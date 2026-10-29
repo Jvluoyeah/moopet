@@ -1,0 +1,2948 @@
+{
+  "characters": {
+    "version": 2,
+    "globalSettings": {
+      "defaultPosition": "left",
+      "positions": [
+        {
+          "id": "left",
+          "name": "左",
+          "left": 0,
+          "top": 3
+        },
+        {
+          "id": "center-left",
+          "name": "中左",
+          "left": 19,
+          "top": 2
+        },
+        {
+          "id": "center",
+          "name": "中",
+          "left": 30,
+          "top": 2
+        },
+        {
+          "id": "center-right",
+          "name": "中右",
+          "left": 50,
+          "top": 2
+        },
+        {
+          "id": "right",
+          "name": "右",
+          "left": 68,
+          "top": 2
+        }
+      ],
+      "defaultPositionId": "center",
+      "defaultAnchor": "left_top",
+      "graphics": {
+        "heightRatio": 1.74
+      },
+      "distancePresets": [
+        {
+          "id": "far",
+          "name": "远",
+          "scale": 0.72,
+          "positions": [
+            {
+              "id": "left",
+              "name": "左",
+              "left": 0,
+              "top": 3
+            },
+            {
+              "id": "center-left",
+              "name": "中左",
+              "left": 19,
+              "top": 2
+            },
+            {
+              "id": "center",
+              "name": "中",
+              "left": 30,
+              "top": 2
+            },
+            {
+              "id": "center-right",
+              "name": "中右",
+              "left": 50,
+              "top": 2
+            },
+            {
+              "id": "right",
+              "name": "右",
+              "left": 68,
+              "top": 2
+            }
+          ]
+        },
+        {
+          "id": "middle",
+          "name": "中",
+          "scale": 0.45,
+          "positions": [
+            {
+              "id": "left",
+              "name": "左",
+              "left": 3.6,
+              "top": 14.6
+            },
+            {
+              "id": "center-left",
+              "name": "中左",
+              "left": 21.6,
+              "top": 11.1
+            },
+            {
+              "id": "center",
+              "name": "中",
+              "left": 33.5,
+              "top": 10.6
+            },
+            {
+              "id": "center-right",
+              "name": "中右",
+              "left": 51.7,
+              "top": 11.9
+            },
+            {
+              "id": "right",
+              "name": "右",
+              "left": 66.1,
+              "top": 11.4
+            },
+            {
+              "id": "a0e8669f-eaaf-4446-b33e-542d38a12178",
+              "name": "狗左",
+              "left": -6.9,
+              "top": 14
+            },
+            {
+              "id": "f4577314-dbd5-4837-b513-fd5af788d775",
+              "name": "狗中左",
+              "left": 9.7,
+              "top": 13.9
+            },
+            {
+              "id": "f9bd75f1-7290-4210-bb13-216c8526bba9",
+              "name": "狗中",
+              "left": 24.4,
+              "top": 12.5
+            },
+            {
+              "id": "0aeec35a-febc-45a6-8f47-399a3c949eb1",
+              "name": "狗中右",
+              "left": 44.7,
+              "top": 11.5
+            },
+            {
+              "id": "4aadadfa-34ab-4352-be6d-07b418b1a5f9",
+              "name": "狗右",
+              "left": 59.1,
+              "top": 12.9
+            }
+          ]
+        },
+        {
+          "id": "near",
+          "name": "近",
+          "scale": 1.38,
+          "positions": [
+            {
+              "id": "left",
+              "name": "左",
+              "left": 0,
+              "top": 3
+            },
+            {
+              "id": "center-left",
+              "name": "中左",
+              "left": 19,
+              "top": 2
+            },
+            {
+              "id": "center",
+              "name": "中",
+              "left": 30,
+              "top": 2
+            },
+            {
+              "id": "center-right",
+              "name": "中右",
+              "left": 50,
+              "top": 2
+            },
+            {
+              "id": "right",
+              "name": "右",
+              "left": 68,
+              "top": 2
+            }
+          ]
+        }
+      ]
+    },
+    "attributeTemplate": [],
+    "characters": [
+      {
+        "id": "7491fed9-0faf-478b-8cb0-6fa47e07e9eb",
+        "name": "我",
+        "expressions": [
+          {
+            "id": "39e6cdec-9d5a-4381-b4e0-9a3fe405376b",
+            "name": "默认",
+            "assetPath": "portraits/记录员形象.png"
+          }
+        ],
+        "defaultPosition": "left"
+      },
+      {
+        "id": "448c0978-9dc9-4ce1-8ccf-2c0624db2b97",
+        "name": "狗",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/shiba/默认.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "8eba2050-246d-49b2-8c7f-92afd448f1b3",
+        "name": "登记处的女人",
+        "expressions": [
+          {
+            "id": "8842c629-90f3-448d-ab05-50633aba9b62",
+            "name": "默认",
+            "assetPath": "portraits/登记处的女人.png"
+          }
+        ],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "24c81bc8-c583-46c3-841f-411831a93358",
+        "name": "老记录员",
+        "expressions": [
+          {
+            "id": "f1fda91d-3875-4594-8b6b-6795b3cfa020",
+            "name": "默认",
+            "assetPath": "portraits/老记录员.png"
+          }
+        ],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "c06c600a-2d95-4021-8b65-79d05dd01e58",
+        "name": "老太太",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "109ccd83-fa0e-4eb1-8f33-b3091b70ed94",
+        "name": "年轻人",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "fb0d0dec-341c-4dc4-8fa1-b436461679f5",
+        "name": "送水工",
+        "expressions": [],
+        "defaultPosition": "center-left"
+      },
+      {
+        "id": "7dc0a17a-c268-4a70-8484-18055698a3a6",
+        "name": "裁判",
+        "expressions": [],
+        "defaultPosition": "center"
+      },
+      {
+        "id": "7ec7e356-19e2-419e-8b2d-d721aae1be85",
+        "name": "对手记录员",
+        "expressions": [
+          {
+            "id": "ddcfd4f8-6981-4272-abaf-4373c744e604",
+            "name": "默认",
+            "assetPath": "portraits/对手记录员.png"
+          }
+        ],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "ee0c8ba1-6244-4263-8e09-1df70ac8266d",
+        "name": "中年男人",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "22acd748-912c-49b2-8fd2-934cdddba9ff",
+        "name": "广场上的女人",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "cee10c5e-878d-48ba-8da2-6e51cf47a55e",
+        "name": "广场上的男人",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "7ceffc72-5cb4-408b-85cd-148abd4f5dcc",
+        "name": "归档处的记录员",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "993a1fef-6014-4a44-8a23-4e3e193cb38b",
+        "name": "竞技场门口的记录员",
+        "expressions": [],
+        "defaultPosition": "center-right"
+      },
+      {
+        "id": "7b17f4d2-c0a0-4133-89f9-b2be44bf4244",
+        "name": "萨摩耶",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/samoyed/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/samoyed/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/samoyed/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/samoyed/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/samoyed/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/samoyed/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/samoyed/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/samoyed/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/samoyed/跑·三.png"
+          },
+          {
+            "name": "跑·四",
+            "assetPath": "dog/samoyed/跑·四.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/samoyed/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/samoyed/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/samoyed/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/samoyed/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/samoyed/咬.png"
+          },
+          {
+            "name": "咬·二",
+            "assetPath": "dog/samoyed/咬·二.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/samoyed/赢.png"
+          },
+          {
+            "name": "背对",
+            "assetPath": "dog/samoyed/背对.png"
+          },
+          {
+            "name": "低头",
+            "assetPath": "dog/samoyed/低头.png"
+          },
+          {
+            "name": "受伤",
+            "assetPath": "dog/samoyed/受伤.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/samoyed/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/samoyed/开心脸.png"
+          },
+          {
+            "name": "歪头",
+            "assetPath": "dog/samoyed/歪头.png"
+          },
+          {
+            "name": "叼东西",
+            "assetPath": "dog/samoyed/叼东西.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "f683dda9-a2f0-4cc6-8ff9-4e40d76d1429",
+        "name": "边境牧羊犬",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/border_collie/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/border_collie/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/border_collie/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/border_collie/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/border_collie/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/border_collie/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/border_collie/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/border_collie/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/border_collie/跑·三.png"
+          },
+          {
+            "name": "跑·四",
+            "assetPath": "dog/border_collie/跑·四.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/border_collie/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/border_collie/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/border_collie/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/border_collie/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/border_collie/咬.png"
+          },
+          {
+            "name": "咬·二",
+            "assetPath": "dog/border_collie/咬·二.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/border_collie/赢.png"
+          },
+          {
+            "name": "背对",
+            "assetPath": "dog/border_collie/背对.png"
+          },
+          {
+            "name": "低头",
+            "assetPath": "dog/border_collie/低头.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/border_collie/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/border_collie/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/border_collie/侧头.png"
+          },
+          {
+            "name": "侧头·动",
+            "assetPath": "dog/border_collie/侧头·动.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "59fc6bbe-c4fa-45ff-8961-947a46273b0e",
+        "name": "金毛寻回犬",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/golden/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/golden/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/golden/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/golden/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/golden/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/golden/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/golden/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/golden/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/golden/跑·三.png"
+          },
+          {
+            "name": "跑·四",
+            "assetPath": "dog/golden/跑·四.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/golden/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/golden/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/golden/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/golden/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/golden/咬.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/golden/赢.png"
+          },
+          {
+            "name": "技能",
+            "assetPath": "dog/golden/技能.png"
+          },
+          {
+            "name": "背对",
+            "assetPath": "dog/golden/背对.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/golden/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/golden/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/golden/侧头.png"
+          },
+          {
+            "name": "侧头·动",
+            "assetPath": "dog/golden/侧头·动.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "0ecad3cd-868e-4529-8f74-729f1a00e4fc",
+        "name": "柯基",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/corgi/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/corgi/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/corgi/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/corgi/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/corgi/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/corgi/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/corgi/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/corgi/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/corgi/跑·三.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/corgi/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/corgi/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/corgi/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/corgi/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/corgi/咬.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/corgi/赢.png"
+          },
+          {
+            "name": "技能",
+            "assetPath": "dog/corgi/技能.png"
+          },
+          {
+            "name": "背对",
+            "assetPath": "dog/corgi/背对.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/corgi/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/corgi/侧头.png"
+          },
+          {
+            "name": "侧头·动",
+            "assetPath": "dog/corgi/侧头·动.png"
+          },
+          {
+            "name": "歪头",
+            "assetPath": "dog/corgi/歪头.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "407d0430-8705-4e8b-84cd-c46ca234c52c",
+        "name": "柴犬",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/shiba/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/shiba/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/shiba/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/shiba/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/shiba/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/shiba/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/shiba/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/shiba/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/shiba/跑·三.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/shiba/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/shiba/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/shiba/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/shiba/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/shiba/咬.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/shiba/赢.png"
+          },
+          {
+            "name": "技能",
+            "assetPath": "dog/shiba/技能.png"
+          },
+          {
+            "name": "技能·二",
+            "assetPath": "dog/shiba/技能·二.png"
+          },
+          {
+            "name": "背对",
+            "assetPath": "dog/shiba/背对.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/shiba/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/shiba/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/shiba/侧头.png"
+          },
+          {
+            "name": "歪头",
+            "assetPath": "dog/shiba/歪头.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "f9576a16-46b0-40f8-88a1-470a17be6b43",
+        "name": "德国牧羊犬",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/gsd/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/gsd/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/gsd/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/gsd/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/gsd/站着.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/gsd/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/gsd/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/gsd/跑·三.png"
+          },
+          {
+            "name": "跑·四",
+            "assetPath": "dog/gsd/跑·四.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/gsd/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/gsd/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/gsd/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/gsd/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/gsd/咬.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/gsd/赢.png"
+          },
+          {
+            "name": "技能",
+            "assetPath": "dog/gsd/技能.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/gsd/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/gsd/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/gsd/侧头.png"
+          },
+          {
+            "name": "歪头",
+            "assetPath": "dog/gsd/歪头.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "dec58c50-04ab-468a-82b1-10ddc95c4fc3",
+        "name": "哈士奇",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/husky/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/husky/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/husky/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/husky/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/husky/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/husky/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/husky/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/husky/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/husky/跑·三.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/husky/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/husky/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/husky/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/husky/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/husky/咬.png"
+          },
+          {
+            "name": "咬·二",
+            "assetPath": "dog/husky/咬·二.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/husky/赢.png"
+          },
+          {
+            "name": "背对",
+            "assetPath": "dog/husky/背对.png"
+          },
+          {
+            "name": "低头",
+            "assetPath": "dog/husky/低头.png"
+          },
+          {
+            "name": "受伤",
+            "assetPath": "dog/husky/受伤.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/husky/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/husky/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/husky/侧头.png"
+          },
+          {
+            "name": "睡脸",
+            "assetPath": "dog/husky/睡脸.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      },
+      {
+        "id": "4ad01503-935d-4ffa-83d0-2fe59bd58e07",
+        "name": "比熊",
+        "expressions": [
+          {
+            "name": "默认",
+            "assetPath": "dog/bichon/默认.png"
+          },
+          {
+            "name": "正面",
+            "assetPath": "dog/bichon/正面.png"
+          },
+          {
+            "name": "挥手",
+            "assetPath": "dog/bichon/挥手.png"
+          },
+          {
+            "name": "趴下",
+            "assetPath": "dog/bichon/趴下.png"
+          },
+          {
+            "name": "站着",
+            "assetPath": "dog/bichon/站着.png"
+          },
+          {
+            "name": "站着·动",
+            "assetPath": "dog/bichon/站着·动.png"
+          },
+          {
+            "name": "跑",
+            "assetPath": "dog/bichon/跑.png"
+          },
+          {
+            "name": "跑·二",
+            "assetPath": "dog/bichon/跑·二.png"
+          },
+          {
+            "name": "跑·三",
+            "assetPath": "dog/bichon/跑·三.png"
+          },
+          {
+            "name": "跳",
+            "assetPath": "dog/bichon/跳.png"
+          },
+          {
+            "name": "滚",
+            "assetPath": "dog/bichon/滚.png"
+          },
+          {
+            "name": "睡",
+            "assetPath": "dog/bichon/睡.png"
+          },
+          {
+            "name": "睡着了",
+            "assetPath": "dog/bichon/睡着了.png"
+          },
+          {
+            "name": "咬",
+            "assetPath": "dog/bichon/咬.png"
+          },
+          {
+            "name": "赢",
+            "assetPath": "dog/bichon/赢.png"
+          },
+          {
+            "name": "技能",
+            "assetPath": "dog/bichon/技能.png"
+          },
+          {
+            "name": "咧嘴",
+            "assetPath": "dog/bichon/咧嘴.png"
+          },
+          {
+            "name": "开心脸",
+            "assetPath": "dog/bichon/开心脸.png"
+          },
+          {
+            "name": "侧头",
+            "assetPath": "dog/bichon/侧头.png"
+          },
+          {
+            "name": "侧头·动",
+            "assetPath": "dog/bichon/侧头·动.png"
+          }
+        ],
+        "portraitLayout": {
+          "distancePresets": [
+            {
+              "id": "far",
+              "name": "远",
+              "scale": 0.72,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            },
+            {
+              "id": "middle",
+              "name": "中",
+              "scale": 0.45,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": -6,
+                  "top": 11
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 9.1,
+                  "top": 13
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 24.8,
+                  "top": 12
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 42.2,
+                  "top": 13
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 62.2,
+                  "top": 13
+                }
+              ]
+            },
+            {
+              "id": "near",
+              "name": "近",
+              "scale": 1.38,
+              "positions": [
+                {
+                  "id": "left",
+                  "name": "左",
+                  "left": 0,
+                  "top": 3
+                },
+                {
+                  "id": "center-left",
+                  "name": "中左",
+                  "left": 19,
+                  "top": 2
+                },
+                {
+                  "id": "center",
+                  "name": "中",
+                  "left": 30,
+                  "top": 2
+                },
+                {
+                  "id": "center-right",
+                  "name": "中右",
+                  "left": 50,
+                  "top": 2
+                },
+                {
+                  "id": "right",
+                  "name": "右",
+                  "left": 68,
+                  "top": 2
+                }
+              ]
+            }
+          ],
+          "defaultDistanceId": "middle",
+          "defaultPositionId": "center",
+          "defaultAnchor": "left_top",
+          "graphics": {
+            "heightRatio": 1.74
+          }
+        },
+        "defaultPosition": "center"
+      }
+    ]
+  },
+  "scenes": {
+    "version": 3,
+    "scenes": [
+      {
+        "id": "2c43b3d1-c274-4fdd-a69e-96ac613a5095",
+        "name": "长夜月广场",
+        "layers": [
+          {
+            "id": "aa54475e-541a-4d83-ab6b-7be7c9b80908",
+            "name": "长夜月广场-石环",
+            "assetPath": "images/d37b41a1ead817e53ccc19cda7be1225.png",
+            "distance": 12
+          },
+          {
+            "id": "8fae6781-714d-43a0-b0b6-95c12ca05261",
+            "name": "石环的局部",
+            "assetPath": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
+            "distance": 10
+          }
+        ],
+        "x-note": "长夜月广场（中央石环）"
+      },
+      {
+        "id": "6354e960-9a0d-47a6-ab6c-dbe8c9af8a92",
+        "name": "长夜月公园",
+        "layers": [
+          {
+            "id": "9b4ac01a-72cd-4589-a837-b9aac59a03cf",
+            "name": "长夜月公园",
+            "assetPath": "images/84edd6f79917a27517e52ce22ed3fadb.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "长夜月公园"
+      },
+      {
+        "id": "e82961a3-016c-4960-ab89-65aabdbe48d2",
+        "name": "我的狗窝",
+        "layers": [
+          {
+            "id": "e07cf3ec-d4f6-43c5-94ac-8195777450bf",
+            "name": "月塔的窗",
+            "assetPath": "images/eed2030a48f05d3ea5527e85c70588a0.png",
+            "distance": 12
+          },
+          {
+            "id": "415ac06c-b84a-4ae3-9df7-63ff118b168f",
+            "name": "门缝底下那条光",
+            "assetPath": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
+            "distance": 10
+          }
+        ],
+        "x-note": "主角那间房（窗 + 门缝光）"
+      },
+      {
+        "id": "3682892f-c39b-4af2-8900-40795e2184c4",
+        "name": "月光竞技场",
+        "layers": [
+          {
+            "id": "b42c2d08-3bb3-4ea1-bb2c-e9709839bd5d",
+            "name": "月光竞技场",
+            "assetPath": "images/1a8d5f4e6f3bd146281cfcee48f87b42.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "月光竞技场"
+      },
+      {
+        "id": "34d74fb7-4e49-41cb-866b-89f3669b8761",
+        "name": "登记处",
+        "layers": [
+          {
+            "id": "a50844d7-3ecb-4513-b4d3-d2916782bba1",
+            "name": "登记处 -内（柜台）",
+            "assetPath": "images/f1743f8c2db9c4e6972bc50b2656180b.png",
+            "distance": 12
+          },
+          {
+            "id": "03c08220-a75e-46dc-810d-52849fd427f8",
+            "name": "柜台的台面",
+            "assetPath": "images/5d9661b42a15e7cb07e561a619a7339a.png",
+            "distance": 10
+          }
+        ],
+        "x-note": "登记处 · 内（柜台 + 台面近景）"
+      },
+      {
+        "id": "7c918d29-8f43-4171-8f15-6bc63688904e",
+        "name": "训练场",
+        "layers": [
+          {
+            "id": "fabccdba-6d69-408c-a0c1-a11bd33d7f02",
+            "name": "训练场",
+            "assetPath": "images/24b61cb51e21b2f23cea7acfb8c69579.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "训练场"
+      },
+      {
+        "id": "6fdb09e7-c9cd-45a7-a840-1222396b8cf6",
+        "name": "月塔地下档案室",
+        "layers": [
+          {
+            "id": "dc9c77bb-ad7c-420e-b6ea-b99baa96ce61",
+            "name": "月塔-一楼归档处",
+            "assetPath": "images/ec5d0d142719d43a646895373fd620da.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "月塔 · 一楼归档处"
+      },
+      {
+        "id": "6bba6b76-ff34-4733-b909-47eeeea917d1",
+        "name": "楼道",
+        "layers": [
+          {
+            "id": "08acbb9b-bfea-4a76-82d2-118cc513ae8d",
+            "name": "月塔-外",
+            "assetPath": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "月塔外观（楼道/外侧）"
+      },
+      {
+        "id": "2b75d9fa-773a-4882-b140-3af8486bf4e3",
+        "name": "街上",
+        "layers": [
+          {
+            "id": "2ac29178-c604-46c4-9af3-31f461761fa0",
+            "name": "门缝底下那条光",
+            "assetPath": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
+            "distance": 12
+          },
+          {
+            "id": "f7f52a01-a011-4539-9270-abb0bcf6f26e",
+            "name": "户外雪地",
+            "assetPath": "images/2503b43f836a6c5132364f4b4741257b.png",
+            "distance": 10
+          }
+        ],
+        "x-note": "夜街（门缝光 + 雪夜街道）"
+      },
+      {
+        "id": "f00c7667-3b26-4dcc-892c-ad72a560c6be",
+        "name": "图鉴架",
+        "layers": [
+          {
+            "id": "8d87d393-0124-4cb2-95e3-0609424aeed5",
+            "name": "八格位的图鉴架",
+            "assetPath": "images/cf55bb020483267995419047752f4c5f.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "八个格位的图鉴架 · **空**（第一章 ★A 选狗；源文：「八个格位里没有狗。是记录。」）"
+      },
+      {
+        "id": "59f795c7-564b-488a-bc76-33a6de0e6ecb",
+        "name": "图鉴架·有狗",
+        "layers": [
+          {
+            "id": "de05001b-ea65-48cb-b877-e00362448460",
+            "name": "八格位的图鉴架(有狗)",
+            "assetPath": "images/098653683e7782ec1090265b4e18ffe0.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "八个格位的图鉴架 · **有狗**（选中之后回去看，或第七章社交榜/第八章结算）"
+      },
+      {
+        "id": "1423ca15-1a88-44e6-855d-c820a1327024",
+        "name": "册子的一页",
+        "layers": [
+          {
+            "id": "28afc469-c1ea-460d-b183-60015b8c4e4f",
+            "name": "册子摊开的一页",
+            "assetPath": "images/ab50f1bf4ff47e0c4d66d9c80857f240.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "册子摊开的一页（记录/归档段）"
+      },
+      {
+        "id": "8f530b2e-4b74-4136-a20b-e0869fccefbd",
+        "name": "天台",
+        "layers": [
+          {
+            "id": "3d490ff5-853c-4133-8438-8fae029a2d39",
+            "name": "天台",
+            "assetPath": "images/d90e9c2b4e1fa4a0c3ca9130d45adc1a.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "天台（第四章第三关 · 天台快递）"
+      },
+      {
+        "id": "51254a0e-3945-4a50-bb0f-1be8e489eb9d",
+        "name": "登记处外",
+        "layers": [
+          {
+            "id": "6db9cc65-e07e-463c-b025-467d81453788",
+            "name": "登记处-外（门）",
+            "assetPath": "images/5f97c39312f6c35d6acc67b5c69ca365.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "登记处 · 外（门）"
+      },
+      {
+        "id": "43e65c7b-3014-4f41-b79c-50cef38a8d58",
+        "name": "月塔外",
+        "layers": [
+          {
+            "id": "9c9f9306-e27e-461d-a802-aaf83e60e1a5",
+            "name": "月塔-外",
+            "assetPath": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
+            "distance": 12
+          }
+        ],
+        "x-note": "月塔 · 外"
+      },
+      {
+        "id": "ddba2bb4-9c48-41aa-83bf-adf85eb82ca8",
+        "name": "黑场",
+        "layers": [],
+        "x-note": "过场用，不挂图"
+      }
+    ]
+  },
+  "voice": {
+    "version": 1,
+    "entries": []
+  },
+  "asr": {
+    "version": 1,
+    "entries": []
+  },
+  "narrative": {
+    "version": 2,
+    "variables": [
+      {
+        "id": "11e67a63-d7c0-4d5f-b5de-724ca478204c",
+        "name": "prototype",
+        "type": "string",
+        "defaultValue": "",
+        "kind": "project",
+        "createdAt": 1789133757943,
+        "persistence": "slot"
+      },
+      {
+        "id": "489326d3-dc02-4f99-92f8-6ec7adb10850",
+        "name": "dog_name",
+        "type": "string",
+        "defaultValue": "",
+        "kind": "project",
+        "createdAt": 1789133757944,
+        "persistence": "slot"
+      },
+      {
+        "id": "619bfd21-a307-4b02-9487-9bf07e0b3c68",
+        "name": "catchphrase_id",
+        "type": "number",
+        "defaultValue": 0,
+        "kind": "project",
+        "createdAt": 1789133757945,
+        "persistence": "slot"
+      },
+      {
+        "id": "11f3c9e1-4c4c-4156-8adb-587b92f472a3",
+        "name": "catchphrase",
+        "type": "string",
+        "defaultValue": "",
+        "kind": "project",
+        "createdAt": 1789274084364,
+        "persistence": "slot"
+      },
+      {
+        "id": "ece0a9ba-5809-42d5-b22c-4117090a740a",
+        "name": "relic_choice",
+        "type": "string",
+        "defaultValue": "",
+        "kind": "project",
+        "createdAt": 1789133757946,
+        "persistence": "slot"
+      },
+      {
+        "id": "f92a1bd6-9adb-44ff-9637-29a79cf41769",
+        "name": "deploy_choice",
+        "type": "string",
+        "defaultValue": "",
+        "kind": "project",
+        "createdAt": 1789133757947,
+        "persistence": "slot"
+      },
+      {
+        "id": "8d2b6c3c-ec9c-4950-95c5-bc60e0fcab9f",
+        "name": "waiting_state",
+        "type": "string",
+        "defaultValue": "",
+        "kind": "project",
+        "createdAt": 1789133757948,
+        "persistence": "slot"
+      },
+      {
+        "id": "bf50c522-133f-4059-a49a-a77315cb6c05",
+        "name": "arena_choice",
+        "type": "string",
+        "defaultValue": "none",
+        "kind": "project",
+        "createdAt": 1789135043668,
+        "persistence": "slot"
+      },
+      {
+        "id": "52a052f0-da80-4407-91df-a21a80eeca23",
+        "name": "f2_signed",
+        "type": "string",
+        "defaultValue": "none",
+        "kind": "project",
+        "createdAt": 1789210230564,
+        "persistence": "slot"
+      },
+      {
+        "id": "19c673c9-e5f2-4837-a71e-0db7bdb2fec4",
+        "name": "f2_asked",
+        "type": "string",
+        "defaultValue": "none",
+        "kind": "project",
+        "createdAt": 1789210230564,
+        "persistence": "slot"
+      }
+    ]
+  },
+  "personalization": {
+    "userSettings": [],
+    "presetDialogueBoxes": [
+      {
+        "id": "cinematic",
+        "dialogueBox": {
+          "text_speed": 30,
+          "styles": {
+            "dialogue": {
+              "text_styles": {
+                "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+                "fontSize": 30,
+                "fontWeight": 500,
+                "color": "#f3ede2",
+                "textShadow": "0 0 1.5px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.7), 1px 2px 4px rgba(0,0,0,0.6)",
+                "letterSpacing": "0.04em",
+                "lineHeight": 1.75
+              },
+              "background": {
+                "css": "\n            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 100%);\n            border-top: 1px solid rgba(255,255,255,0.12);\n          ",
+                "box_size": "(100%, 220)",
+                "box_position": "(center, bottom-220)"
+              }
+            },
+            "name_card": {
+              "text_styles": {
+                "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+                "fontSize": 34,
+                "fontWeight": 600,
+                "color": "#ffd88a",
+                "textShadow": "0 0 1.5px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.7), 1px 2px 4px rgba(0,0,0,0.6)",
+                "letterSpacing": "0.04em"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "cinematic-centered",
+        "dialogueBox": {
+          "text_speed": 30,
+          "styles": {
+            "dialogue": {
+              "box_size": "(100%, 220)",
+              "box_position": "(center, bottom-220)",
+              "show_wait_for_icon": false,
+              "text_styles": {
+                "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+                "fontSize": 34,
+                "fontWeight": 500,
+                "color": "#f3ede2",
+                "textShadow": "0 0 1.5px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.7), 1px 2px 6px rgba(0,0,0,0.6)",
+                "letterSpacing": "0.08em",
+                "lineHeight": 1.8,
+                "textAlign": "center",
+                "marginLeft": 0,
+                "marginRight": 0,
+                "marginTop": 40
+              },
+              "background": {
+                "css": "background: transparent;",
+                "box_size": "(100%, 220)",
+                "box_position": "(center, bottom-220)"
+              }
+            },
+            "name_card": {
+              "box_size": "(100%, 40)",
+              "box_position": "(center, bottom-260)",
+              "text_styles": {
+                "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+                "fontSize": 26,
+                "fontWeight": 600,
+                "color": "#ffd88a",
+                "textShadow": "0 0 1.5px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.7)",
+                "letterSpacing": "0.15em",
+                "textAlign": "center"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "literary",
+        "dialogueBox": {
+          "text_speed": 30,
+          "styles": {
+            "dialogue": {
+              "text_styles": {
+                "fontFamily": "'LXGW WenKai', 'Songti SC', serif",
+                "fontSize": 28,
+                "fontWeight": 400,
+                "color": "#fdf6e3",
+                "textShadow": "0 1px 2px rgba(0,0,0,0.5), 1px 1px 3px rgba(0,0,0,0.35)",
+                "letterSpacing": "0.06em",
+                "lineHeight": 1.75
+              },
+              "background": {
+                "css": "\n            background: linear-gradient(180deg, rgba(43,34,24,0.78) 0%, rgba(35,26,18,0.82) 100%);\n            border-top: 1px solid rgba(192,148,88,0.35);\n            box-shadow:\n              inset 0 0 40px rgba(15,10,5,0.55),\n              inset 0 1px 0 rgba(255,208,140,0.08);\n          ",
+                "box_size": "(100%, 220)",
+                "box_position": "(center, bottom-220)"
+              }
+            },
+            "name_card": {
+              "text_styles": {
+                "fontFamily": "'LXGW WenKai', 'Songti SC', serif",
+                "fontSize": 32,
+                "fontWeight": 500,
+                "color": "#ffcf7a",
+                "textShadow": "0 1px 2px rgba(0,0,0,0.5), 1px 1px 3px rgba(0,0,0,0.35)",
+                "letterSpacing": "0.06em"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "sharp",
+        "dialogueBox": {
+          "text_speed": 30,
+          "styles": {
+            "dialogue": {
+              "text_styles": {
+                "fontFamily": "'Smiley Sans', 'PingFang SC', sans-serif",
+                "fontSize": 30,
+                "fontWeight": 700,
+                "color": "#ffffff",
+                "textShadow": "-1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, 0 0 10px rgba(120,180,255,0.5)",
+                "letterSpacing": "0.01em",
+                "lineHeight": 1.6
+              },
+              "background": {
+                "css": "\n            background: linear-gradient(180deg, rgba(8,12,22,0.9) 0%, rgba(14,20,34,0.92) 100%);\n            border-top: 1px solid rgba(120,180,255,0.55);\n            box-shadow:\n              inset 0 1px 0 rgba(120,180,255,0.25),\n              0 0 24px rgba(120,180,255,0.18);\n          ",
+                "box_size": "(100%, 220)",
+                "box_position": "(center, bottom-220)"
+              }
+            },
+            "name_card": {
+              "text_styles": {
+                "fontFamily": "'Smiley Sans', 'PingFang SC', sans-serif",
+                "fontSize": 36,
+                "fontWeight": 800,
+                "color": "#9ee7ff",
+                "textShadow": "-1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, 0 0 12px rgba(120,180,255,0.7)",
+                "letterSpacing": "0.03em"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "handwritten",
+        "dialogueBox": {
+          "text_speed": 30,
+          "styles": {
+            "dialogue": {
+              "text_styles": {
+                "fontFamily": "'LXGW WenKai', 'PingFang SC', sans-serif",
+                "fontSize": 28,
+                "fontWeight": 400,
+                "color": "#fff8f0",
+                "textShadow": "0 1px 3px rgba(60,40,30,0.55), 0 2px 6px rgba(60,40,30,0.3)",
+                "letterSpacing": "0.05em",
+                "lineHeight": 1.8
+              },
+              "background": {
+                "css": "\n            background: linear-gradient(180deg, rgba(90,62,48,0.72) 0%, rgba(70,46,34,0.78) 100%);\n            border-radius: 20px 20px 0 0;\n            box-shadow:\n              0 -4px 18px rgba(60,40,30,0.25),\n              inset 0 1px 0 rgba(255,245,230,0.1);\n          ",
+                "box_size": "(96%, 220)",
+                "box_position": "(center, bottom-230)"
+              }
+            },
+            "name_card": {
+              "text_styles": {
+                "fontFamily": "'LXGW WenKai', 'PingFang SC', sans-serif",
+                "fontSize": 32,
+                "fontWeight": 500,
+                "color": "#ffb3c6",
+                "textShadow": "0 1px 3px rgba(60,40,30,0.55), 0 2px 6px rgba(60,40,30,0.3)",
+                "letterSpacing": "0.05em"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "active": null,
+    "activeDialogueBox": {
+      "source": "preset",
+      "id": "cinematic",
+      "dialogueBox": {
+        "text_speed": 30,
+        "styles": {
+          "dialogue": {
+            "text_styles": {
+              "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+              "fontSize": 30,
+              "fontWeight": 500,
+              "color": "#f3ede2",
+              "textShadow": "0 0 1.5px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.7), 1px 2px 4px rgba(0,0,0,0.6)",
+              "letterSpacing": "0.04em",
+              "lineHeight": 1.75
+            },
+            "background": {
+              "css": "\n            background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 100%);\n            border-top: 1px solid rgba(255,255,255,0.12);\n          ",
+              "box_size": "(100%, 220)",
+              "box_position": "(center, bottom-220)"
+            }
+          },
+          "name_card": {
+            "text_styles": {
+              "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+              "fontSize": 34,
+              "fontWeight": 600,
+              "color": "#ffd88a",
+              "textShadow": "0 0 1.5px rgba(0,0,0,0.95), 0 0 3px rgba(0,0,0,0.7), 1px 2px 4px rgba(0,0,0,0.6)",
+              "letterSpacing": "0.04em"
+            }
+          }
+        }
+      }
+    },
+    "dialogueStyles": [
+      {
+        "ref": {
+          "source": "system",
+          "id": "landing"
+        },
+        "name": "默认对话框",
+        "dialogueBox": {
+          "text_speed": 30,
+          "char_fade_in_duration": 100,
+          "text_reveal_effect": "smooth-rise",
+          "text_reveal_parameters": {
+            "distance_px": 8,
+            "scale_percent": 82,
+            "rotation_degrees": 70,
+            "blur_px": 4
+          },
+          "wait_for_icon_delay": 0
+        },
+        "dialogueBoxVisualUI": {
+          "version": 2,
+          "canvas": {
+            "width": 1920,
+            "height": 1080
+          },
+          "elements": [
+            {
+              "id": "dialogue-backdrop",
+              "type": "dialogue-backdrop",
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1920,
+                "h": 1080
+              },
+              "anchor": "c",
+              "name": "舞台遮罩",
+              "refId": "dialogue-backdrop",
+              "style": {
+                "fill": "#000000",
+                "opacity": 0
+              },
+              "props": {},
+              "selectorId": "vui-27423e2642ad5f2facc4fe4e85e34dd7"
+            },
+            {
+              "id": "dialogue-frame",
+              "type": "dialogue-frame",
+              "rect": {
+                "x": 0,
+                "y": 880,
+                "w": 1920,
+                "h": 200
+              },
+              "anchor": "tl",
+              "name": "框体背景",
+              "refId": "dialogue-frame",
+              "style": {
+                "fill": "transparent",
+                "borderColor": "transparent",
+                "borderWidth": 0,
+                "radius": 0,
+                "opacity": 100
+              },
+              "props": {
+                "runtimeOverride": true,
+                "backgroundImage": "",
+                "backgroundImageFit": "stretch",
+                "backgroundImagePosition": "center",
+                "backgroundImageRepeat": "no-repeat",
+                "linearGradient": {
+                  "enabled": true,
+                  "angle": 0,
+                  "startColor": "rgba(0,0,0,0.75)",
+                  "endColor": "rgba(0,0,0,0.3)"
+                },
+                "frameDecoration": {
+                  "borderTop": "1px solid rgba(255,255,255,0.12)",
+                  "borderRight": "",
+                  "borderBottom": "",
+                  "borderLeft": "",
+                  "borderRadius": "",
+                  "boxShadow": ""
+                }
+              },
+              "selectorId": "vui-614ea9511e2f51eeb47af97cc98bcc71"
+            },
+            {
+              "id": "dialogue-text",
+              "type": "dialogue-text",
+              "rect": {
+                "x": 200,
+                "y": 900,
+                "w": 1520,
+                "h": 180
+              },
+              "anchor": "tl",
+              "name": "对白文本",
+              "refId": "dialogue-text",
+              "style": {
+                "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+                "fontSize": 30,
+                "fontWeight": 500,
+                "color": "#f3ede2",
+                "letterSpacing": 1.2,
+                "textAlign": "left",
+                "opacity": 100
+              },
+              "props": {
+                "lineHeight": 1.75,
+                "textShadows": [
+                  {
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "blur": 1.5,
+                    "color": "rgba(0,0,0,0.95)"
+                  },
+                  {
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "blur": 3,
+                    "color": "rgba(0,0,0,0.7)"
+                  },
+                  {
+                    "offsetX": 1,
+                    "offsetY": 2,
+                    "blur": 4,
+                    "color": "rgba(0,0,0,0.6)"
+                  }
+                ],
+                "previewText": "有些故事，会从一个看似普通的夜晚开始。\n而我们，刚好站在它的入口。"
+              },
+              "selectorId": "vui-822228848cdd5dfcac35a3db94a2ba70"
+            },
+            {
+              "id": "dialogue-name",
+              "type": "dialogue-name",
+              "rect": {
+                "x": 200,
+                "y": 840,
+                "w": 384,
+                "h": 40
+              },
+              "anchor": "tl",
+              "name": "角色名",
+              "refId": "dialogue-name",
+              "style": {
+                "fontFamily": "'Source Han Sans', 'PingFang SC', sans-serif",
+                "fontSize": 34,
+                "fontWeight": 600,
+                "color": "#ffd88a",
+                "fill": "transparent",
+                "borderColor": "transparent",
+                "borderWidth": 0,
+                "radius": 0,
+                "letterSpacing": 1.36,
+                "textAlign": "left",
+                "opacity": 100
+              },
+              "props": {
+                "backgroundImage": "",
+                "backgroundImageFit": "stretch",
+                "backgroundImagePosition": "center",
+                "backgroundImageRepeat": "no-repeat",
+                "linearGradient": {
+                  "enabled": false,
+                  "angle": 180,
+                  "startColor": "transparent",
+                  "endColor": "transparent"
+                },
+                "frameDecoration": {
+                  "borderTop": "",
+                  "borderRight": "",
+                  "borderBottom": "",
+                  "borderLeft": "",
+                  "borderRadius": "",
+                  "boxShadow": ""
+                },
+                "lineHeight": 1.5,
+                "textShadows": [
+                  {
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "blur": 1.5,
+                    "color": "rgba(0,0,0,0.95)"
+                  },
+                  {
+                    "offsetX": 0,
+                    "offsetY": 0,
+                    "blur": 3,
+                    "color": "rgba(0,0,0,0.7)"
+                  },
+                  {
+                    "offsetX": 1,
+                    "offsetY": 2,
+                    "blur": 4,
+                    "color": "rgba(0,0,0,0.6)"
+                  }
+                ],
+                "previewName": "小满"
+              },
+              "selectorId": "vui-9fcbb122a55e51169851045be205b588"
+            },
+            {
+              "id": "dialogue-wait-cursor",
+              "type": "dialogue-wait-cursor",
+              "rect": {
+                "x": 1546.4,
+                "y": 965.6,
+                "w": 28,
+                "h": 28
+              },
+              "anchor": "tl",
+              "name": "等待提示",
+              "refId": "dialogue-wait-cursor",
+              "style": {
+                "color": "#ffffff",
+                "opacity": 100
+              },
+              "props": {
+                "source": "legacy",
+                "imageAsset": "",
+                "shape": "diamond",
+                "accentColor": "#ff3d00",
+                "animation": "rotate",
+                "durationMs": 1000
+              },
+              "selectorId": "vui-28197ac174065ca685273c772a1b2699"
+            }
+          ],
+          "dialogueBehavior": {
+            "text_speed": 30
+          },
+          "name": "对话框"
+        }
+      }
+    ],
+    "activeDialogueStyle": null,
+    "activeParagraphStyle": {
+      "source": "preset",
+      "id": "cinematic"
+    },
+    "paragraphUserStyles": [],
+    "paragraphExtensionStyles": []
+  },
+  "extensionSettings": {}
+}

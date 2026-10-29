@@ -1,0 +1,37 @@
+{
+  "code": "bichon",
+  "name": "比熊",
+  "canvas": [
+    512,
+    512
+  ],
+  "baseline": 470,
+  "reference": "sit",
+  "forms": {
+    "sit": {
+      "file": "forms/sit.png",
+      "h": 400,
+      "use": "图鉴/档案/大世界立牌/对战待机"
+    },
+    "face": {
+      "file": "forms/face.png",
+      "h": 390,
+      "use": "正面（对话、结算）"
+    },
+    "paw": {
+      "file": "forms/paw.png",
+      "h": 378,
+      "use": "挥手（打招呼/撒娇）"
+    },
+    "lie": {
+      "file": "forms/lie.png",
+      "h": 214,
+      "use": "趴下（休息/倒地）"
+    }
+  },
+  "source": {
+    "main": "主图.png",
+    "sheet": "四种形态.jpg",
+    "note": "由 tools/slice_breeds.py 从用户提供的图切出；四格同系数缩放、脚底对齐 470 基线"
+  }
+}

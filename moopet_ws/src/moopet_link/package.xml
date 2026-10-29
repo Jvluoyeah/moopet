@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>moopet_link</name>
+  <version>0.1.0</version>
+  <description>狗↔背包通信层：信封协议/心跳状态机/离线队列/断连自治/故障注入测试台（核心逻辑可在无 ROS 下单测）</description>
+  <maintainer email="liwenyang@moopet.local">李文扬</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- rclpy 仅作可选传输实现，核心逻辑不依赖它 -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>moopet_interfaces</exec_depend>
+
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

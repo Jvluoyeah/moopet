@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>长夜月 · 开场 PV</title>
+<!--
+  ==========================================================================
+  长夜月 · 开场 PV        一本册子在被翻
+  ==========================================================================
+  这个文件是**全新的**，在 public/pv2/ 下，不复用 public/pv/ 的任何东西。
+
+  【目标】90 秒。每一镜是册子的一页。全片只有三种页：
+      墨页 INK   墨迹 + 三套真动画：门打开 / 去月塔 / 剪影走过
+      影页 SIL   剪影。黑白，以及四个角色的主题色
+      图页 IMG   场景图，只交代地点，不当主角
+    翻页＝穿过黑场。文字印在页上。「长夜月」只在合上册子那一刻出现一次。
+    四个 ★立绘位各 5.14 秒，每一页都精确压在一句歌词上。
+
+  【这一版修掉的两个 bug】
+   ① 剪影和卡片配对错了
+      上一版 36.82s 挂的是韩柏的剪影，紧接的 39.60s 却是秦素的卡——
+      用户一眼就看出来了：「在女子前面的色彩化立绘是老头的」。
+      现在每个角色的主题色剪影**只紧挨着他自己的卡**（卡前或卡后）。
+   ② 地点卡和歌词抢同一块地方
+      上一版 #loco 在 left:5vw;bottom:12vh，#lyric 在 left:8vw;bottom:14vh，
+      两套字压在同一个角上，直接叠在一起。
+      现在地点卡固定在**左上角**，歌词占下三分之一，永不相交。
+
+  【轴】歌词。LRC 减 20 秒＝音频时间轴（音频从原曲 0:20 起）。
+  ==========================================================================
+-->
+<style>
+  :root{
+    --paper:#f5f1e8; --ink:#111211; --seal:#a8332a;
+    --navy:#16264f; --grey:#8f8d88; --copper:#7a4a24; --moss:#4a6b4f;
+    --serif:"LXGW Bright",ui-serif,Georgia,"Noto Serif SC","Songti SC","STSong",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden}
+  body{font-family:var(--serif);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+  #stage{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--ink);isolation:isolate}
+  #stage.paper{background:var(--paper)}
+
+  /* ── 页 ─────────────────────────────────────────── */
+  #img{position:absolute;inset:-4vw;z-index:1;transform-origin:50% 50%;will-change:transform}
+  #img img{width:100%;height:100%;object-fit:cover;display:block}
+  #veil{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 52%,rgba(0,0,0,.10),rgba(0,0,0,.60) 100%)}
+  #air{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .5s}
+  #grain{position:absolute;inset:0;z-index:14;pointer-events:none;opacity:.32;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.22'/></svg>")}
+
+  #sil{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0}
+  #sil .plate{position:absolute;inset:0}
+  #sil .fig{position:absolute;left:50%;top:50%}
+  #ink{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;overflow:hidden}
+  #fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+  /* 视频页：盖章那一段。object-fit:cover 铺满，
+     逐帧导出时靠 currentTime 定位，所以**帧帧精确**。 */
+  #video{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;overflow:hidden}
+  #video video{width:100%;height:100%;object-fit:cover;display:block}
+
+  #cast{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0}
+  #cast img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  #dog{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;display:grid;place-items:center}
+  #dog img{object-fit:contain}
+
+  /* ── 字：地点卡在左上，歌词在下三分之一，永不相交 ── */
+  #loco{position:absolute;left:5vw;top:8vh;z-index:9;pointer-events:none;opacity:0}
+  #loco .cn{font-size:clamp(23px,3.3vw,52px);letter-spacing:.1em;color:var(--paper);
+    text-shadow:0 2px 14px rgba(0,0,0,.9)}
+  #loco .en{margin-top:.4em;font-size:clamp(10px,1.25vw,16px);letter-spacing:.5em;
+    color:rgba(245,241,232,.72)}
+  #loco .rule{margin-top:.65em;width:8em;height:3px;background:var(--seal)}
+
+  #chap{position:absolute;right:5vw;top:8vh;z-index:9;pointer-events:none;opacity:0;text-align:right}
+  #chap .n{font-size:clamp(23px,3.4vw,52px);letter-spacing:.2em;color:rgba(245,241,232,.88)}
+  #chap .e{margin-top:.3em;font-size:clamp(8px,1vw,12px);letter-spacing:.42em;
+    color:rgba(245,241,232,.6)}
+
+  #quote{position:absolute;left:0;right:0;top:26vh;z-index:9;pointer-events:none;opacity:0;
+    text-align:center;padding:0 14vw}
+  #quote .q{font-size:clamp(22px,4.4vw,62px);line-height:1.34;letter-spacing:.07em;color:var(--paper);
+    text-shadow:0 3px 22px rgba(0,0,0,.92)}
+  #quote .src{margin-top:1.1em;font-size:clamp(9px,1.2vw,14px);letter-spacing:.44em;
+    color:rgba(245,241,232,.62)}
+
+  #lyric{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;--e:0}
+  /* 歌词：金色渐变填充 + 斜体 + 硬描边。
+     用 background-clip:text 做渐变字，再靠 drop-shadow 补描边
+     （渐变字不能用 text-shadow，颜色会被盖住）。 */
+  #lyric .ln{position:absolute;font-style:italic;font-weight:600;
+    font-family:"Songti SC","Noto Serif SC",Georgia,serif;
+    background:linear-gradient(178deg,#ffffff 0%,#fdf6e4 44%,#f0dcae 68%,#d8b877 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 1.5px #000)
+           drop-shadow(0 2px 9px rgba(0,0,0,.95))
+           drop-shadow(0 0 26px rgba(255,226,170,.28))}
+  #lyric .ln k{background:linear-gradient(178deg,#ffd9c8,#e0685a 62%,#a8332a);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 1.5px #000)
+           drop-shadow(0 0 20px rgba(224,104,90,.5))}
+  /* 降级：不支持 background-clip:text 的浏览器仍然有字 */
+  @supports not (-webkit-background-clip:text){ #lyric .ln{color:#fff} }
+  #lyric .rule{position:absolute;left:8vw;bottom:11.4vh;height:3px;width:28vw;background:var(--seal);
+    transform-origin:0 50%;transform:scaleX(var(--e));opacity:0}
+  #lyric::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34vh;opacity:0;
+    background:linear-gradient(0deg,rgba(0,0,0,.62),rgba(0,0,0,0))}
+  #lyric.main .ln{left:8vw;right:14vw;bottom:13.5vh;font-size:clamp(25px,4.3vw,68px);line-height:1.24}
+  #lyric.main::after,#lyric.main .rule{opacity:1}
+  #lyric.vert .ln{right:6vw;top:22vh;writing-mode:vertical-rl;font-size:clamp(20px,2.7vw,40px);
+    line-height:1.7;letter-spacing:.16em;max-height:56vh}
+  #lyric.echo .ln{right:6vw;bottom:10vh;font-size:clamp(13px,1.75vw,25px);letter-spacing:.18em;
+    opacity:.78;font-style:italic}
+  #lyric.punch .ln{left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;padding:0 6vw;
+    font-size:clamp(38px,8vw,124px);line-height:1.14;font-weight:600}
+  #lyric.punch::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42)}
+  #lyric.punch .ln{position:relative}
+  /* 立绘卡上：卡片底色浅，白字压不住 → 墨黑字 + 白晕 + 底部安全区 */
+  #lyric.beside .ln{left:0;right:0;top:auto;bottom:8.5vh;text-align:center;padding:0 8vw;
+    writing-mode:horizontal-tb;max-height:none;font-size:clamp(23px,3.5vw,54px);letter-spacing:.05em;
+    line-height:1.3;font-style:normal;opacity:1;clip-path:none!important;
+    background:linear-gradient(178deg,#2b2a26,#111211);-webkit-background-clip:text;
+    background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 3px #fff) drop-shadow(0 0 3px #fff)
+           drop-shadow(0 1px 8px rgba(255,255,255,.95))}
+  #lyric.beside .ln k{color:var(--seal)}
+  #lyric.beside::after{opacity:1;
+    background:linear-gradient(0deg,rgba(255,255,255,.72),rgba(255,255,255,0))}
+  #lyric.beside .rule{display:none}
+
+  /* 人物介绍：压在立绘卡片的左上角空白处。
+     卡片自己的小标签从 y≈22% 才开始，歌词在下三分之一——三行刚好填中间那条空。 */
+  /* 人物介绍：放大 + 垫一层纸白柔光。
+     卡片的底色很花（蓝楔形、幽灵线稿），只靠描边读不清，
+     所以先铺一块纸白的半透明底衬，再压墨黑字。 */
+  #who{position:absolute;left:4.4vw;top:3.4vh;z-index:9;pointer-events:none;opacity:0;
+    max-width:52vw;padding:1.1vh 1.6vw 1.2vh 1.4vw;
+    background:
+      radial-gradient(ellipse 78% 62% at 14% 40%,rgba(255,253,247,.95) 0%,rgba(255,253,247,0) 100%),
+      radial-gradient(ellipse 60% 52% at 46% 62%,rgba(255,253,247,.72) 0%,rgba(255,253,247,0) 100%)}
+  #who .head{display:flex;align-items:baseline;gap:.9em;flex-wrap:nowrap}
+  #who .cn{font-size:clamp(23px,2.7vw,44px);letter-spacing:.1em;font-weight:600;
+    color:var(--ink);text-shadow:0 1px 0 rgba(255,255,255,.9);white-space:nowrap}
+  #who .en{font-size:clamp(10px,1.08vw,16px);letter-spacing:.2em;
+    color:rgba(17,18,17,.66);white-space:nowrap}
+  #who .rule{margin:.45em 0 .5em;width:6em;height:3px;background:var(--seal);
+    transform-origin:0 50%;transform:scaleX(var(--e,0))}
+  /* 台词：这一块是主要文字——要配语音，所以最大、最显眼 */
+  #who .say{font-size:clamp(17px,2.1vw,34px);line-height:1.45;letter-spacing:.03em;
+    color:var(--seal);font-weight:600;white-space:nowrap}
+  #who .say:before{content:"「";opacity:.55}
+  #who .say:after{content:"」";opacity:.55}
+  /* 性格概括：一行小字，垫在台词下面 */
+  #who .line{margin-top:.55em;font-size:clamp(12px,1.28vw,19px);line-height:1.5;
+    letter-spacing:.03em;color:rgba(17,18,17,.7);white-space:nowrap}
+
+  #title{position:absolute;inset:0;z-index:11;pointer-events:none;opacity:0;
+    display:grid;place-items:end center;padding-bottom:7vh;text-align:center}
+  #title .t{font-size:clamp(38px,9vw,138px);letter-spacing:.24em;color:var(--paper);text-indent:.24em;
+    text-shadow:0 4px 30px rgba(0,0,0,.85)}
+  #title .s{margin-top:.4em;font-size:clamp(9px,1.25vw,14px);letter-spacing:.6em;
+    color:rgba(245,241,232,.72)}
+  #title .rule{margin:1.1em auto 0;width:10em;height:3px;background:var(--seal)}
+  /* 标题压在纸白底的剪影上时，反过来用墨黑字 */
+  #title.onlight .t{color:var(--ink);text-shadow:0 2px 18px rgba(255,255,255,.85)}
+  #title.onlight .s{color:rgba(17,18,17,.66)}
+  #white{position:absolute;inset:0;z-index:12;background:#fff;opacity:0;pointer-events:none}
+  #flip{position:absolute;inset:0;z-index:13;background:#000;opacity:0;pointer-events:none}
+
+  /* ── 呼吸 ───────────────────────────────────────── */
+  #air.warm{background:radial-gradient(ellipse at 42% 58%,rgba(255,206,140,.30),rgba(255,206,140,0) 42%);
+    animation:breathe 3.6s ease-in-out infinite}
+  #air.cold{background:radial-gradient(ellipse at 50% 46%,rgba(180,215,255,.22),rgba(180,215,255,0) 46%);
+    animation:flick 1.9s steps(3,end) infinite}
+  #air.window{background:radial-gradient(ellipse at 62% 44%,rgba(255,214,150,.34),rgba(255,214,150,0) 22%);
+    animation:breathe 4.4s ease-in-out infinite}
+  #air.moon{background:none;overflow:hidden}
+  #air.moon::after{content:"";position:absolute;inset:-30% -70%;
+    background:linear-gradient(100deg,rgba(226,238,255,0) 40%,rgba(226,238,255,.22) 50%,rgba(226,238,255,0) 60%);
+    animation:sweep 7s linear infinite}
+  @keyframes breathe{0%,100%{opacity:.72}50%{opacity:1}}
+  @keyframes flick{0%,100%{opacity:.6}33%{opacity:.9}66%{opacity:.72}}
+  @keyframes sweep{0%{transform:translateX(-42%)}100%{transform:translateX(42%)}}
+
+  /* ── 三套动画 ───────────────────────────────────── */
+  .door{position:absolute;left:50%;top:50%;translate:-50% -50%;width:34vh;height:62vh;perspective:1100px}
+  .door .jam{position:absolute;inset:0;border:2px solid rgba(245,241,232,.22);background:#07070a}
+  .door .leaf{position:absolute;inset:1.5%;transform-origin:left center;
+    background:linear-gradient(180deg,#15151a,#0b0b0e);box-shadow:inset -18px 0 30px rgba(0,0,0,.7)}
+  .door .gap{position:absolute;left:1.5%;top:1.5%;bottom:1.5%;width:0;filter:blur(1px);
+    background:linear-gradient(90deg,#fff,rgba(255,255,255,.15))}
+  .door .ring{position:absolute;right:14%;top:48%;width:2.6vh;height:2.6vh;
+    border:3px solid rgba(245,241,232,.5);border-radius:50%}
+  .door .pool{position:absolute;left:-40%;right:-40%;bottom:-26%;height:30%;
+    background:radial-gradient(ellipse at 50% 0,rgba(255,246,228,.55),rgba(255,246,228,0) 70%)}
+  .tower{position:absolute;inset:0;background:#07070a}
+  .tower .far,.tower .mid,.tower .near{position:absolute;bottom:0;left:-60%;width:220%;height:46%;
+    background-repeat:repeat-x;background-position:0 100%}
+  .tower .far{bottom:38%;height:30%;opacity:.4;background-size:14vw 100%;
+    background-image:linear-gradient(180deg,transparent 55%,#0f0f14 55%)}
+  .tower .mid{bottom:14%;height:34%;opacity:.7;background-size:22vw 100%;
+    background-image:linear-gradient(180deg,transparent 42%,#141419 42%)}
+  .tower .near{bottom:0;height:26%;background-size:36vw 100%;
+    background-image:linear-gradient(180deg,transparent 30%,#000 30%)}
+  .tower .spire{position:absolute;left:50%;bottom:20%;translate:-50% 0;width:11vh;height:58vh;
+    background:#000;clip-path:polygon(50% 0,74% 9%,74% 100%,26% 100%,26% 9%)}
+  .tower .lit{position:absolute;left:50%;bottom:52%;translate:-50% 0;width:2.4vh;height:3vh;
+    background:#ffe6b0;filter:blur(.5px)}
+  .tower .moon{position:absolute;right:14%;top:12%;width:7vh;height:7vh;border-radius:50%;
+    background:#f2f0ea;box-shadow:0 0 8vh 2vh rgba(242,240,234,.22)}
+  /* 翻页：一张纸从左翻到右，露出底下的一页 */
+  .turning{position:absolute;inset:0;background:var(--ink)}
+  .turning .under{position:absolute;left:12%;right:12%;top:16%;bottom:16%;
+    background:var(--paper);box-shadow:0 0 8vh rgba(0,0,0,.7)}
+  .turning .under i{position:absolute;left:10%;right:10%;height:1px;background:var(--paper-edge);
+    display:block;opacity:.5}
+  .turning .sheet{position:absolute;left:12%;right:12%;top:16%;bottom:16%;
+    background:linear-gradient(100deg,#efe9dc,#fbf8f1 40%,#ded6c6);
+    transform-origin:left center;box-shadow:0 2vh 6vh rgba(0,0,0,.6)}
+  .turning .sheet::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(90deg,rgba(0,0,0,.30),rgba(0,0,0,0) 26%)}
+
+  /* 刻编号：石面上一个编号被一点点凿出来 */
+  .carve{position:absolute;inset:0;background:#14110d}
+  .carve .stone{position:absolute;left:0;right:0;bottom:0;height:72%;
+    background:radial-gradient(ellipse at 50% 0,rgba(255,236,200,.18),rgba(0,0,0,0) 70%),
+               repeating-linear-gradient(94deg,#2a2621 0 6vw,#241f1a 6vw 12vw)}
+  .carve .ring{position:absolute;left:50%;bottom:6%;translate:-50% 0;width:120%;height:52%;
+    border:3vh solid #1b1712;border-radius:50% 50% 0 0/70% 70% 0 0}
+  .carve .num{position:absolute;left:50%;bottom:26%;translate:-50% 0;
+    font-size:clamp(50px,15vw,210px);letter-spacing:.1em;color:#0b0908;
+    text-shadow:0 2px 0 rgba(255,236,200,.35),0 -1px 0 rgba(0,0,0,.9)}
+
+  /* 盖章：一枚章从上方落下，砸出一个红印 */
+  .stamp{position:absolute;inset:0;background:#0d0b0a}
+  .stamp .paper{position:absolute;left:14%;right:14%;top:18%;bottom:18%;background:var(--paper);
+    box-shadow:0 0 9vh rgba(0,0,0,.75)}
+  .stamp .paper::after{content:"";position:absolute;inset:6%;
+    background:repeating-linear-gradient(180deg,transparent 0 5.5vh,var(--paper-edge) 5.5vh 5.7vh)}
+  .stamp .seal{position:absolute;left:50%;top:16%;translate:-50% 0;
+    width:26vh;height:26vh;border:.8vh solid #3a1512;border-radius:.8vh;
+    background:#7d241d;box-shadow:0 0 0 .5vh rgba(0,0,0,.4)}
+  .stamp .seal::after{content:"";position:absolute;inset:18%;border:.5vh solid rgba(255,220,210,.5)}
+  .stamp .mark{position:absolute;left:50%;bottom:26%;translate:-50% 0;
+    width:26vh;height:26vh;border:.8vh solid var(--seal);border-radius:.8vh;
+    background:radial-gradient(circle,rgba(168,51,42,.55),rgba(168,51,42,.18));
+    transform:scale(.2);opacity:0}
+
+  /* 狗跳起来接飞盘：狗沿弧线跃起，飞盘从右上飞进来，在最高点接住 */
+  .fris{position:absolute;inset:0;background:var(--ink)}
+  .fris .ground{position:absolute;left:0;right:0;bottom:0;height:22%;
+    background:linear-gradient(0deg,rgba(245,241,232,.10),rgba(245,241,232,0))}
+  .fris .dog{position:absolute;left:18%;bottom:20%;height:26vh;object-fit:contain;
+    filter:brightness(0) invert(1);transform-origin:50% 100%}
+  .fris .frisbee{position:absolute;width:9vh;height:2.6vh;border-radius:50%;
+    background:var(--seal);box-shadow:0 0 3vh rgba(168,51,42,.55)}
+  .fris .spark{position:absolute;width:16vh;height:16vh;border-radius:50%;
+    border:2px solid rgba(245,241,232,.8);opacity:0}
+
+  /* 记录员把册子合上：两页纸对折合拢（不用画手） */
+  .shut{position:absolute;inset:0;background:#0b0a09;
+    display:grid;place-items:center;perspective:1400px}
+  .shut .book{position:absolute;width:52vh;height:36vh;transform-style:preserve-3d}
+  .shut .page{position:absolute;top:0;bottom:0;width:50%;background:var(--paper);
+    box-shadow:inset 0 0 4vh rgba(0,0,0,.22)}
+  .shut .page::after{content:"";position:absolute;inset:12%;
+    background:repeating-linear-gradient(180deg,transparent 0 2.6vh,var(--paper-edge) 2.6vh 2.75vh)}
+  .shut .page.l{left:0;transform-origin:right center}
+  .shut .page.r{right:0;transform-origin:left center}
+  .shut .cover{position:absolute;left:50%;top:50%;width:26vh;height:36vh;
+    translate:-50% -50%;background:linear-gradient(180deg,#2b2118,#1a130d);
+    opacity:0;box-shadow:0 0 10vh rgba(0,0,0,.8)}
+  .shut .seal{position:absolute;left:50%;top:50%;width:9vh;height:2.2vh;
+    translate:-50% -50%;background:var(--seal);opacity:0}
+
+  .pass img{position:absolute;bottom:16vh;object-fit:contain;filter:brightness(0) invert(1)}
+
+  #hud{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;gap:12px;justify-content:center;
+    align-items:center;padding:11px;font-size:13px;letter-spacing:.14em;color:rgba(245,241,232,.74);
+    background:linear-gradient(0deg,rgba(0,0,0,.76),transparent);transition:opacity .4s}
+  #hud.hide{opacity:0;pointer-events:none}
+  button{font-family:var(--serif);font-size:13px;letter-spacing:.24em;padding:.55em 1.5em .6em 1.8em;
+    cursor:pointer;color:var(--paper);background:transparent;border:1px solid rgba(245,241,232,.42)}
+  button:hover{background:rgba(245,241,232,.12)}
+  #prog{position:fixed;left:0;bottom:0;height:2px;background:var(--seal);width:0;z-index:31}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="img"><img id="imgEl" alt=""></div>
+  <div id="veil"></div><div id="air"></div>
+  <div id="sil"></div><div id="ink"></div>
+  <canvas id="fx"></canvas>
+  <div id="video"><video id="videoEl" playsinline muted preload="auto"></video></div>
+  <div id="cast"></div><div id="dog"></div>
+  <div id="who"><div class="head"><div class="cn"></div><div class="en"></div></div><div class="rule"></div><div class="say"></div><div class="line"></div></div>
+  <div id="loco"><div class="cn"></div><div class="en"></div><div class="rule"></div></div>
+  <div id="chap"><div class="n"></div><div class="e"></div></div>
+  <div id="quote"><div><div class="q"></div><div class="src"></div></div></div>
+  <div id="lyric"><div class="ln"></div><div class="rule"></div></div>
+  <div id="title"><div><div class="t">长夜月</div><div class="s">MOOPET DOSSIER</div>
+    <div class="rule"></div></div></div>
+  <div id="white"></div><div id="flip"></div><div id="grain"></div>
+</div>
+<div id="prog"></div>
+<div id="hud">
+  <button id="play">播 放</button>
+  <span>开场 PV · 75s · <b id="heroName">samoyed</b>（URL 尾加 <code>#husky</code> 换狗）</span>
+</div>
+
+<script>
+/* ══ 0 · 素材 ══════════════════════════════════════════════════════ */
+const BREEDS=[['samoyed','萨摩耶'],['husky','哈士奇'],['border_collie','边牧'],['german_shepherd','德牧'],
+              ['golden','金毛'],['shiba','柴犬'],['corgi','柯基'],['bichon','比熊']];
+const CODES=BREEDS.map(b=>b[0]);
+const hash=location.hash.replace('#','').trim();
+const HERO=CODES.includes(hash)?hash:'samoyed';
+document.getElementById('heroName').textContent=HERO;
+const pup=(c,...p)=>`assets/breeds/${c}/${p.join('/')}`;
+const SCENES=['registry_out','registry_in','desk_top','dex_rack','book_page','door_light',
+  'tower_out','tower_archive','tower_window','plaza','arena','training','rooftop','ring_close'];
+
+/* 四个人的介绍：**按性格概括，用具体动作写，不照搬剧本原话**。
+     记录员 —— 写完，笔搁回原处      有规矩，也有他自己的位置（册子上没有他）
+     秦素   —— 灯只照她半边脸        直接用卡片自己的画面：另半边她自己收着
+     韩柏   —— 后半截从来不出口      停住的那半句，是那只不在了的狗
+     周朗   —— 别人说本事，他讲挑食  用一句废话写他的坦荡
+   四句都收在一个动作上，意思让观众自己接。 */
+const CAST_INFO={
+  /* 一句具体动作，比一串形容词有力。
+     每句末尾都留一个动作收住，意思让观众自己接。 */
+  recorder: {cn:'记录员',  en:'THE RECORDER ｜ NO.0000',
+             say:'写下来，就不会丢。',
+             line:'他写别人的名字，写完，笔搁回原处。'},
+  qin_su:   {cn:'秦素',    en:'QIN SU ｜ REGISTRAR',
+             say:'报名字。别的不用说。',
+             line:'灯只照她半边脸，另半边她自己收着。'},
+  han_bai:  {cn:'韩柏',    en:'HAN BAI ｜ GATEKEEPER',
+             say:'急什么。它记得住你。',
+             line:'同一句话他讲了很多年，后半截从来不出口。'},
+  zhou_lang:{cn:'周朗',    en:'ZHOU LANG ｜ DUELIST',
+             say:'第一次都这样。别慌。',
+             line:'别人说狗讲本事，他讲他家狗挑食。'},
+};
+
+const MOVE={
+  registry_out :['scale(1.04) translate(0,0)','scale(1.18) translate(-2.2%,-1.6%)'],
+  registry_in  :['scale(1.16) translate(1.6%,1.6%)','scale(1.03) translate(0,0)'],
+  dex_rack     :['scale(1.17) translate(-1.6%,0)','scale(1.04) translate(0,0)'],
+  book_page    :['scale(1.03) translate(1.8%,0)','scale(1.16) translate(-1.8%,0)'],
+  door_light   :['scale(1.22) translate(0,0)','scale(1.03) translate(0,0)'],
+  tower_out    :['scale(1.16) translate(1.4%,3.2%)','scale(1.03) translate(0,0)'],
+  tower_archive:['scale(1.03) translate(0,0)','scale(1.17) translate(0,-2.4%)'],
+  training     :['scale(1.03) translate(1.8%,0)','scale(1.17) translate(-1.8%,0)'],
+  park         :['scale(1.04) translate(0,0)','scale(1.19) translate(0,-1.8%)'],
+  ring_close   :['scale(1.16) rotate(-.9deg)','scale(1.03) rotate(.9deg)'],
+};
+const GRADE={
+  registry_out:'saturate(1.06) contrast(1.07) brightness(.94)',
+  registry_in :'saturate(1.14) contrast(1.05) brightness(1.02)',
+  dex_rack    :'saturate(1.16) contrast(1.08) brightness(1.03)',
+  book_page   :'saturate(.94) contrast(1.08) brightness(1.02)',
+  door_light  :'saturate(1.04) contrast(1.18) brightness(.90)',
+  tower_out   :'saturate(1.10) contrast(1.06) brightness(.98)',
+  tower_archive:'saturate(.86) contrast(1.14)',
+  training    :'saturate(1.16) contrast(1.06)',
+  park        :'saturate(1.14) contrast(1.04) brightness(1.05)',
+  ring_close  :'saturate(.98) contrast(1.12)',
+};
+const AIR={registry_out:'cold',registry_in:'warm',dex_rack:'warm',book_page:'warm',
+  door_light:'cold',tower_out:'cold',tower_archive:'cold',training:'warm',
+  park:'moon',ring_close:'moon'};
+
+const _n=s=>(s.match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+const _f=s=>[...s.matchAll(/(scale|translate|rotate)\(([^)]*)\)/g)];
+function lerpTF(a,b,e){
+  const A=_f(a),B2=_f(b);
+  return A.map((m,i)=>{const fn=m[1],na=_n(m[2]),nb=B2[i]?_n(B2[i][2]):na;
+    return `${fn}(${na.map((v,j)=>{const w=nb[j]===undefined?v:nb[j];const x=v+(w-v)*e;
+      return Math.abs(x)>0.0005?+x.toFixed(4):0;}).join(',')})`;}).join(' ');
+}
+const easeIO=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+
+/* ══ 1 · 轴：歌词（LRC 减 20 秒） ═════════════════════════════════ */
+const LYRICS=[
+  [20.230,2.01,'main','It’s <k>full moon</k> again'],
+  [22.242,2.60,'echo','crazy how time flies'],
+  [24.847,1.62,'main','one might wonder'],
+  [26.465,3.51,'vert','if past path was in a right direction'],
+  [29.971,2.16,'main','but I do believe'],
+  [32.135,2.79,'vert','things come to life by accident'],
+  [34.929,2.00,'echo','when it remains on'],
+  [36.926,2.74,'main','sounds like it’s <k>meant to be</k>'],
+  [39.670,2.88,'punch','<k>Wake up</k>'],
+  [42.554,0.43,'punch','<k>Get Up</k>'],
+  [42.985,1.99,'main','what matters after ending’s<br>how you left a mark'],
+  [44.975,0.62,'echo','(Don’t wait up)'],
+  [45.594,1.91,'punch','<k>Fire in my soul</k><br><k>fire in my heart</k>'],
+  [47.499,2.25,'main','’til you see me on the other side<br>of stars, I’m running'],
+  [49.751,4.73,'vert','All the journeys start some where with a first step'],
+  [54.484,2.34,'main','No one’s sure what lies ahead,'],
+  [56.819,2.78,'main','be bold and braves <k>(stand up)</k>'],
+  [59.598,2.23,'vert','roads may be'],
+  [61.823,2.49,'vert','rough and tough'],
+  [64.312,3.21,'main','though it will lead some where'],
+  [67.523,2.26,'echo','(nothing easy get up and go get it go)'],
+  [69.778,4.70,'main','sometimes it’s journey itself that teaches'],
+  [74.481,4.92,'vert','a lot about the destination not aware of'],
+  [79.400,1.41,'main','no matter how far'],
+  [80.808,1.08,'echo','(no matter how far)'],
+  [81.891,1.13,'main','how you go'],
+  [83.018,1.18,'echo','(how you go)'],
+  [84.199,3.20,'main','how long it may last'],
+  [87.395,2.31,'punch','<k>venture life</k><br>burn your dread'],
+  [89.705,10.3,'echo','(Carpe Diem no time to waste, you gotta<br>venture life go get it burn your dread)'],
+].map(([t,d,kind,text])=>({t:Math.max(0,t-20),d,kind,text}));
+const lyricAt=t=>{let c=null;for(const L of LYRICS)if(t>=L.t&&t<L.t+L.d)c=L;return c;};
+
+/* ══ 2 · 册子：一页一页 ══════════════════════════════════════════
+   剪影与卡片的配对（这一版的重点修正）：
+     记录员卡 22.99 → 记录员·夜墨蓝剪影 29.51   ← 紧跟自己的卡
+     秦素卡   39.60 ← 秦素·灰剪影 36.82          ← 紧挨自己的卡之前
+     韩柏卡   54.48 → 韩柏·旧铜剪影 59.62        ← 紧跟自己的卡
+     周朗卡   67.40 ← 周朗·苔绿剪影 64.20        ← 紧挨自己的卡之前
+   ─────────────────────────────────────────────────────────────── */
+const P=[
+  /* ══ 引子 ═════════════════════════════════════════ */
+  {t:0.00,l:0.86,type:'ink',ink:'drop',note:'一滴墨落纸'},
+  {t:0.86,l:1.38,type:'ink',ink:'door',note:'门打开'},
+  {t:2.24,l:1.90,type:'ink',ink:'pass',loco:['登记处','THE REGISTRY'],note:'走向登记处'},
+  {t:4.14,l:1.50,type:'img',src:'door_light',note:'门缝底下那条光'},
+  {t:5.64,l:4.80,type:'img',src:'registry_in',note:'登记处·内'},
+  /* ══ 第一页 ═══════════════════════════════════════ */
+  {t:10.44,l:2.20,type:'img',src:'dex_rack',loco:['图鉴架','THE DEX'],note:'八格位图鉴架'},
+  {t:12.64,l:1.80,type:'ink',ink:'page',loco:['档案册','MOOPET DOSSIER'],note:'翻页'},
+  {t:14.44,l:1.90,type:'ink',ink:'carve',chap:['#0001','FIRST RECORD'],note:'刻编号'},
+  {t:16.34,l:1.80,type:'ink',ink:'frisbee',note:'狗跳起来接住飞盘'},
+  {t:18.14,l:1.20,type:'sil',who:['recorder_full'],h:66,tone:'--ink',fig:'paper',
+    note:'记录员·黑白影（定场）'},
+  {t:19.34,l:2.30,type:'ink',ink:'tower',note:'去月塔'},
+  {t:21.64,l:1.35,type:'sil',who:['recorder_full'],h:68,tone:'--navy',fig:'paper',
+    note:'记录员·夜墨蓝'},
+  /* ── 影紧接立绘，中间不放东西 ── */
+  {t:22.99,l:5.14,type:'cast',who:'recorder',note:'★ 立绘位·记录员'},
+  /* ══ 八原型快剪 ═══════════════════════════════════ */
+  {t:28.13,l:0.44,type:'dog',form:'sit'},{t:28.57,l:0.44,type:'dog',form:'sit'},
+  {t:29.01,l:0.44,type:'dog',form:'sit'},{t:29.45,l:0.44,type:'dog',form:'sit'},
+  {t:29.89,l:0.44,type:'dog',form:'sit'},
+  {t:30.33,l:1.40,type:'dog',form:'run',paper:1},
+  {t:31.73,l:3.70,type:'img',src:'tower_out',loco:['月塔','MOON TOWER'],note:'月塔·外'},
+  {t:35.43,l:1.40,type:'duel',note:'对拍'},
+  {t:36.83,l:2.77,type:'sil',who:['qin_su'],h:64,tone:'--grey',fig:'ink',note:'秦素·灰'},
+  /* ── 影紧接立绘 ── */
+  {t:39.60,l:5.14,type:'cast',who:'qin_su',note:'★ 立绘位·秦素'},
+  /* ══ 归档 ═════════════════════════════════════════ */
+  {t:44.74,l:5.04,type:'video',src:'assets/footage/stamp.mp4',
+    quote:['打赢了不算本事。<br>被家里的东西打赢过，<br>才算长大。','老记录员'],
+    note:'盖章（生成的视频 · 5.02s）'},
+  {t:49.78,l:4.70,type:'sil',who:['han_bai'],h:66,tone:'--copper',fig:'paper',
+    note:'韩柏·旧铜'},
+  /* ── 影紧接立绘 ── */
+  {t:54.48,l:5.14,type:'cast',who:'han_bai',note:'★ 立绘位·韩柏'},
+  /* ══ 夜深 ═════════════════════════════════════════ */
+  {t:59.62,l:1.90,type:'ink',ink:'pass',note:'剪影走过'},
+  {t:61.52,l:2.00,type:'duel',note:'对拍'},
+  {t:63.52,l:3.88,type:'sil',who:['zhou_lang'],h:66,tone:'--moss',fig:'paper',
+    note:'周朗·苔绿'},
+  /* ── 影紧接立绘 ── */
+  {t:67.40,l:5.14,type:'cast',who:'zhou_lang',note:'★ 立绘位·周朗'},
+  /* ══ 收束：四人四色 + 标题压在上面 ═══════════════ */
+  {t:72.54,l:2.46,type:'sil',
+    who:['recorder_full','qin_su','han_bai','zhou_lang'],h:50,
+    colors:['#16264f','#8f8d88','#7a4a24','#4a6b4f'],tone:'--paper',fig:'paper',dog:1,
+    titleOn:1,note:'四个人 · 四色 + 长夜月（全片唯一一次）'},
+];
+const TOTAL=75;
+const pageAt=t=>{for(const p of P)if(t>=p.t&&t<p.t+p.l)return p;return P[P.length-1];};
+const prog=(t,p)=>Math.max(0,Math.min(1,(t-p.t)/p.l));
+const force=p=>p.l<=0.5?1:p.l<=1.5?0.72:p.l<=3?0.5:0.34;
+
+/* ══ 3 · 墨（那一滴） ════════════════════════════════════════════ */
+const fx=document.getElementById('fx'),cx=fx.getContext('2d');
+let CW=0,CHh=0;
+function fitFX(){const r=fx.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.5);
+  CW=fx.width=Math.round(r.width*d);CHh=fx.height=Math.round(r.height*d);}
+function blob(g,x,y,r,seed,amt){g.beginPath();
+  for(let i=0;i<=72;i++){const a=i/72*Math.PI*2;
+    const w=Math.sin(a*3+seed)*.5+Math.sin(a*5-seed*1.7)*.3+Math.sin(a*8+seed*.6)*.2;
+    const rr=r*(1+w*amt),X=x+Math.cos(a)*rr,Y=y+Math.sin(a)*rr;i?g.lineTo(X,Y):g.moveTo(X,Y);}
+  g.closePath();}
+function drawDrop(p){
+  cx.clearRect(0,0,CW,CHh);
+  const X=CW/2,Y=CHh/2,base=Math.min(CW,CHh);
+  cx.save();cx.fillStyle='rgba(245,241,232,.96)';cx.globalCompositeOperation='screen';
+  if(p<0.5){const e=1-Math.pow(1-p/0.5,3);blob(cx,X,Y,base*(.04+.20*e),1.4,.13);cx.fill();}
+  else{const e=(p-.5)/0.5;blob(cx,X,Y,base*(.24+.30*e),1.4,.13);cx.fill();
+    cx.globalAlpha=.30*(1-e);blob(cx,X,Y,base*(.42+.34*e),3.1,.18);cx.fill();cx.globalAlpha=1;}
+  cx.restore();
+}
+const clearFX=()=>{if(CW)cx.clearRect(0,0,CW,CHh);};
+
+/* ══ 4 · 渲染 ════════════════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),imgWrap=$('img'),imgEl=$('imgEl'),air=$('air'),
+      sil=$('sil'),ink=$('ink'),cast=$('cast'),dog=$('dog'),
+      loco=$('loco'),chap=$('chap'),quote=$('quote'),lyric=$('lyric'),title=$('title'),
+      white=$('white'),flip=$('flip'),progEl=$('prog');
+const who=$('who'),video=$('video'),videoEl=$('videoEl');
+const LAYERS={sil,ink,cast,dog,loco,chap,quote,title,air,who,video};
+let memo={},lyKey=null,SEEK=false,flipHold=0.04,flipFade=0.16;
+
+const dogImg=(form='sit',asSil=true)=>{
+  const e=document.createElement('img');
+  const m=/^([a-z]+)_(\d+)$/.exec(form);
+  e.src=m?pup(HERO,'actions',form+'.png'):pup(HERO,'forms',form+'.png');
+  e.onerror=()=>{e.onerror=null;e.src=pup(HERO,'forms','sit.png');};
+  e.style.height='52vh';
+  if(asSil)e.style.filter='brightness(0) invert(1)';
+  return e;
+};
+/* 剪影上色只能用 mask：给 <img> 设 background 只会得到色块 */
+function figure(src,h,dx,color,figKind){
+  if(color){
+    const d=document.createElement('div'); d.className='fig';
+    d.style.cssText=`height:${h}vh;aspect-ratio:2/3;background:${color};`
+      +`translate:calc(-50% + ${dx}vw) -50%;`
+      +`-webkit-mask:url("${src}") center/contain no-repeat;`
+      +`mask:url("${src}") center/contain no-repeat`;
+    return d;
+  }
+  const im=document.createElement('img'); im.className='fig'; im.src=src;
+  im.style.cssText=`height:${h}vh;object-fit:contain;translate:calc(-50% + ${dx}vw) -50%;`;
+  im.style.filter=(figKind==='ink')?'brightness(0)':'brightness(0) invert(1)';
+  return im;
+}
+
+function render(t){
+  const p=pageAt(t), type=p.type, k=prog(t,p);
+  const onNew=(memo.key!==p.t+':'+type);
+  if(onNew){
+    memo={key:p.t+':'+type};
+    /* 大切口黑得久一点，慢页压得短一点——但都到全黑 */
+    flipHold=0.03+force(p)*0.07; flipFade=0.13+force(p)*0.07;
+  }
+
+  /* ① 这一页要什么 */
+  const need={sil:0,ink:0,cast:0,dog:0,loco:0,chap:0,quote:0,lyric:0,title:0,air:0,who:0,video:0};
+  let bg='ink', src=null, whiteLvl=0, dropP=null;
+
+  if(type==='img'){ src=p.src; need.air=1; }
+  else if(type==='ink'){ need.ink=1; if(p.ink==='drop') dropP=k; }
+  else if(type==='sil'){ need.sil=1; bg=(p.tone==='--paper')?'paper':'ink';
+    if(p.titleOn) need.title=1; }
+  else if(type==='cast'){ need.cast=1; need.who=1; }
+  else if(type==='video'){ need.video=1; }
+  else if(type==='dog'){ need.dog=1; bg=p.paper?'paper':'ink'; }
+  else if(type==='duel'){ need.dog=1; }
+  else if(type==='bleach'){ need.cast=1; whiteLvl=Math.max(0,(k-.30)/.70); }
+  else if(type==='blank'){ whiteLvl=1; }
+  else if(type==='end'){ need.title=1; if(!p.hold){ src='tower_out'; need.air=1; } }
+
+  const ly=lyricAt(t);
+  if(p.loco) need.loco=1;
+  if(p.quote&&!ly) need.quote=1;              /* 有歌词时引文让位 */
+  if(p.chap) need.chap=1;
+  /* 标题页上不放歌词：原来 (Carpe Diem...) 那句一直挂到 80s，和结尾标题叠在一起 */
+  if(ly && !need.title) need.lyric=1;
+  /* 全屏冲击歌词（punch）时收起人物介绍——那时候整屏都是字 */
+  if(ly && ly.kind==='punch') need.who=0;
+  /* 立绘卡上不放和声：和声是垫在主句后面的，在卡片上只会把画面铺满 */
+  if(ly && ly.kind==='echo' && p.who) need.lyric=0;
+
+  /* ② 图页 */
+  stage.className=bg;
+  if(src){
+    if(imgEl.dataset.k!==src){ imgEl.dataset.k=src; imgEl.src=`assets/scene/${src}.png`; }
+    imgWrap.style.opacity=1; imgWrap.style.filter=GRADE[src]||'none';
+    const mv=MOVE[src]||['scale(1.03)','scale(1.12)'];
+    if(SEEK){ imgWrap.style.transition='none'; imgWrap.style.transform=lerpTF(mv[0],mv[1],easeIO(k)); }
+    else if(onNew){
+      imgWrap.style.transition='none'; imgWrap.style.transform=mv[0];
+      requestAnimationFrame(()=>{ imgWrap.style.transition=
+        `transform ${Math.max(1.2,p.l).toFixed(2)}s cubic-bezier(.22,0,.36,1)`;
+        imgWrap.style.transform=mv[1]; });
+    }
+    const a=AIR[src]||'';
+    if(air.dataset.k!==src+a){ air.dataset.k=src+a; air.className=a; }
+  } else {
+    imgWrap.style.opacity=0; imgWrap.style.transform='none';
+    if(imgEl.dataset.k){ imgEl.removeAttribute('src'); imgEl.dataset.k=''; } air.dataset.k=''; air.className='';
+  }
+
+  /* ③ 墨页 */
+  if(dropP!=null) drawDrop(dropP); else clearFX();
+  if(need.ink&&p.ink&&p.ink!=='drop'&&ink.dataset.k!=='ink:'+p.t){
+    ink.dataset.k='ink:'+p.t;
+    if(p.ink==='door') ink.innerHTML='<div class="door"><div class="jam"></div>'
+      +'<div class="gap"></div><div class="leaf"></div><div class="ring"></div>'
+      +'<div class="pool"></div></div>';
+    else if(p.ink==='tower') ink.innerHTML='<div class="tower"><div class="moon"></div>'
+      +'<div class="far"></div><div class="mid"></div>'
+      +'<div class="spire"><div class="lit"></div></div><div class="near"></div></div>';
+    else if(p.ink==='frisbee') ink.innerHTML=
+      `<div class="fris"><div class="ground"></div>`
+      +`<img class="dog" src="assets/breeds/${HERO}/actions/run_02.png">`
+      +`<div class="frisbee"></div><div class="spark"></div></div>`;
+    else if(p.ink==='book') ink.innerHTML=
+      '<div class="shut"><div class="book"><div class="page l"></div>'
+      +'<div class="page r"></div></div><div class="cover"></div><div class="seal"></div></div>';
+    else if(p.ink==='page') ink.innerHTML=
+      '<div class="turning"><div class="under"><i style="top:22%"></i><i style="top:44%"></i>'
+      +'<i style="top:66%"></i><i style="top:88%"></i></div><div class="sheet"></div></div>';
+    else if(p.ink==='carve') ink.innerHTML=
+      '<div class="carve"><div class="stone"></div><div class="ring"></div>'
+      +'<div class="num">#0001</div></div>';
+    else if(p.ink==='stamp') ink.innerHTML=
+      '<div class="stamp"><div class="paper"></div><div class="seal"></div>'
+      +'<div class="mark"></div></div>';
+    else ink.innerHTML=`<div class="pass">`
+      +`<img src="assets/cast/recorder_full.png" style="height:52vh;left:-30vw">`
+      +`<img src="${pup(HERO,'forms','sit.png')}" style="height:15vh;left:-20vw"></div>`;
+  }
+  if(need.ink){
+    const e=1-Math.pow(1-k,2.2);
+    if(p.ink==='door'){
+      const op=Math.min(1,Math.max(0,(k-0.18)/0.62));
+      ink.querySelector('.leaf').style.transform=`rotateY(${(-78*op).toFixed(1)}deg)`;
+      const gap=ink.querySelector('.gap'); gap.style.width=(2+op*92)+'%';
+      gap.style.opacity=(0.25+op*0.75).toFixed(2);
+      const pool=ink.querySelector('.pool'); pool.style.opacity=Math.min(1,op*1.5).toFixed(2);
+      pool.style.transform=`scaleX(${(0.4+op*1.1).toFixed(2)})`;
+    } else if(p.ink==='tower'){
+      const d=e*100;
+      ink.querySelector('.far').style.transform=`translateX(${-d*1.6}%)`;
+      ink.querySelector('.mid').style.transform=`translateX(${-d*3.4}%)`;
+      ink.querySelector('.near').style.transform=`translateX(${-d*7}%)`;
+      ink.querySelector('.spire').style.transform=
+        `scale(${(0.45+e*0.75).toFixed(3)}) translateY(${((1-e)*10).toFixed(2)}%)`;
+    } else if(p.ink==='frisbee'){
+      /* 狗沿抛物线跃起接飞盘：狗用跑动帧，飞盘从右上飞进来，在最高点接住 */
+      const q=Math.min(1,k/0.72);
+      const leap=Math.sin(Math.min(1,q)*Math.PI);            /* 0→1→0 的弧 */
+      const dg=ink.querySelector('.dog');
+      dg.style.transform=`translate(${(q*46).toFixed(1)}vw, ${(-leap*30).toFixed(1)}vh) `
+        +`rotate(${(-leap*18).toFixed(1)}deg)`;
+      dg.style.height=(26+leap*7).toFixed(1)+'vh';
+      const fb=ink.querySelector('.frisbee');
+      const fx2=78-q*46, fy2=8+leap*30-6;
+      fb.style.left=fx2.toFixed(1)+'%'; fb.style.top=fy2.toFixed(1)+'%';
+      fb.style.transform=`rotate(${(q*300).toFixed(0)}deg) scale(${(1-leap*0.25).toFixed(2)})`;
+      fb.style.opacity=(k>0.70?Math.max(0,1-(k-0.70)/0.18):1).toFixed(2);
+      const sp=ink.querySelector('.spark');
+      const hit=Math.max(0,1-Math.abs(k-0.62)/0.14);
+      sp.style.left=`calc(${fx2.toFixed(1)}% - 8vh)`; sp.style.top=`calc(${fy2.toFixed(1)}% - 8vh)`;
+      sp.style.opacity=(hit*0.8).toFixed(2);
+      sp.style.transform=`scale(${(0.3+hit*1.1).toFixed(2)})`;
+    } else if(p.ink==='book'){
+      /* 两页纸对折合拢 → 露出封面 → 盖印。不用画手 */
+      const q=Math.min(1,Math.max(0,(k-0.10)/0.52));
+      const e=q*q*(3-2*q);
+      ink.querySelector('.page.l').style.transform=`rotateY(${(e*168).toFixed(1)}deg)`;
+      ink.querySelector('.page.r').style.transform=`rotateY(${(-e*168).toFixed(1)}deg)`;
+      const cov=ink.querySelector('.cover');
+      cov.style.opacity=Math.max(0,(e-0.72)/0.28).toFixed(2);
+      const se=ink.querySelector('.seal');
+      const sq=Math.min(1,Math.max(0,(k-0.74)/0.18));
+      se.style.opacity=sq.toFixed(2);
+      se.style.width=(2+sq*7).toFixed(1)+'vh';
+    } else if(p.ink==='page'){
+      const q=Math.min(1,Math.max(0,(k-0.16)/0.66));
+      const e=q*q*(3-2*q);
+      ink.querySelector('.sheet').style.transform=
+        `rotateY(${(-168*e).toFixed(1)}deg) translateZ(${(1-e)*1}px)`;
+      ink.querySelector('.sheet').style.opacity=(1-Math.max(0,(e-0.86)/0.14)).toFixed(2);
+    } else if(p.ink==='carve'){
+      const q=Math.min(1,Math.max(0,(k-0.12)/0.7));
+      const e=1-Math.pow(1-q,2.4);
+      const n=ink.querySelector('.num');
+      n.style.clipPath=`inset(0 ${((1-e)*100).toFixed(1)}% 0 0)`;
+      n.style.opacity=(0.25+e*0.75).toFixed(2);
+      ink.querySelector('.stone').style.filter=
+        `brightness(${(0.75+e*0.45).toFixed(2)})`;
+    } else if(p.ink==='stamp'){
+      const q=Math.min(1,Math.max(0,k/0.42));
+      const e=q*q*q;
+      const stop=1-Math.abs(Math.min(1,k/0.5)*2-1);
+      ink.querySelector('.seal').style.transform=`translateY(${(e*46).toFixed(1)}vh)`;
+      ink.querySelector('.seal').style.opacity=(1-Math.max(0,(k-0.44)/0.14)).toFixed(2);
+      const m=ink.querySelector('.mark');
+      m.style.transform=`scale(${(0.2+stop*0.8).toFixed(3)}) rotate(${(-4*stop).toFixed(1)}deg)`;
+      m.style.opacity=(stop*0.9).toFixed(2);
+    } else if(p.ink==='pass'){
+      ink.querySelectorAll('img').forEach((im,i)=>{
+        im.style.transform=`translateX(${(e*(i?120:108)).toFixed(1)}vw) `
+          +`translateY(${(Math.sin(k*22+i)*0.6).toFixed(2)}vh)`;});
+    }
+  }
+
+  /* ④ 影页 */
+  if(need.sil&&sil.dataset.k!=='sil:'+p.t){
+    sil.dataset.k='sil:'+p.t;
+    const box=document.createElement('div'); box.style.cssText='position:absolute;inset:0';
+    const plate=document.createElement('div'); plate.className='plate';
+    plate.style.background=`var(${p.tone||'--ink'})`;
+    box.appendChild(plate);
+    const list=p.who||[], n=list.length;
+    list.forEach((name,i)=>box.appendChild(
+      figure(`assets/cast/${name}.png`, p.h||62, (i-(n-1)/2)*22, p.colors?p.colors[i]:null, p.fig)));
+    if(p.dog){
+      const d=dogImg('sit',true);
+      d.style.cssText='position:absolute;left:50%;top:50%;height:18vh;'
+        +'filter:brightness(0) invert(1);translate:calc(-50% + 20vw) calc(-50% + 22vh)';
+      box.appendChild(d);
+    }
+    sil.replaceChildren(box);
+  }
+  if(need.sil) sil.firstElementChild.style.transform=`scale(${(1+0.05*k).toFixed(3)})`;
+  /* 标题叠在浅底剪影上时换深色字 */
+  if(need.title) title.className=need.sil?'onlight':'';
+
+  /* ⑤ 立绘页 */
+  if(need.cast&&cast.dataset.k!=='cast:'+p.t){
+    cast.dataset.k='cast:'+p.t;
+    const im=document.createElement('img');
+    if(p.who){ im.src=`assets/cast/card_${p.who}.png`;
+      im.onerror=()=>{im.onerror=null;im.src=`assets/cast/${p.who}.png`;}; }
+    else im.src='assets/cast/recorder_full.png';
+    cast.replaceChildren(im);
+  }
+  if(need.cast){
+    if(p.who) cast.firstElementChild.style.transform=`scale(${(1+0.02*k).toFixed(3)})`;
+    else cast.firstElementChild.style.filter=`brightness(${(1+Math.min(1,k*1.4)*3).toFixed(2)})`;
+  }
+
+  /* ⑥ 狗 */
+  if(need.dog){
+    if(type==='duel'){
+      if(dog.dataset.k!=='duel'){
+        dog.dataset.k='duel';
+        const a=dogImg('sit',true), b=dogImg('sit',true);
+        a.src=pup('german_shepherd','forms','sit.png');
+        a.style.cssText='position:absolute;height:38vh;filter:brightness(0) invert(1);'
+          +'translate:-30vw 0;scale:-1 1';
+        b.style.cssText='position:absolute;height:38vh;filter:brightness(0) invert(1);translate:30vw 0';
+        dog.replaceChildren(a,b);
+      }
+    } else {
+      const form=(p.form==='run')?`run_0${Math.floor(t/(60/140/2))%4+1}`:'sit';
+      const idx=(p.form==='sit'&&!p.single&&p.note!=='八原型')?Math.floor(t/(p.l/8))%8:-1;
+      const key='dog:'+form+':'+idx+(p.paper?'p':'');
+      if(dog.dataset.k!==key){
+        dog.dataset.k=key;
+        const e=dogImg(form,true);
+        if(p.paper) e.style.filter='none';
+        if(idx>=0) e.src=pup(CODES[idx],'forms','sit.png');
+        dog.replaceChildren(e);
+      }
+    }
+  }
+
+  /* ⑦ 字 */
+  if(need.loco){
+    loco.querySelector('.cn').textContent=p.loco[0];
+    loco.querySelector('.en').textContent=p.loco[1];
+    loco.style.transform=`translateX(${(-(1-Math.min(1,(t-p.t)/0.5))*2.5).toFixed(2)}vw)`;
+  }
+  if(need.chap){
+    chap.querySelector('.n').textContent=p.chap[0];
+    chap.querySelector('.e').textContent=p.chap[1];
+    chap.style.transform=`translateX(${((1-Math.min(1,(t-p.t)/0.4))*2.5).toFixed(2)}vw)`;
+  }
+  if(need.quote){
+    quote.querySelector('.q').innerHTML=p.quote[0];
+    quote.querySelector('.src').textContent=p.quote[1];
+    quote.style.transform=`scale(${(1.10-0.10*Math.min(1,(t-p.t)/0.35)).toFixed(3)})`;
+  }
+
+  /* ⑥b 视频页：逐帧导出时用 currentTime 定位，实时播放时让它自己走 */
+  if(need.video){
+    const dur=videoEl.duration||p.l;
+    const local=Math.max(0,Math.min(t-p.t,dur-0.001));
+    if(video.dataset.k!==p.t+''){
+      video.dataset.k=p.t+'';
+      if(videoEl.getAttribute('src')!==p.src) videoEl.setAttribute('src',p.src);
+      videoEl.currentTime=local;
+      if(!SEEK){ videoEl.play().catch(()=>{}); }
+    } else if(SEEK){
+      if(Math.abs(videoEl.currentTime-local)>0.004) videoEl.currentTime=local;
+    } else if(Math.abs(videoEl.currentTime-local)>0.12){
+      videoEl.currentTime=local;                 /* 实时播放偏差大了才纠 */
+    }
+  } else if(video.dataset.k){
+    video.dataset.k=''; videoEl.pause();
+  }
+
+  /* ⑦b 人物介绍：只在本人的立绘位出现，从左侧滑入 */
+  if(need.who&&p.who){
+    const info=CAST_INFO[p.who];
+    if(info){
+      if(who.dataset.k!==p.who){
+        who.dataset.k=p.who;
+        who.querySelector('.cn').textContent=info.cn;
+        who.querySelector('.en').textContent=info.en;
+        who.querySelector('.say').textContent=info.say;
+        who.querySelector('.line').innerHTML=info.line;
+      }
+      const q=Math.min(1,Math.max(0,(t-p.t-0.16)/0.46)), e=1-Math.pow(1-q,3);
+      who.style.transform=`translateX(${(-(1-e)*2.4).toFixed(2)}vw)`;
+      who.style.opacity=e.toFixed(3);
+      who.style.setProperty('--e',e.toFixed(3));
+    }
+  }
+  /* who 的 opacity 由上面按进度算，这里不要覆盖它 */
+  /* ⑧ 歌词：四套排法，四种显字 */
+  if(ly){
+    const key='ly:'+ly.t+ly.kind+(p.who?'|c':'');
+    if(lyKey!==key){
+      lyKey=key; memo.lyAt=t;
+      lyric.querySelector('.ln').innerHTML=ly.text;
+      lyric.className=ly.kind+((p.who&&ly.kind!=='punch')?' beside':'');
+    }
+    const q=Math.min(1,(t-memo.lyAt)/0.40), e=1-Math.pow(1-q,3);
+    const out=Math.max(0,Math.min(1,(ly.t+ly.d-t)/0.30));
+    lyric.style.opacity=Math.min(e,out);
+    lyric.style.setProperty('--e',e.toFixed(3));
+    const ln=lyric.querySelector('.ln');
+    if(ly.kind==='main'){
+      ln.style.clipPath=`inset(0 ${((1-e)*100).toFixed(1)}% 0 0)`;
+      ln.style.scale=1; ln.style.translate=`0 ${((1-e)*1.4).toFixed(2)}vh`; ln.style.letterSpacing='';
+    } else if(ly.kind==='vert'){
+      ln.style.clipPath=`inset(0 0 ${((1-e)*100).toFixed(1)}% 0)`;
+      ln.style.scale=1; ln.style.translate='0'; ln.style.letterSpacing='';
+    } else if(ly.kind==='echo'){
+      ln.style.clipPath='none'; ln.style.scale=1;
+      ln.style.translate=`0 ${((1-e)*0.7).toFixed(2)}vh`;
+    } else {
+      ln.style.clipPath=`inset(0 ${((1-e)*50).toFixed(1)}% 0 ${((1-e)*50).toFixed(1)}%)`;
+      ln.style.letterSpacing=`${(0.30-0.24*e).toFixed(3)}em`;
+      ln.style.scale=(1.28-0.28*e).toFixed(3); ln.style.translate='0';
+    }
+  } else lyKey=null;
+
+  /* ⑨ 统一应用可见性：每帧从零写 → 不可能残留 */
+  for(const key in LAYERS){
+    const on=!!need[key], el=LAYERS[key];
+    if(key!=='who') el.style.opacity=on?1:0;     /* who 的 opacity 由进度算 */
+    el.style.visibility=on?'visible':'hidden';
+    if(key==='who'&&!on){ el.style.opacity=0; el.style.transform=''; el.dataset.k=''; }
+  }
+  lyric.style.visibility=need.lyric?'visible':'hidden';
+  if(!need.lyric) lyric.style.opacity=0;
+  white.style.opacity=whiteLvl;
+  white.style.visibility=whiteLvl>0?'visible':'hidden';
+
+  /* ⑩ 翻页：穿过黑场 */
+  /* 翻页：穿过黑场。
+     ⚠️ 必须**只依赖 t 和本页起点**（纯函数）。
+     原来用「t − 上一次换页的时刻」，单次 render 里那个差恒为 0，
+     黑永远不褪（截图全黑），逐帧导出时同样会全黑。
+     ⚠️ 也不能像更早那版按页长调透明度——慢页只压到 34%，
+     换图那一瞬被看见，表现就是「中间闪出来一张别的图」。
+     现在：无论快慢都先压到全黑，只改黑多久。 */
+  {
+    const since = t - p.t;
+    if(since < flipHold) flip.style.opacity='1';
+    else if(since < flipHold+flipFade)
+      flip.style.opacity=(1-(since-flipHold)/flipFade).toFixed(3);
+    else flip.style.opacity=0;
+  }
+
+  progEl.style.width=(Math.min(1,t/TOTAL)*100)+'%';
+}
+
+/* ══ 5 · 音轨 —— 已按要求删除 ═══════════════════════════════════
+   这里原来是 140BPM 的合成占位轨。用户有自己的歌，不需要。
+   留一个空函数，免得渲染循环里的调用点炸掉。 */
+function pump(){}
+
+/* ══ 6 · 播放 / 逐帧导出 ═════════════════════════════════════════ */
+let t0=0,raf=0,playing=false;
+const hud=$('hud');
+const PRE=['assets/cast/card_recorder.png','assets/cast/card_qin_su.png','assets/cast/card_han_bai.png',
+  'assets/cast/card_zhou_lang.png','assets/cast/recorder_full.png','assets/cast/qin_su.png','assets/cast/han_bai.png',
+  'assets/cast/zhou_lang.png'];
+PRE.push('assets/footage/stamp.mp4');
+SCENES.forEach(k=>PRE.push('assets/scene/'+k+'.png'));
+CODES.forEach(c=>PRE.push(pup(c,'forms','sit.png')));
+for(let i=1;i<=4;i++)PRE.push(pup(HERO,'actions',`run_0${i}.png`));
+let loaded=0;
+(function(){const n=PRE.length;
+  PRE.forEach(u=>{const im=new Image();
+    const ok=()=>{loaded++;if(loaded>=n){$('play').disabled=false;$('play').textContent='播 放';}};
+    im.onload=()=>(im.decode?im.decode().catch(()=>{}):Promise.resolve()).then(ok);
+    im.onerror=ok;im.src=u;});})();
+$('play').disabled=true;$('play').textContent='载入…';
+
+function loop(now){
+  if(!playing)return;
+  const t=(now-t0)/1000;
+  pump();
+  if(t>=TOTAL){playing=false;render(TOTAL-0.001);hud.classList.remove('hide');return;}
+  render(t);raf=requestAnimationFrame(loop);
+}
+function start(){
+  cancelAnimationFrame(raf);
+  memo={};lyKey=null;fitFX();
+  t0=performance.now();playing=true;
+  render(0);
+  hud.classList.add('hide');raf=requestAnimationFrame(loop);
+}
+$('play').onclick=start;
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();start();}});
+addEventListener('resize',fitFX);
+
+SEEK=/[?&]still=1/.test(location.search);
+window.__total=()=>TOTAL;
+/* 导出脚本每 seek 一次要等这个 resolve——否则会截到视频的上一帧 */
+window.__ready=()=>new Promise(res=>{
+  if(!videoEl||videoEl.readyState<2||!videoEl.seeking) return res();
+  let done=false; const fin=()=>{if(!done){done=true;res();}};
+  videoEl.addEventListener('seeked',fin,{once:true});
+  setTimeout(fin,600);
+});
+window.__seek=function(tt){
+  SEEK=true;playing=false;cancelAnimationFrame(raf);
+  document.querySelectorAll('#air').forEach(el=>{
+    el.style.animationPlayState='paused';el.style.animationDelay=(-tt)+'s';});
+  render(tt);return true;
+};
+fitFX();render(0);
+</script>
+</body>
+</html>

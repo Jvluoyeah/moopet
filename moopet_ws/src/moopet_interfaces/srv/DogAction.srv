@@ -1,0 +1,9 @@
+# 狗执行动作服务（/dog/action）
+# action_type: guide(使用指引) / walk(散步) / pet(抚摸) / handshake(握手) /
+#              call(呼唤) / ventilate(通风) / projector(投影) / communication(通讯) / quiz(答题)
+string action_type
+string params
+---
+bool success
+int32 exp_gained
+string message

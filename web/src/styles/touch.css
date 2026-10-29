@@ -1,0 +1,142 @@
+/* 移动端触控层
+   ============================================================
+   只在触屏设备上显示（JS 里按 pointer:coarse 判断，不由 CSS 媒体查询决定 ——
+   桌面窄窗口不该冒出虚拟按键）。默认 display:none，加上 .is-on 才出现。
+
+   布局要点：
+     · 左下手势区、右下招式区，**两只拇指各自够得着**
+     · 按钮够大（≥56px）：小按钮在手机上必然按错
+     · 不挡画面中上部 —— 打斗都在那里
+     · env(safe-area-inset-*) 避开刘海和底部小白条
+*/
+
+.tp {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;      /* 只有按钮本身吃事件，中间要能透过去 */
+  z-index: 8;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;        /* 别让浏览器把滑动解释成滚动/缩放 */
+}
+.tp.is-on { display: block; }
+
+.tp-pad {
+  position: absolute;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.tp-left {
+  left: calc(12px + env(safe-area-inset-left, 0px));
+  flex-direction: column;
+  /* 移动键两两一排：上一排 ◀ ▶，下一排 跳 */
+}
+.tp-left .tp-move { align-self: center; }
+.tp-left { flex-flow: row wrap; width: 168px; justify-content: center; }
+.tp-right {
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  flex-wrap: wrap;
+  width: 216px;
+  justify-content: flex-end;
+}
+
+/* ---------------- 开放世界的触控层 ----------------
+   和对战那套分开写：大世界要的是"按住一直走"，所以左边是**十字方向键**
+   （拇指按着不放），右边是跳 / 跑 / 交互。布局用 grid 摆十字，
+   比 flex 好对位。 */
+.tp-world-move {
+  left: calc(14px + env(safe-area-inset-left, 0px));
+  display: grid;
+  grid-template-columns: repeat(3, 58px);
+  grid-template-rows: repeat(2, 58px);
+  gap: 6px;
+}
+.tp-dir { width: 58px; height: 58px; font-size: 22px; }
+.tp-up { grid-column: 2; grid-row: 1; }
+.tp-left2 { grid-column: 1; grid-row: 2; }
+.tp-down { grid-column: 2; grid-row: 2; }
+.tp-right2 { grid-column: 3; grid-row: 2; }
+
+.tp-world-act {
+  right: calc(14px + env(safe-area-inset-right, 0px));
+  display: grid;
+  grid-template-columns: repeat(2, 64px);
+  gap: 10px;
+  justify-items: end;
+}
+.tp-world-act .tp-run { width: 64px; height: 64px; font-size: 16px; }
+.tp-world-act .tp-action { width: 64px; height: 64px; font-size: 15px; }
+.tp-world-act .tp-jump2 {
+  grid-column: 1 / span 2;
+  width: 138px;
+  height: 64px;
+  font-size: 18px;
+}
+
+/* 触控按钮：**方形的纸片**，和全站的羊皮纸 / 墨线是同一套语言。
+   演进过程（都是用户一句句逼出来的）：
+     第一版：深色半透明圆片 —— 不挡视线，但和页面完全不是一个世界（"按钮美术不行"）；
+     第二版：木刻圆钮（木纹盘面 + 铜边 + 内高光）—— 像回事了，但**还是圆的**；
+     第三版（现在）：**方的**，直接用全站那套纸片语言 ——
+       墨线方框 + 纸色底 + 硬偏移投影（像一张剪下来贴上去的纸），
+       按下时**反白**成墨底纸字 —— 和目录页签的选中态一模一样。
+   颜色全走 `var(--ink)` / `var(--paper)`，所以**白天纸和夜读纸两套主题都自动对**，
+   不用为暗色主题再写一套。 */
+.tp-btn {
+  pointer-events: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 3px;                        /* 方，圆角很小 —— 和页签一致 */
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  /* 硬偏移投影（不是散开的柔光）—— 纸片剪下来贴上去的那种"土" */
+  box-shadow: 2px 2px 0 rgba(17, 18, 17, .38);
+  transition: transform .05s ease, box-shadow .05s ease,
+              background .05s ease, color .05s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.tp-btn.is-down {
+  /* 按下 = 反白（和页签选中态同一招），并且**陷进纸面**：投影收掉、位移补上 */
+  background: var(--ink);
+  color: var(--paper);
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+.tp-jump { width: 64px; height: 64px; }
+.tp-right .tp-skill { width: 60px; height: 60px; }
+/* 必杀：印章红那一条，一眼看出它是"压箱底那招" */
+.tp-super {
+  border-color: var(--seal);
+  box-shadow: 2px 2px 0 rgba(168, 51, 42, .45);
+}
+.tp-super.is-down { background: var(--seal); color: var(--paper); }
+/* 防御：苔绿（在线/健康用的那个绿），和"守"这个动作对上 */
+.tp-guard {
+  width: 60px; height: 60px;
+  border-color: var(--moss);
+  box-shadow: 2px 2px 0 rgba(74, 107, 79, .45);
+}
+.tp-guard.is-down { background: var(--moss); color: var(--paper); }
+
+/* 横屏矮屏：再压一点高度，别把画面挤没 */
+@media (max-height: 460px) {
+  .tp-btn { width: 48px; height: 48px; font-size: 15px; }
+  .tp-jump, .tp-right .tp-skill, .tp-guard { width: 52px; height: 52px; }
+  .tp-left { width: 148px; }
+  .tp-right { width: 186px; }
+}
+
+/* 触屏上把右下角那排 HUD 招式钮藏掉 —— 功能重复，
+   而且会和触控层的按钮叠在一起 */
+.is-touch .bh-br { display: none; }

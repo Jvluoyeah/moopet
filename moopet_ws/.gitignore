@@ -1,0 +1,18 @@
+# colcon
+build/
+install/
+log/
+
+# python
+__pycache__/
+*.pyc
+*.egg-info/
+
+# 运行时
+logs/*
+!logs/.gitkeep
+
+# 本地数据库
+*.db
+*.db-wal
+*.db-shm

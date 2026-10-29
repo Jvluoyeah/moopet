@@ -1,0 +1,21 @@
+{
+  "id": "avg.internal.default-shell",
+  "name": "默认游戏壳",
+  "description": "标题/存档/历史/设置/工具栏及剧情选项、标准输入、消息弹层一体的默认游戏 UI。每个 UI 子模块都可单独替换。",
+  "author": "LetsGal Studio",
+  "version": "1.0.0",
+  "entry": "dist/index.mjs",
+  "sdkVersion": ">=1.0.0",
+  "builtin": true,
+  "contributes": {
+    "dialogueBoxStyles": [
+      {
+        "id": "landing",
+        "name": "默认对话框",
+        "description": "LetsGal 的唯一系统对话框基线。项目未选择其它扩展样式时使用。",
+        "visualUI": "dialogue-box",
+        "dialogueBox": {}
+      }
+    ]
+  }
+}

@@ -1,0 +1,253 @@
+/* 战斗 HUD —— 招式钮与状态条
+   ============================================================
+   用户的要求：「对战界面不用强求满足原有设计风格，主要是手感要好」。
+
+   所以这一块**不走羊皮纸文档风**，改成深色圆钮 + 高对比：
+     · 钮是深炭色实心圆，在浅色舞台上一眼能看见
+     · 冷却用**扇形环**扫 —— 剩下的暗色越少说明越快好，不用读数字就知道
+     · 冷却时键位字母缩到上方、剩余秒数居中，两者**绝不重叠**
+       （第一版两个都往中心挤，用户截图里 "0.5" 直接压在 "K" 上）
+     · 气够不够、必杀就绪都用钮本身发光表示
+*/
+
+/* ================= 招式钮 ================= */
+.bh-br { gap: 9px; align-items: flex-end; }
+
+.bh-skill {
+  position: relative;
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  border: 2px solid #1b1917;
+  background: radial-gradient(circle at 34% 28%, #4a443d, #262320 68%);
+  color: #f5efe3;
+  font-family: var(--font-serif);
+  cursor: pointer;
+  display: grid; place-items: center;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 2px 0 #161412, 0 4px 10px rgba(0, 0, 0, .3);
+  transition: transform .08s var(--ease), box-shadow .12s var(--ease);
+}
+.bh-skill:hover { transform: translateY(-2px); }
+.bh-skill:active { transform: translateY(1px); box-shadow: 0 1px 0 #161412; }
+
+/* 名称气泡：默认不显示，悬停才出来（常驻会挡住舞台） */
+.bh-skill::after {
+  content: attr(data-name);
+  position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+  padding: 1px 7px 2px;
+  font-size: 10px; white-space: nowrap;
+  color: #f5efe3;
+  background: rgba(20, 18, 16, .92);
+  border-radius: 3px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .12s;
+}
+.bh-skill:hover::after { opacity: 1; }
+
+/* 键位字母 */
+.bh-skill-k {
+  position: relative; z-index: 2;
+  font-size: 17px; font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+  transition: transform .12s var(--ease), font-size .12s var(--ease);
+}
+
+/* 冷却环：暗色扇形，--cd 从 1 掉到 0 */
+.bh-ring {
+  position: absolute; inset: 0; z-index: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    rgba(10, 9, 8, .74) calc(var(--cd, 0) * 360deg),
+    transparent 0);
+  pointer-events: none;
+}
+
+/* 剩余秒数：只在冷却时出现，居中 */
+.bh-cd {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; place-items: center;
+  font-family: var(--font-mono);
+  font-size: 16px; font-weight: 700;
+  color: #f5efe3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .1s;
+}
+
+/* ---- 冷却中：字母缩小挪到上方，数字居中 ---- */
+.bh-skill.is-cooling .bh-skill-k {
+  font-size: 10px;
+  font-weight: 400;
+  transform: translateY(-12px);
+  opacity: .75;
+}
+.bh-skill.is-cooling .bh-cd { opacity: 1; }
+.bh-skill.is-cooling { border-color: #0f0e0d; }
+
+/* ---- 气不够：压暗，但仍然看得见键位 ---- */
+.bh-skill.is-poor { filter: grayscale(.7) brightness(.62); }
+
+/* ---- 必杀钮：金边 ---- */
+.bh-skill.is-super {
+  border-color: #7a5a1e;
+  background: radial-gradient(circle at 34% 28%, #5c4a24, #2b2317 68%);
+}
+.bh-skill.is-super.is-ready {
+  border-color: #e8b64a;
+  animation: bh-ready 1.2s ease-in-out infinite;
+}
+@keyframes bh-ready {
+  0%, 100% { box-shadow: 0 2px 0 #161412, 0 0 0 2px rgba(232, 182, 74, .35),
+                         0 0 16px rgba(232, 182, 74, .5); }
+  50%      { box-shadow: 0 2px 0 #161412, 0 0 0 5px rgba(232, 182, 74, 0),
+                         0 0 24px rgba(232, 182, 74, .85); }
+}
+
+/* ================= 状态条（防御 / 气） ================= */
+.bh-bar.sub { height: 5px; margin-top: 2px; border-radius: 2px; overflow: hidden; }
+.bh-bar.sub.guard { background: rgba(20, 18, 16, .22); }
+.bh-bar.sub.energy { background: rgba(20, 18, 16, .16); }
+.bh-fill.guard { background: linear-gradient(90deg, #9dc7e8, #4a86b8); }
+.bh-fill.energy { background: linear-gradient(90deg, #f0d27a, #d99a2b); }
+.bh-side-1 .bh-bar.sub { direction: rtl; }
+.bh-side:not(.has-guard) .bh-bar.sub.guard { display: none; }
+
+/* 快破防：条变红并轻微呼吸 */
+.bh-side.is-guardlow .bh-bar.sub.guard .bh-fill.guard {
+  background: linear-gradient(90deg, #e58f8f, #c94f4f);
+}
+.bh-side.is-guardlow .bh-bar.sub.guard {
+  animation: bh-guardlow .8s ease-in-out infinite;
+}
+@keyframes bh-guardlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 79, 79, 0); }
+  50%      { box-shadow: 0 0 4px 1px rgba(201, 79, 79, .65); }
+}
+
+/* 气满：金边提示"必杀可以放了" */
+.bh-side.is-full .bh-bar.sub.energy { box-shadow: 0 0 5px rgba(217, 154, 43, .75); }
+
+/* ================= 状态标记 ================= */
+.bh-marks { display: inline-flex; gap: 4px; margin-left: 6px; }
+.bh-mark {
+  padding: 0 5px 1px;
+  font-family: var(--font-serif);
+  font-size: 11px; line-height: 1.5;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  letter-spacing: .5px;
+}
+.bh-mark.broken { color: #c94f4f; }
+.bh-mark.stance { color: #b8860b; }
+.bh-mark.invuln { color: #4a86b8; }
+
+/* ================= 瞬时提示 ================= */
+.bh-flash {
+  position: absolute;
+  left: 50%; top: 24%;
+  transform: translate(-50%, 0) scale(.9);
+  padding: 4px 16px 6px;
+  font-family: var(--font-serif);
+  font-size: 19px; font-weight: 700;
+  letter-spacing: 2px;
+  color: #fff8e8;
+  background: rgba(24, 21, 18, .88);
+  border-radius: 3px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, .4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease, transform .12s ease;
+  z-index: 6;
+}
+.bh-flash.is-on { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.bh-flash.is-escape { color: #ffd98a; }
+.bh { position: relative; }
+
+/* --- 白闪（必杀命中时全屏闪一下）---
+   盖在舞台上、HUD 之下。opacity 由 stage.js 每帧写。 */
+.battle-flash {
+  position: absolute; inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+.battle-stage { position: relative; }
+
+/* --- 伤害数字 / 飘字 --- */
+.fx-text-root {
+  position: absolute; inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 4;                 /* 在舞台之上、HUD 之下 */
+}
+.fx-text {
+  position: absolute; left: 0; top: 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  white-space: nowrap;
+  /* 描边：浅色舞台上看不清，得压一层深色边 */
+  text-shadow:
+    0 0 2px rgba(20, 16, 12, .95), 0 1px 0 rgba(20, 16, 12, .9),
+    1px 0 0 rgba(20, 16, 12, .7), -1px 0 0 rgba(20, 16, 12, .7),
+    0 -1px 0 rgba(20, 16, 12, .7), 0 2px 5px rgba(0, 0, 0, .5);
+  will-change: transform, opacity;
+}
+/* 格挡/破防这类"事件词"换个观感：字距拉开、更像喊出来 */
+.fx-text.is-block { letter-spacing: 3px; }
+.fx-text.is-break { letter-spacing: 4px; font-size: 30px; }
+
+/* ★ 治愈的飘字（HP +N）—— 必须**一眼看出是绿的**（用户要求）。
+   只在 style.color 上给绿色不够：这层字带着很重的深色描边（见上面的 text-shadow），
+   细笔画的浅绿会被描边压成灰白。所以这里换一套"发光的绿"：
+   绿字 + 绿色描边 + 一点外发光，在深色大厅和浅色纸面上都认得出来。 */
+.fx-text.is-heal {
+  color: #63d67f;
+  letter-spacing: 1px;
+  text-shadow:
+    0 0 3px rgba(12, 40, 18, .95), 0 1px 0 rgba(12, 40, 18, .95),
+    1px 0 0 rgba(12, 40, 18, .8), -1px 0 0 rgba(12, 40, 18, .8),
+    0 -1px 0 rgba(12, 40, 18, .8),
+    0 0 10px rgba(99, 214, 127, .75), 0 0 18px rgba(99, 214, 127, .45);
+}
+
+/* ================= 结算面板 ================= */
+.rs { position: relative; overflow: hidden; }
+/* 胜负用左边的色条区分，比换个标题字色更省眼睛 */
+.rs::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+}
+.rs-win::before  { background: linear-gradient(#7fc98a, #3f8f4f); }
+.rs-lose::before { background: linear-gradient(#e08a8a, #a83a3a); }
+.rs-draw::before { background: linear-gradient(#c9c2b4, #8b8578); }
+
+.rs-how {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs, 11px);
+  letter-spacing: 2px;
+  color: var(--seal);
+  margin-top: 2px;
+}
+.rs-verdict {
+  font-family: var(--font-serif);
+  font-size: 34px; line-height: 1.15;
+  margin: 2px 0 4px;
+}
+.rs-win .rs-verdict  { color: #2f6b3a; }
+.rs-lose .rs-verdict { color: #93352f; }
+.rs-hp { margin-bottom: 10px; }
+
+/* 四项战绩：两列，数值大、标签小 —— 一眼扫到数字 */
+.rs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.rs-cell { display: flex; flex-direction: column; gap: 1px; }
+.rs-cell b { font-size: 19px; font-weight: 700; line-height: 1.2; }
+.rs-cell span { font-size: var(--fs-xs, 11px); }

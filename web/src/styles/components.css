@@ -1,0 +1,872 @@
+/* ============================================================
+   组件层：纸页 / 纸卡 / 印章 / 页签 / 墨线按钮 / 图鉴卡 / 进度条
+   全部直角 + 墨线描边，不用现代 UI 的大圆角与彩色投影。
+   ============================================================ */
+
+/* ---------------- 纸页（主内容容器） ---------------- */
+.sheet {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sheet);
+  padding: 26px 26px 30px;
+}
+.sheet::before {                      /* 左侧装订线 */
+  content: '';
+  position: absolute;
+  left: 10px; top: 0; bottom: 0;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom, var(--line) 0 6px, transparent 6px 12px);
+  opacity: .7;
+}
+.sheet > * { position: relative; }
+.sheet-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap;
+  padding-bottom: 14px; margin-bottom: 18px;
+  border-bottom: 2px solid var(--ink);
+}
+.sheet-head .sub { color: var(--muted); font-size: var(--fs-sm); }
+
+/* ---------------- 纸卡 ---------------- */
+.card {
+  background: var(--paper);
+  background-image: var(--tex-noise);
+  border: 1px solid var(--line);
+  padding: 16px;
+  box-shadow: var(--shadow-inset);
+}
+.card.tint { background: color-mix(in srgb, var(--paper-deep) 70%, var(--surface)); }
+.card.flat { box-shadow: none; background: var(--surface); }
+.card.lift { box-shadow: var(--shadow-lift); }
+.card-title { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-weight: 750; }
+.card-title .kicker { margin: 0; }
+
+/* ---------------- 页签（左侧目录项） ---------------- */
+.tabs { display: grid; gap: 0; border: 1px solid var(--line); background: var(--surface); }
+.tab {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  text-decoration: none;
+  background: transparent;
+  text-align: left;
+  width: 100%;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.tab:last-child { border-bottom: none; }
+.tab:hover { background: color-mix(in srgb, var(--blue) 8%, transparent); }
+.tab.is-current { background: var(--ink); color: var(--paper); }
+.tab.is-current .tab-idx { color: var(--signal); }
+.tab-idx {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  min-width: 20px;
+}
+.tab .tab-hint { margin-left: auto; font-size: var(--fs-xs); color: var(--muted); }
+.tab.is-current .tab-hint { color: var(--paper-deep); }
+
+/* ---------------- 按钮 ---------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-size: var(--fs-sm);
+  font-weight: 750;
+  letter-spacing: .01em;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease), background var(--dur) var(--ease),
+              color var(--dur) var(--ease);
+}
+.btn:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn:active { transform: translateY(1px); }
+.btn[disabled], .btn.is-busy { opacity: .5; pointer-events: none; }
+
+.btn-ghost { background: transparent; color: var(--ink); }
+.btn-ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.btn-blue { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn-blue:hover { background: var(--blue-deep); border-color: var(--blue-deep); }
+
+.btn-seal { background: var(--seal); border-color: var(--seal); color: #fff; }
+.btn-seal:hover { background: var(--wax); border-color: var(--wax); }
+
+.btn-sm { min-height: 34px; padding: 0 12px; font-size: var(--fs-xs); }
+.btn-block { width: 100%; }
+
+/* ---------------- 表单 ---------------- */
+.field { display: grid; gap: 6px; }
+.field > label { font-size: var(--fs-xs); font-weight: 750; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.input, .select, .textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+}
+.input:focus, .select:focus, .textarea:focus { outline: none; border-color: var(--blue); box-shadow: inset 0 -2px 0 var(--blue); }
+.input::placeholder { color: color-mix(in srgb, var(--muted) 70%, transparent); }
+.textarea { min-height: 88px; resize: vertical; }
+.field-hint { font-size: var(--fs-xs); color: var(--muted); }
+.field-error { font-size: var(--fs-xs); color: var(--danger); font-weight: 650; }
+
+/* ---------------- 提示条 ---------------- */
+.note {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue);
+  background: color-mix(in srgb, var(--blue) 6%, var(--surface));
+  font-size: var(--fs-sm);
+}
+.note.warn { border-left-color: var(--amber); background: color-mix(in srgb, var(--amber) 9%, var(--surface)); }
+.note.bad { border-left-color: var(--danger); background: color-mix(in srgb, var(--danger) 8%, var(--surface)); }
+.note.good { border-left-color: var(--moss); background: color-mix(in srgb, var(--moss) 9%, var(--surface)); }
+.note .hand { white-space: nowrap; }
+
+/* ---------------- 印章与徽章 ---------------- */
+.seal {
+  display: inline-grid; place-items: center;
+  padding: 3px 8px;
+  border: 1.5px solid var(--seal);
+  color: var(--seal);
+  font-family: var(--font-serif);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: .08em;
+  transform: rotate(-3deg);
+  background: color-mix(in srgb, var(--seal) 7%, transparent);
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  background: var(--surface);
+}
+.badge.rare { color: var(--tier-rare); border-color: var(--tier-rare); }
+.badge.epic { color: var(--tier-epic); border-color: var(--tier-epic); }
+.badge.legend { color: var(--tier-legend); border-color: var(--tier-legend); }
+.badge.signal { background: var(--signal); border-color: var(--ink); color: var(--ink); }
+.badge.moss { color: var(--moss); border-color: var(--moss); }
+.badge.dot::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; display: inline-block;
+}
+
+/* ---------------- 进度条（墨线填充） ---------------- */
+.bar { height: 8px; border: 1px solid var(--line-strong); background: var(--paper-deep); position: relative; overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--ink); transition: width .5s var(--ease); }
+.bar.blue > i { background: var(--blue); }
+.bar.signal > i { background: var(--seal); }
+.bar-label { display: flex; justify-content: space-between; font-size: var(--fs-xs); color: var(--muted); margin-bottom: 5px; }
+
+/* ---------------- 属性四维 ---------------- */
+.stats { display: grid; gap: 9px; }
+.stat { display: grid; grid-template-columns: 52px 1fr 34px; align-items: center; gap: 9px; }
+.stat-name { font-size: var(--fs-xs); color: var(--muted); font-weight: 700; }
+.stat-val { font-family: var(--font-mono); font-size: var(--fs-xs); text-align: right; }
+
+/* ---------------- 图鉴卡（选品种用） ---------------- */
+.breed-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+  text-align: left;
+  width: 100%;
+}
+.breed-card:hover { border-color: var(--ink); transform: translateY(-2px); box-shadow: var(--shadow-lift); }
+.breed-card.is-picked { border-color: var(--seal); box-shadow: inset 0 0 0 1px var(--seal); }
+.breed-card .portrait { display: grid; place-items: center; background: var(--paper); border: 1px solid var(--line); padding: 8px; }
+/* 肖像：SVG 与真实图（img）走同一套尺寸，页面不用关心用的是哪种。
+   真实图是 512×512 方形画布、狗只占中间 78%，按正方形等比缩放即可。
+
+   ⚠️ 全局那条 img.dog-portrait 不能少：真实图是 512×512 的**大图**，
+   没有尺寸规则时浏览器按原始像素渲染，落进窄容器就被 overflow 裁掉半只狗
+   （"已选品种"那一栏就是这么被截断的）。object-fit: contain + max-width:100%
+   保证任何容器里都是"整只缩进去"，不是"裁一块出来"。 */
+img.dog-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+.breed-card .portrait svg,
+.breed-card .portrait img.dog-portrait {
+  width: auto; height: auto;
+  max-width: 100%; max-height: 132px;
+  display: block;
+}
+.dossier .portrait svg, .dossier .portrait img.dog-portrait { max-height: 200px; }
+.breed-name { font-family: var(--font-serif); font-size: 19px; letter-spacing: -.02em; }
+.breed-sub { font-size: var(--fs-xs); color: var(--muted); }
+
+/* ---------------- 档案卡 ---------------- */
+.dossier { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 22px; }
+@media (max-width: 720px) { .dossier { grid-template-columns: 1fr; } }
+.dossier .photo {
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  position: relative;
+}
+.dossier .photo::after {
+  content: ''; position: absolute; inset: 5px; border: 1px dashed var(--line); pointer-events: none;
+}
+.dossier .photo svg { width: 100%; max-width: 176px; height: auto; }
+.dossier dl { display: grid; grid-template-columns: 88px 1fr; gap: 7px 14px; margin: 0; }
+.dossier dt { font-size: var(--fs-xs); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; align-self: center; }
+.dossier dd { margin: 0; font-weight: 650; }
+
+/* ---------------- 便签（右栏） ---------------- */
+.note-paper {
+  background: color-mix(in srgb, var(--signal) 22%, var(--surface));
+  border: 1px solid var(--line);
+  padding: 12px 13px;
+  font-size: var(--fs-sm);
+  box-shadow: var(--shadow-inset);
+  position: relative;
+}
+.note-paper::before {
+  content: ''; position: absolute; top: -1px; left: 14px;
+  width: 34px; height: 8px;
+  background: color-mix(in srgb, var(--leather) 25%, transparent);
+}
+
+/* ---------------- 开放世界画布 ---------------- */
+.world-frame {
+  position: relative;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-deep);
+  box-shadow: var(--shadow-sheet);
+  overflow: hidden;
+}
+.world-frame canvas { display: block; width: 100%; height: auto; }
+.world-hud {
+  position: absolute; left: 10px; top: 10px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+  pointer-events: none;
+}
+.world-hud .badge { background: color-mix(in srgb, var(--surface) 88%, transparent); backdrop-filter: blur(4px); }
+.world-title {
+  position: absolute; right: 12px; bottom: 10px;
+  font-family: var(--font-serif); font-size: var(--fs-sm);
+  color: color-mix(in srgb, var(--ink) 70%, transparent);
+  pointer-events: none;
+}
+
+/* ---------------- 表格（排行榜） ---------------- */
+.plate { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
+.plate th {
+  text-align: left; font-size: var(--fs-xs); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); padding: 8px 10px; border-bottom: 2px solid var(--ink);
+}
+.plate td { padding: 9px 10px; border-bottom: 1px solid var(--line); }
+.plate tbody tr:hover { background: color-mix(in srgb, var(--blue) 6%, transparent); }
+.plate tr.is-me { background: color-mix(in srgb, var(--signal) 26%, transparent); font-weight: 700; }
+.plate .rank { font-family: var(--font-mono); width: 44px; color: var(--muted); }
+
+/* ---------------- 分隔装饰 ---------------- */
+.rule { display: flex; align-items: center; gap: 10px; color: var(--line-strong); }
+.rule::before, .rule::after { content: ''; flex: 1; height: 1px; background: currentColor; }
+.rule span { font-size: var(--fs-xs); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------------- 页内分节（同一张纸上的段落） ---------------- */
+.sections { display: grid; gap: 26px; }
+.section { padding-top: 24px; border-top: 1px solid var(--line); }
+.section:first-child { padding-top: 0; border-top: none; }
+
+/* ---------------- 3D 开放世界（Three.js 视口 + 环绕 HUD） ----------------
+   信息条在画布外面（.world3d-bar），不在画布上盖一层——
+   第一版把地点横幅压在左上角，正好挡住天际线，怎么看怎么像 bug。
+   全屏时整块 wrap 一起铺满，信息条还在，画布吃掉剩下的高度。 */
+.world3d-wrap { position: relative; display: flex; flex-direction: column; }
+
+.world3d-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 7px 12px 8px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-bottom: none;
+}
+.w3-banner { max-width: 60%; min-width: 0; }
+.w3-place { font-family: var(--font-serif); font-size: 18px; letter-spacing: -.02em; }
+.w3-place-sub { font-size: var(--fs-xs); color: var(--muted); }
+.w3-topright { display: flex; gap: 6px; align-items: center; flex: none; }
+
+.world3d {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  height: clamp(420px, 64vh, 680px);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-sheet);
+  overflow: hidden;
+  background: var(--paper-deep);
+  cursor: grab;
+}
+.world3d:active { cursor: grabbing; }
+.world3d canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* 画面四周压一圈纸色暗角：既是羊皮纸的质感，
+   也顺手把"贴边被裁掉的道具"收进阴影里，看着不像 bug。
+   这一层是有意做重的——3D 视口贴边裁切在纸面上会显得像渲染错误，
+   压暗之后整个画布读起来像"一张插图"，而不是"一个没对准的摄像机"。 */
+.world3d::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 46px 10px rgba(74,58,36,.22),
+              inset 0 0 120px 30px rgba(74,58,36,.12);
+  background:
+    linear-gradient(to bottom, rgba(58,46,30,.24) 0%, rgba(58,46,30,0) 11%),
+    linear-gradient(to top,    rgba(58,46,30,.30) 0%, rgba(58,46,30,0) 14%),
+    linear-gradient(to right,  rgba(58,46,30,.26) 0%, rgba(58,46,30,0) 9%),
+    linear-gradient(to left,   rgba(58,46,30,.26) 0%, rgba(58,46,30,0) 9%);
+}
+
+/* 左下：体力 */
+.w3-bottomleft {
+  position: absolute; left: 14px; bottom: 14px;
+  display: flex; gap: 10px; align-items: center;
+  z-index: 3;
+}
+.w3-stamtag {
+  font-size: 11px; letter-spacing: .08em; color: var(--seal);
+  opacity: 0; transition: opacity .12s linear;
+}
+/* 跑动中：整条体力变色 + 冒出「疾跑」标签 */
+.w3-stam.is-running { color: var(--seal); }
+.w3-stam.is-running .bar i { background: var(--seal); }
+.w3-stam.is-running .w3-stamtag { opacity: 1; }
+.w3-stam {
+  display: grid; grid-template-columns: auto 150px auto; gap: 8px; align-items: center;
+  padding: 7px 12px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+}
+.w3-stam .bar { height: 10px; }
+.w3-stam .bar > i { background: var(--moss); }
+
+/* 底部中：附近交互提示 */
+.w3-hint {
+  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%) translateY(8px);
+  display: none; align-items: center; gap: 9px;
+  padding: 9px 16px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-lift);
+  font-size: var(--fs-sm);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 3;
+}
+.w3-hint.is-on { display: flex; }
+.w3-key {
+  display: inline-grid; place-items: center;
+  min-width: 24px; height: 24px; padding: 0 6px;
+  background: var(--ink); color: var(--paper);
+  font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 700;
+}
+
+/* 提示浮条 */
+.w3-toast {
+  position: absolute; left: 50%; top: 76px; transform: translateX(-50%) translateY(-6px);
+  padding: 8px 16px;
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  color: var(--paper);
+  font-size: var(--fs-sm);
+  opacity: 0; transition: opacity .2s var(--ease), transform .2s var(--ease);
+  pointer-events: none;
+  max-width: 70%;
+  text-align: center;
+  z-index: 3;
+}
+.w3-toast.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+.w3-toast.good { background: color-mix(in srgb, var(--moss) 92%, transparent); }
+
+/* 全屏：整块 wrap 铺满，信息条留着，画布吃掉剩下的高度 */
+.world3d-wrap:fullscreen,
+.world3d-wrap:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  background: var(--paper);
+}
+.world3d-wrap:fullscreen .world3d,
+.world3d-wrap:-webkit-full-screen .world3d {
+  height: auto;
+  border: none;
+  box-shadow: none;
+}
+
+/* 全屏时把 HUD 也放大一档，远看才清楚 */
+.world3d-wrap:fullscreen .w3-place,
+.world3d-wrap:-webkit-full-screen .w3-place { font-size: 24px; }
+.world3d-wrap:fullscreen .w3-place-sub,
+.world3d-wrap:-webkit-full-screen .w3-place-sub { font-size: 14px; }
+.world3d-wrap:fullscreen .w3-hint,
+.world3d-wrap:-webkit-full-screen .w3-hint { font-size: 17px; padding: 12px 22px; bottom: 30px; }
+.world3d-wrap:fullscreen .w3-stam,
+.world3d-wrap:-webkit-full-screen .w3-stamtag {
+  font-size: 11px; letter-spacing: .08em; color: var(--seal);
+  opacity: 0; transition: opacity .12s linear;
+}
+/* 跑动中：整条体力变色 + 冒出「疾跑」标签 */
+.w3-stam.is-running { color: var(--seal); }
+.w3-stam.is-running .bar i { background: var(--seal); }
+.w3-stam.is-running .w3-stamtag { opacity: 1; }
+.w3-stam { padding: 10px 16px; }
+
+
+/* ---------------- 横板对战：舞台 + 羊皮纸 HUD ----------------
+   分区照参考图的信息层次来：顶部横贯血条 / 左下资源 / 右下技能环 / 右上状态。
+   配色一律走我们的纸墨体系，不抄参考图的深色科技风。 */
+.battle-wrap { position: relative; }
+
+.battle-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 52vh, 620px);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-sheet);
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+.battle-stage canvas { display: block; width: 100% !important; height: 100% !important; }
+/* 和开放世界同一招纸色暗角：贴边裁切看着才不像 bug */
+.battle-stage::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 40px 8px rgba(74,58,36,.20),
+              inset 0 0 110px 26px rgba(74,58,36,.10);
+}
+
+.battle-hud { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.battle-hud .bh { position: absolute; inset: 0; }
+
+/* 顶部：双方名牌 + 血条 */
+.bh-top {
+  position: absolute; left: 0; right: 0; top: 0;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 12px; padding: 10px 12px 0;
+}
+.bh-side { flex: 1 1 0; min-width: 0; }
+.bh-side-1 { text-align: right; }
+.bh-side-1 .bh-bar { direction: rtl; }
+.bh-plate {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 3px 10px 4px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--seal);
+  font-family: var(--font-serif); font-size: var(--fs-sm);
+}
+.bh-side-1 .bh-plate { border-left: none; border-right: 4px solid var(--blue); }
+.bh-avatar { display: inline-grid; place-items: center; width: 22px; height: 22px; }
+.bh-avatar svg, .bh-avatar img { width: 22px; height: 22px; object-fit: contain; }
+.bh-bar {
+  position: relative;
+  height: 13px; margin-top: 4px;
+  background: color-mix(in srgb, var(--ink) 22%, var(--paper-deep));
+  border: 1px solid var(--line-strong);
+  overflow: hidden;
+}
+.bh-side .bh-fill {
+  display: block; height: 100%; width: 100%;
+  background: linear-gradient(90deg, var(--moss), #6f9a72);
+  transition: width .18s linear;
+}
+.bh-side-1 .bh-fill { background: linear-gradient(90deg, #c0503f, var(--seal)); }
+.bh-side.is-low .bh-fill { background: var(--seal); }
+.bh-side.is-guard .bh-bar { outline: 2px solid var(--blue); outline-offset: 1px; }
+.bh-side.is-down { opacity: .45; filter: grayscale(.6); }
+.bh-hpnum {
+  display: inline-block; margin-top: 2px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+}
+
+/* 顶部中间：倒计时 */
+.bh-center { flex: 0 0 auto; padding-top: 2px; }
+.bh-timer {
+  display: grid; place-items: center;
+  min-width: 54px; height: 42px;
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-mono); font-size: 22px; font-weight: 700;
+}
+.bh-timer.is-urgent { color: var(--seal); border-color: var(--seal); }
+
+/* 右上：加成图标（墨线圈） */
+.bh-buffs {
+  position: absolute; right: 12px; top: 86px;
+  display: flex; gap: 6px;
+}
+.bh-buff {
+  display: grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  font-family: var(--font-serif); font-size: 13px;
+}
+
+/* 左下：头像 + 体力 + 连击 */
+.bh-bl {
+  position: absolute; left: 12px; bottom: 12px;
+  display: flex; gap: 10px; align-items: flex-end;
+}
+.bh-portrait {
+  width: 54px; height: 54px;
+  display: grid; place-items: center;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  overflow: hidden;
+}
+.bh-portrait svg, .bh-portrait img, .bh-portrait .bh-face { width: 50px; height: 50px; object-fit: contain; display: block; }
+img.bh-face { width: 100%; height: 100%; object-fit: contain; }
+.bh-stack { display: grid; gap: 4px; }
+.bh-sta { display: grid; grid-template-columns: auto 130px auto; gap: 6px; align-items: center; }
+.bh-bar.thin { height: 9px; margin-top: 0; }
+.bh-sta .bh-fill { background: linear-gradient(90deg, var(--blue), #5f78e0); }
+.bh-mini { font-size: var(--fs-xs); color: var(--muted); }
+.bh-combo {
+  font-family: var(--font-serif); font-size: var(--fs-sm);
+  color: var(--seal); opacity: 0; transition: opacity .15s;
+}
+.bh-combo.is-on { opacity: 1; }
+
+/* 右下：技能圆章 */
+.bh-br {
+  position: absolute; right: 12px; bottom: 12px;
+  display: flex; gap: 8px; pointer-events: auto;
+}
+.bh-skill {
+  position: relative;
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  color: var(--ink);
+  font-family: var(--font-serif); font-size: 15px;
+  cursor: pointer;
+  display: grid; place-items: center;
+  transition: transform .08s var(--ease);
+}
+.bh-skill::after {
+  content: attr(data-name);
+  position: absolute; top: -17px; left: 50%; transform: translateX(-50%);
+  font-size: 10px; color: var(--muted); white-space: nowrap;
+}
+.bh-skill:hover { transform: translateY(-2px); }
+.bh-skill.is-cooling { color: var(--muted); border-color: var(--line); }
+.bh-skill.is-poor { opacity: .55; }
+.bh-skill-k { font-weight: 700; }
+.bh-cd {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 15px; font-weight: 700;
+  color: var(--seal);
+  background: color-mix(in srgb, var(--paper) 62%, transparent);
+  border-radius: 50%;
+}
+
+/* 正中提示条。
+   ⚠️ 原来是 top: 96px —— 而 Boss 血条从 58px 起、连名字带血条约到 97px 才结束，
+      于是这条提示**正好压在 Boss 血条上**（用户截图里那句「遇敌！往右走…」
+      和 Boss 名字叠在一起就是这个）。往下让到 wave 条下面。 */
+.bh-hint {
+  position: absolute; left: 50%; top: 240px; transform: translateX(-50%);
+  padding: 6px 14px;
+  background: color-mix(in srgb, var(--ink) 86%, transparent);
+  color: var(--paper); font-size: var(--fs-sm);
+  opacity: 0; transition: opacity .18s;
+}
+.bh-hint.is-on { opacity: 1; }
+
+/* Boss 血条：只在剧情关卡的 Boss 战出现（参考图顶上那条就是给它用的） */
+.bh-boss {
+  /* 让到顶排血板下面：血板只占 8~107px，原来的 58px 正好压在它身上 */
+  position: absolute; left: 50%; top: 118px; transform: translateX(-50%) translateY(-8px);
+  width: min(62%, 560px);
+  opacity: 0; transition: opacity .2s var(--ease), transform .2s var(--ease);
+  pointer-events: none;
+}
+.bh-boss.is-on { opacity: 1; transform: translateX(-50%) translateY(0); }
+.bh-boss-head {
+  display: flex; align-items: baseline; gap: 8px; justify-content: center;
+  /* ⚠️ 名字 + 副标题 + 阶段三段挤在一行，窄一点就各自折行，
+     看上去像"两行字叠在一起"（用户截图里那句
+     「失控的扫地机 / 失控的扫地机器人」就是折行折出来的）。
+     现在：各段自己不折行，整行装不下时**整段往下换一行**。 */
+  flex-wrap: wrap; row-gap: 2px;
+  margin-bottom: 3px;
+}
+.bh-boss-name, .bh-boss-sub, .bh-boss-phase { white-space: nowrap; }
+.bh-boss-name {
+  font-family: var(--font-serif); font-size: var(--fs-md);
+  color: var(--paper); text-shadow: 0 1px 0 rgba(17,18,21,.55);
+  letter-spacing: .04em;
+}
+.bh-boss-sub { font-size: 11px; color: color-mix(in srgb, var(--paper) 78%, transparent); }
+.bh-boss-phase { font-family: var(--font-mono); font-size: 11px; color: var(--signal); }
+.bh-bar.boss {
+  height: 16px; margin-top: 0;
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+.bh-bar.boss .bh-fill { background: linear-gradient(90deg, #a8332a, #d4614f); }
+.bh-boss.is-low .bh-bar.boss .bh-fill { background: var(--seal); }
+
+/* 推进段提示 */
+.bh-wave {
+  position: absolute; left: 50%; top: 196px; transform: translateX(-50%);
+  padding: 5px 14px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--moss);
+  font-size: var(--fs-sm);
+  opacity: 0; transition: opacity .18s;
+}
+/* 刷新冷却的细线：走到底，下一波登场。
+   和问询页那条提示线同一个做法 —— 用进度说话，**不写秒数**
+   （写了就成了催促，而这只是"它快到了"）。 */
+.bh-wave.has-gap { padding-bottom: 9px; }
+.bh-wave-fill {
+  position: absolute; left: 0; bottom: 0; height: 3px; width: 0;
+  background: var(--moss);
+  transition: width .1s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bh-wave-fill { transition-duration: .01ms; }
+}
+.bh-wave.is-on { opacity: 1; }
+
+/* 全屏：整块 wrap（舞台 + HUD）一起铺满。
+   ⚠️ 不能只全屏 stage —— HUD 是 stage 的兄弟节点，会被留在屏幕外，
+   用户看到的就是"全屏之后 UI 全没了"。 */
+.battle-wrap:fullscreen,
+.battle-wrap:-webkit-full-screen {
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column;
+  background: var(--paper);
+}
+.battle-wrap:fullscreen .battle-stage,
+.battle-wrap:-webkit-full-screen .battle-stage {
+  flex: 1 1 auto; height: auto; border: none; box-shadow: none;
+}
+.battle-wrap:fullscreen canvas,
+.battle-wrap:-webkit-full-screen canvas { width: 100% !important; height: 100% !important; }
+
+
+/* ---------------- 剧情关卡：羊皮纸关卡地图 ----------------
+   节点 + 连线，像档案册里手绘的一条行军路线。
+   连线用绝对定位的一条竖虚线，节点自身负责圆点与文案。 */
+.lv-map { display: grid; gap: 0; }
+.lv-node {
+  position: relative;
+  display: grid; grid-template-columns: 54px 1fr auto; gap: 12px; align-items: center;
+  width: 100%; text-align: left;
+  padding: 12px 14px 13px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--line-strong);
+  cursor: pointer;
+  font: inherit; color: inherit;
+  transition: transform .08s var(--ease), border-color .12s;
+}
+.lv-node + .lv-node { margin-top: 14px; }
+.lv-node:hover { transform: translateX(3px); border-left-color: var(--seal); }
+.lv-node.is-clear { border-left-color: var(--moss); }
+.lv-index {
+  display: grid; place-items: center;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
+  font-size: 13px; font-weight: 700;
+}
+.lv-node.is-clear .lv-index { background: color-mix(in srgb, var(--moss) 22%, transparent); }
+.lv-body { display: grid; gap: 2px; min-width: 0; }
+.lv-name { font-family: var(--font-serif); font-size: var(--fs-md); }
+.lv-sub { font-size: var(--fs-sm); color: var(--muted); }
+.lv-meta { font-size: var(--fs-xs); }
+.lv-stars { display: flex; gap: 3px; }
+.lv-stars i { font-style: normal; font-size: 17px; color: var(--line-strong); }
+.lv-stars i.on { color: var(--tier-legend); }
+/* 关卡之间的连接线：一条短竖虚线 */
+.lv-link {
+  position: absolute; left: 33px; bottom: -14px;
+  width: 2px; height: 14px;
+  background: repeating-linear-gradient(to bottom,
+    var(--line-strong) 0 4px, transparent 4px 8px);
+}
+
+.loading { display: grid; place-items: center; gap: 10px; padding: 48px 0; color: var(--muted); }
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+.empty .hand { display: block; font-size: 18px; margin-bottom: 6px; color: var(--leather); }
+
+/* ---------------- 彩蛋：页头那枚印 ----------------
+   用户要求："时不时动一下，吸引人去点"。
+   ⚠️ 关键在**时不时**：不是一直在动（那是背景噪音，看久了只会烦），
+      而是**长周期 + 短动作** —— 一轮 7 秒，只在开头那 0.5 秒里动，
+      剩下 6.5 秒一动不动。这样每次动都是"咦？刚才那是什么"。
+   动作是**印章被戳了一下**：先压扁一点、再弹回来、带一点歪 ——
+      和这枚印的身份对得上（它不是按钮，是一枚印）。
+   只动 transform，不动布局尺寸；reduced-motion 下彻底关掉。 */
+@keyframes seal-nudge {
+  0%   { transform: none; }
+  3%   { transform: translate(-2px, 1px) rotate(-4deg) scale(.93); }  /* 被按住 */
+  5%   { transform: translate(2px, -1px) rotate(4deg) scale(1.03); }  /* 弹起来 */
+  7%   { transform: translate(-1px, 0) rotate(-2deg) scale(.98); }
+  9%   { transform: none; }
+  100% { transform: none; }        /* ← 剩下 91% 的时间：完全不动 */
+}
+#brand-mark { animation: seal-nudge 7s ease-in-out infinite; transform-origin: 50% 55%; }
+@media (prefers-reduced-motion: reduce) {
+  #brand-mark { animation: none; }
+}
+/* 问询 / 同问共用的选项按钮与提示条。
+   风格同全站：纸片 + 墨线 + 硬投影。提示做成"压在题目下面的一张折纸"，
+   到点自己展开 —— 不用现代那套浮层/气泡。 */
+.quiz-opt {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 10px 12px; font: inherit; color: inherit;
+  background: var(--surface); border: 1.5px solid var(--line-strong);
+  box-shadow: 2px 2px 0 rgba(17, 18, 21, .18);
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.quiz-opt:hover:not(:disabled) { transform: translate(-1px, -1px); border-color: var(--ink); }
+.quiz-opt:disabled { cursor: default; }
+/* 四个选项前面那个 A/B/C/D：做成册子上的角标 */
+.quiz-key {
+  flex: 0 0 auto; width: 22px; height: 22px; display: grid; place-items: center;
+  font-family: var(--font-mono); font-size: 12px;
+  border: 1.5px solid var(--line-strong); color: var(--muted);
+}
+.quiz-opt.is-pick { border-color: var(--ink); }
+.quiz-opt.is-right { border-color: var(--moss); box-shadow: 2px 2px 0 var(--moss); }
+.quiz-opt.is-right .quiz-key { border-color: var(--moss); color: var(--moss); }
+.quiz-opt.is-wrong { border-color: var(--seal); }
+.quiz-opt.is-wrong .quiz-key { border-color: var(--seal); color: var(--seal); }
+
+/* 倒计时：一条墨线走到底。**不写秒数** —— 写出来就成了催促，
+   而提示是"帮人想起来"的东西，不是压力。 */
+.hint-meter {
+  height: 3px; background: color-mix(in srgb, var(--ink) 14%, transparent);
+  margin-top: 4px;
+}
+.hint-meter > i {
+  display: block; height: 100%; width: 0;
+  background: var(--moss); transition: width .1s linear;
+}
+
+/* 提示：像一张压在题下面的折纸，到点自己展开 */
+.hint-slip {
+  max-height: 0; overflow: hidden; opacity: 0;
+  border-left: 4px solid var(--moss);
+  background: color-mix(in srgb, var(--moss) 10%, transparent);
+  transition: max-height .3s var(--ease), opacity .3s var(--ease),
+              padding .3s var(--ease);
+}
+.hint-slip.is-on { max-height: 120px; opacity: 1; padding: 8px 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-opt, .hint-meter > i, .hint-slip { transition-duration: .01ms; }
+}
+
+/* ── 难度基准与模式切换（问询页）──────────────────────────────
+   一个模式切换 + 一排档位。挑档这件事要"一眼挑完"，
+   所以每一档都把**题量、星档、给谁**摆在明面上 —— 不用点进去试。
+   视觉沿用全站：纸片 + 墨线 + 硬投影，不做圆角胶囊那套。 */
+.mode-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.mode-tab {
+  padding: 6px 12px; border: 1.5px solid var(--line-strong);
+  background: var(--surface); color: inherit; text-decoration: none;
+  font-size: 14px;
+}
+.mode-tab:hover { border-color: var(--ink); }
+.mode-tab.is-current {
+  border-color: var(--ink); background: var(--ink); color: var(--paper);
+  box-shadow: 2px 2px 0 rgba(17, 18, 21, .25);
+}
+
+.base-card { display: grid; gap: 8px; }
+.base-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.base-chip {
+  display: flex; align-items: baseline; gap: 6px;
+  padding: 8px 10px; cursor: pointer; font: inherit; color: inherit;
+  background: var(--surface); border: 1.5px solid var(--line-strong);
+  box-shadow: 2px 2px 0 rgba(17, 18, 21, .16);
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.base-chip:hover { transform: translate(-1px, -1px); border-color: var(--ink); }
+.base-chip.is-cur {
+  border-color: var(--moss); box-shadow: 2px 2px 0 var(--moss);
+}
+.base-chip.is-cur .base-label { color: var(--moss); }
+.base-label { font-size: 15px; }
+.base-count { opacity: .75; }
+.base-stars { opacity: .6; }
+
+/* ── 同问（好友对战）──────────────────────────────────────────
+   两块并排的比分牌夹一个"同问"，下面才是题。
+   比分要一直看得见 —— 抢答的时候人是顾不上翻页的。 */
+.duel-board {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 10px; align-items: stretch;
+}
+.duel-side {
+  padding: 8px 10px; background: var(--surface);
+  border: 1.5px solid var(--line-strong);
+  box-shadow: 2px 2px 0 rgba(17, 18, 21, .18);
+}
+.duel-side.is-me { border-color: var(--moss); }
+.duel-name { font-family: var(--font-serif); font-size: 16px; }
+.duel-num { font-family: var(--font-mono); font-size: 26px; line-height: 1.15; }
+.duel-vs { display: grid; place-content: center; text-align: center; gap: 2px; }
+.duel-vs-word { font-family: var(--font-serif); letter-spacing: 3px; }
+.duel-room { letter-spacing: 3px; }
+
+.npc-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.npc-card {
+  flex: 0 0 auto; width: 156px; text-align: left; cursor: pointer;
+  padding: 8px 10px; font: inherit; color: inherit; background: var(--surface);
+  border: 1.5px solid var(--line-strong);
+  box-shadow: 2px 2px 0 rgba(17, 18, 21, .16);
+}
+.npc-card:hover { transform: translate(-1px, -1px); border-color: var(--ink); }
+.npc-name { font-family: var(--font-serif); font-size: 15px; }
+
+.join-input {
+  width: 116px; padding: 8px 10px; font-family: var(--font-mono); font-size: 15px;
+  letter-spacing: 3px; text-transform: uppercase; color: inherit;
+  background: var(--surface); border: 1.5px solid var(--line-strong);
+}
+.join-input:focus { outline: none; border-color: var(--ink); }
+
+.duel-rounds { display: grid; gap: 2px; margin-top: 8px; }
+.duel-round-line { opacity: .75; }
+.divider { height: 1px; background: var(--line-strong); opacity: .45; margin: 10px 0; }

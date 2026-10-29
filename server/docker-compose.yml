@@ -1,0 +1,58 @@
+# 养成系机械狗 · 服务端 compose
+#
+# 本地（默认，SQLite）：
+#     docker compose up --build
+#     → http://localhost:8080/docs
+#
+# 云端 Ubuntu（PostgreSQL）：
+#     MOOPET_SECRET_KEY=$(openssl rand -hex 32) docker compose --profile cloud up -d --build
+#     再按 docs/部署文档.md 在前面挂 Nginx + TLS
+#
+# 注意：多进程（--workers > 1）时对战房间在内存里，必须配 Redis 才能跨进程；
+#       演示阶段固定单进程，见文档说明。
+
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: moopet-server:latest
+    container_name: moopet-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      MOOPET_DATABASE_URL: ${MOOPET_DATABASE_URL:-sqlite:////data/moopet.db}
+      MOOPET_SECRET_KEY: ${MOOPET_SECRET_KEY:-moopet-dev-only-secret-change-me-in-production-32b}
+      MOOPET_ALLOW_ORIGINS: ${MOOPET_ALLOW_ORIGINS:-*}
+      MOOPET_TOKEN_TTL_HOURS: ${MOOPET_TOKEN_TTL_HOURS:-72}
+      MOOPET_SEED_DEMO: ${MOOPET_SEED_DEMO:-1}
+    volumes:
+      - ./data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c",
+             "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8080/api/health', timeout=2).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # 云端档位：需要 PostgreSQL 时启用（--profile cloud）
+  db:
+    image: postgres:16-alpine
+    container_name: moopet-db
+    profiles: ["cloud"]
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-moopet}
+      POSTGRES_USER: ${POSTGRES_USER:-moopet}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-in-production}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-moopet}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

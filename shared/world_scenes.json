@@ -1,0 +1,19 @@
+{
+  "_comment": "开放世界的场景边界表：Python 服务端与 JS 前端共用这一份，避免两边各写一套尺寸后对不上。改这里要同时跑 server/tests 与 web/tests/world_net_test.mjs。",
+  "scenes": {
+    "plaza": { "name": "长夜月广场", "w": 2200, "d": 1700, "spawn": [1100, 1200], "capacity": 64 },
+    "park": { "name": "长夜月公园", "w": 2400, "d": 1900, "spawn": [1200, 1350], "capacity": 48 },
+    "kennel": { "name": "我的狗窝", "w": 1500, "d": 1150, "spawn": [750, 700], "capacity": 8 },
+    "arena": { "name": "月光竞技场", "w": 2200, "d": 1700, "spawn": [1100, 1200], "capacity": 32 }
+  },
+  "motion": {
+    "_comment": "位置校验参数（格/秒）。max_speed 比 world.js 的 RUN_SPEED=430 留了余量；grace 必须比一个上报周期的最大位移大一点（520/10≈52），否则被 TCP 攒在一起到达的包会被误判成超速。",
+    "max_speed": 520,
+    "grace": 72,
+    "window_sec": 1.2,
+    "report_hz": 10,
+    "max_msg_per_sec": 40,
+    "reject_budget": 20,
+    "presence_write_sec": 5
+  }
+}

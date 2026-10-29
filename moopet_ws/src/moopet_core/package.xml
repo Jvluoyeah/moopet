@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>moopet_core</name>
+  <version>0.1.0</version>
+  <description>纯逻辑大脑：经验结算/等级/火花/行为决策/日记/题库。零 ROS 依赖，可在狗本体或算力背包任一侧运行</description>
+  <maintainer email="liwenyang@moopet.local">李文扬</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- 刻意不依赖 rclpy：本包必须能在无 ROS 环境下独立运行与测试 -->
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

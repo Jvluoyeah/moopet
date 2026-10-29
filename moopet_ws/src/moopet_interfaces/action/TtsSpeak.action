@@ -1,0 +1,10 @@
+# 背包 TTS 播放动作（/backpack/tts_speak，决策 → 语音）
+---
+string text
+float32 rate
+float32 pitch
+---
+bool success
+float32 duration
+---
+float32 progress

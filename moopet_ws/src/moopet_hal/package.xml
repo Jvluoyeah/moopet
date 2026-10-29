@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>moopet_hal</name>
+  <version>0.1.0</version>
+  <description>硬件抽象层：感知来源（仿真/回放/真机）与执行器（打印/模拟/录制），让大脑不关心自己在跟谁说话</description>
+  <maintainer email="liwenyang@moopet.local">李文扬</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>moopet_core</exec_depend>
+
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assetsUrl": "../assets/",
+  "title": "长夜月 · 机械狗档案册",
+  "gameId": "1232571e-35b1-412e-8628-e9c35d7f97cd",
+  "resolution": {
+    "width": 1920,
+    "height": 1080
+  },
+  "graphicsRendering": {
+    "mode": "auto",
+    "fixedScale": 1,
+    "autoMaxScale": 2,
+    "antialias": true,
+    "imageSampling": "auto",
+    "frameRate": 60,
+    "effectQuality": "high"
+  },
+  "backgroundColor": "#000000",
+  "window": {
+    "lockAspectRatio": false,
+    "allowMaximize": true,
+    "allowFullscreen": true,
+    "launchMode": "windowed"
+  },
+  "cursor": {
+    "mode": "system",
+    "image": "",
+    "imagePixelRatio": 1,
+    "imageSize": {
+      "width": 24,
+      "height": 24
+    },
+    "hotspot": {
+      "x": 0,
+      "y": 0
+    },
+    "fallback": "default",
+    "css": "",
+    "cssImagePixelRatio": 1,
+    "cssImageSize": {
+      "width": 24,
+      "height": 24
+    }
+  },
+  "encryption": null
+}

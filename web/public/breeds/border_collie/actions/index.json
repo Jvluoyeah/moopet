@@ -1,0 +1,63 @@
+{
+  "code": "border_collie",
+  "canvas": [
+    512,
+    512
+  ],
+  "baseline": 470,
+  "scale": {
+    "body": 0.3653,
+    "head": 0.4472
+  },
+  "actions": {
+    "attack": {
+      "frames": 2,
+      "kind": "body"
+    },
+    "back": {
+      "frames": 1,
+      "kind": "body"
+    },
+    "down": {
+      "frames": 1,
+      "kind": "body"
+    },
+    "head_grin": {
+      "frames": 1,
+      "kind": "head"
+    },
+    "head_happy": {
+      "frames": 1,
+      "kind": "head"
+    },
+    "head_side": {
+      "frames": 2,
+      "kind": "head"
+    },
+    "idle": {
+      "frames": 2,
+      "kind": "body"
+    },
+    "jump": {
+      "frames": 1,
+      "kind": "body"
+    },
+    "roll": {
+      "frames": 1,
+      "kind": "body"
+    },
+    "run": {
+      "frames": 4,
+      "kind": "body"
+    },
+    "sleep": {
+      "frames": 2,
+      "kind": "body"
+    },
+    "win": {
+      "frames": 1,
+      "kind": "body"
+    }
+  },
+  "note": "由 tools/build_actions.py 从 pic/ 处理而来；同一品种身体动作共用一个缩放系数，脚底对齐 470"
+}

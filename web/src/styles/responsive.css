@@ -1,0 +1,330 @@
+/* 响应式：窄屏（手机）适配
+   ============================================================
+   目标：手机上**能正常注册、能正常打**。之前实测 390px 宽时注册页的元素
+   互相遮挡点不到 —— 因为所有布局都是按桌面写的。
+
+   两条规则：
+     · 两栏布局在窄屏**收成一栏**（战斗画面在上、面板在下）
+     · 触控按钮已经由 touch.css 处理（只在触屏设备出现）
+
+   ⚠️ 之前战斗页的两栏是**内联样式**写的（`style: { gridTemplateColumns: ... }`），
+      内联会压过媒体查询 —— 所以那些页面在手机上永远是两栏。
+      现在统一挪到 .battle-layout 这个类里。
+*/
+
+/* 战斗页的两栏：左画面 + 右面板 */
+.battle-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+  align-items: start;
+  gap: var(--sp-4, 16px);
+}
+
+/* ---------------- 窄屏 ---------------- */
+@media (max-width: 820px) {
+  /* 两栏收一栏 */
+  .battle-layout,
+  .grid-2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* 战斗画面在窄屏上要占满宽度，别留白 */
+  .battle-stage { width: 100%; }
+
+  /* 面板里的卡片不用再挤成两列 */
+  .grid-2 > * { min-width: 0; }
+
+  /* 顶栏在窄屏上会换行 —— 给足高度免得压住内容 */
+  .topbar { flex-wrap: wrap; }
+
+  /* 页面内边距收一点，窄屏上很宝贵 */
+  .sheet { padding-left: 12px; padding-right: 12px; }
+}
+
+/* 手机竖屏：更激进一点 */
+@media (max-width: 560px) {
+  /* ⚠️⚠️ 页面里有**两个** aside，类名不一样，别只写一个：
+       catalogue() → <aside class="catalogue">  ← 01~07 那排目录
+       aside(tips) → <aside class="aside">      ← 右边的便签
+     原来只隐藏了 `.aside`，而手机上占掉 430px 的是 **`.catalogue`** ——
+     实测 412×915 的屏上它一直露着，把世界画布挤成一条。
+     （这个文件里上一版还留着"第一版写的 .sidenav 是不存在的类"的教训，
+       同一个错又犯深了一层：类名对了，但**对的是另一个元素**。） */
+  .catalogue { display: none; }
+  .aside { display: none; }
+
+  /* 顶栏在窄屏上会折成三行（品牌 + 4 个页签 + 纸色 + 主人），
+     吃掉 180px。手机上的导航就靠这排页签，所以**留页签、砍掉字**：
+     品牌只留那个"犬"字方块，纸色开关收起来（手机上不是高频操作）。 */
+  .topbar { flex-wrap: nowrap; gap: 8px; min-height: 52px; padding: 6px 8px; }
+  .topbar .brand div { display: none; }
+  #theme-toggle { display: none; }
+  /* ★ 顶栏在手机上折成**两行**：品牌 + 主人/登出 在上，四个页签独占下一行。
+     为什么非折不可：一行摆不下"品牌 + 4 个页签 + 主人 + 登出"，
+     页签被挤出去之后**和"主人"链接压在一起** —— 实测在"训练记录"的中心点
+     做 elementFromPoint，最顶层元素是"主人"的链接，也就是**点不到训练记录**。
+     （先试过 `overflow-x: auto` + `min-width: 0`，几何上看着没重叠，
+       但命中测试证明它确实被盖住 —— 只有命中测试算数。） */
+  .topbar { flex-wrap: wrap; row-gap: 4px; }
+  .topbar .spacer { display: none; }
+  /* 手机上顶栏那排导航现在是**全部八项**（从 PAGES 生成）——
+     一行放不下，所以让它**横向滚动**而不是折行/挤压。
+     顶栏这里是独占一整行（order:3 + flex 1 1 100%），
+     所以滚动时不会像上一版那样被"主人"链接盖住。 */
+  #top-nav {
+    order: 3; flex: 1 1 100%; min-width: 0; gap: 4px;
+    flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #top-nav::-webkit-scrollbar { display: none; }
+  #top-nav .tab { flex: 0 0 auto; padding: 8px 10px !important; font-size: 14px; }
+  .topbar .row-tight:last-child { order: 2; margin-left: auto; }
+  /* 触控目标不能太小：Apple/Google 的下限是 44px。
+     实测顶栏页签只有 39px 高、品牌方块 40×30、登出按钮 38 宽 —— 拇指点不准。 */
+  .topbar .tab, .topbar a, .topbar button { min-height: 44px; display: inline-flex; align-items: center; }
+  .topbar .brand { min-width: 44px; min-height: 44px; justify-content: center; }
+  .topbar button#logout, .topbar .btn { min-width: 44px; justify-content: center; }
+  /* 场景页签同理：四个页签在 412px 上要能横着排开 */
+  .sheet-head .row-tight, #world3d-wrap .row-tight { flex-wrap: nowrap; overflow-x: auto; }
+  .sheet-head .row-tight .tab { white-space: nowrap; }
+  /* 世界页左上那块地点横幅在手机上占 140px，压扁一点把高度还给画布 */
+  .w3-banner { font-size: 15px; }
+  .w3-banner .small, .w3-banner div + div { display: none; }
+
+  /* 表单控件要够大，不然点不准 */
+  input, select, textarea, .btn { min-height: 44px; }
+
+  /* 品种卡从多列收成一列 */
+  .breed-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+
+  /* 字号小一档，窄屏上能多放点东西 */
+  .sheet-head h1 { font-size: 22px; }
+}
+
+/* ---------------- 触屏设备：可点元素不能太小 ----------------
+   ⚠️ 这条**必须按"是不是触屏"来判**，不能按宽度。
+      第一版把这些规则写在 `@media (max-width: 560px)` 里 ——
+      手机**横过来**时宽度是 915，不满足这条，规则全部失效，
+      实测顶栏按钮只剩 34~37px 高（拇指点不准）。
+      `pointer: coarse` 和朝向、宽度都无关，才是对的判别条件，
+      和 JS 那边 isTouchDevice() 用的是同一套判据。
+   （44px 是 Apple/Google 都认的触控目标下限。） */
+@media (pointer: coarse) {
+  .topbar .tab, .topbar a, .topbar button, .btn, .tp-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .topbar .brand, .topbar button, .topbar .btn, .btn-sm {
+    min-width: 44px;
+    justify-content: center;
+  }
+
+  /* ★★ 触控按钮必须**随屏宽缩放**，不能写死 px。
+     真机（1440 物理像素 + 系统显示缩放）的实际 CSS 视口可能只有 300~320，
+     原来写死的 58px 在那上面占 **18% 屏宽** —— 一个按钮顶五分之一屏，
+     用户看到的就是"UI 错乱"。clamp 下限 40px（再小按不准），
+     上限 62px（大屏上别太大），中间跟 vw 走。 */
+  .tp-btn { width: clamp(40px, 12.5vw, 62px); height: clamp(40px, 12.5vw, 62px); }
+  .tp-dir {
+    width: clamp(42px, 13.5vw, 64px);
+    height: clamp(42px, 13.5vw, 64px);
+    font-size: clamp(15px, 4.4vw, 22px);
+  }
+  .tp-world-move {
+    grid-template-columns: repeat(3, clamp(42px, 13.5vw, 64px));
+    grid-template-rows: repeat(2, clamp(42px, 13.5vw, 64px));
+  }
+  .tp-world-act { grid-template-columns: repeat(2, clamp(44px, 14vw, 66px)); }
+  .tp-world-act .tp-run, .tp-world-act .tp-action {
+    width: clamp(44px, 14vw, 66px);
+    height: clamp(44px, 14vw, 66px);
+    font-size: clamp(12px, 3.6vw, 16px);
+  }
+  .tp-world-act .tp-jump2 {
+    width: clamp(88px, 28vw, 140px);
+    height: clamp(44px, 14vw, 66px);
+    font-size: clamp(14px, 4vw, 18px);
+  }
+  .tp-jump, .tp-right .tp-skill, .tp-guard {
+    width: clamp(40px, 12vw, 60px);
+    height: clamp(40px, 12vw, 60px);
+    /* ⚠️ 招式钮现在显示的是**两个汉字**（轻击/重击/突进/升龙/飞弹/必杀），
+       不是单字母 —— 字号要比原来小一档才放得下，行高也要收，
+       否则两个字会挤成上下两行。 */
+    font-size: clamp(11px, 3.2vw, 14px);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+}
+/* ---------------- 手机上的开放世界：**必须一屏装下** ----------------
+   ⚠️ 这条是实测逼出来的：虚拟摇杆固定在画布底部，而画布写死了
+      `height: clamp(420px, 64vh, 680px)` —— 加上顶栏(66) + 页头 + 信息条，
+      画布底部在 412×915 的手机上落到 **y=1376**，屏幕只有 915 高。
+      表现就是"摇杆画出来了、按上去没反应"（实测 inViewport: False，
+      手动派发 pointerdown 狗立刻就走了 —— 逻辑没问题，是**够不着**）。
+   改成一屏：wrap 占满剩余高度，画布跟着撑开，底部控件就落在拇指够得着的地方。
+
+   ⚠️⚠️ 这个块的**上面**曾经有一段游离在注释外的说明文字（我把 section 的开头
+      替换掉了，正文却留着），末尾还多出一个注释结束符号。
+      那是**语法错误**：浏览器容错时会连**紧跟其后的整个 @media 块**一起丢掉 ——
+      于是手机端最关键的一整块规则（触控层定位、画布高度、页头压缩）
+      全部静默失效，真机表现和模拟完全对不上。
+      ⚠️ 更坑的是：**注释正文里不许出现注释的起止符号** ——
+         我第二次修的时候，就在这段说明里写了那两个字，注释当场提前结束，
+         后面的正文变成活的 CSS，又把这一整块吃掉了第二次。
+         改完 CSS 一定要看一眼构建产物里规则还在不在。 */
+@media (max-width: 820px) {
+  /* ⚠️ 两行都要写：`dvh` 在旧一点的 Chromium/WebView 里**不被识别**，
+     整条声明会被丢弃（沉默失效，看代码还以为写对了）。 */
+  .world3d-wrap { height: calc(100vh - 132px); height: calc(100dvh - 132px); }
+
+  /* ★ 触控层钉在**屏幕上**（两类页面都适用）。
+     ⚠️ 光写 `position: fixed` 还不够 —— 只要祖先链上有 transform，
+        fixed 就会以那个祖先为包含块。页面外壳 `.sheet` 的入场动画留下了
+        `transform: matrix(1,0,0,1,0,0)`，所以触控层**必须挂在 body 上**
+        （见 world.js / arena.js / dojo.js 的挂载点），再配合这条 fixed。 */
+  .tp { position: fixed; inset: 0; z-index: 60; }
+  .tp-pad { position: fixed; }
+  .world3d {
+    height: auto;
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+  /* 手机上页头压扁，把高度让给画布 */
+  .sheet-head { padding-top: 6px; padding-bottom: 6px; }
+  .sheet-head h1 { font-size: 20px; }
+  .sheet-head .sub { display: none; }
+
+  /* ★ 世界页信息条也折两行：地点在上、按钮在下。
+     地点原来写死 `max-width: 60%`，在 320px 的机器上只剩 192px，
+     "长夜月广场"被折成**一个字一行**——真机截图里最扎眼的那处。 */
+  .world3d-bar { flex-wrap: wrap; row-gap: 4px; }
+  .w3-banner { max-width: 100%; flex: 1 1 100%; }
+  .w3-banner .w3-place { font-size: 17px; white-space: nowrap; }
+  .w3-topright { flex: 1 1 100%; flex-wrap: wrap; }
+
+  /* ★ 场景页签**要能折行**，不能挤。
+     ⚠️ 之前这里写的是 `flex-wrap: nowrap` —— 四个页签在窄屏上被压扁，
+     文字溢出被裁掉，只剩最后一个字（真机上显示成"场 / 园 / 窝 / 场"）。
+     挤不下就老老实实折两行，比"看起来整齐但字没了"强。 */
+  .sheet-head .row-tight, #world3d-wrap .row-tight { flex-wrap: wrap; }
+  .sheet-head .row-tight .tab { white-space: nowrap; }
+}
+
+/* 竖屏战斗页：给固定在屏幕底部的触控按钮**留出空间**。
+   触控层是 fixed 的，正文会滚到它下面 —— 不留白的话
+   "开一局"这类按钮会被摇杆压住，看得见点不着。
+   ⚠️ 一开始只给 `.battle-layout` 加了留白，但**结算面板不在它里面** ——
+      打完一局之后"上报结果 / 再来一局"正好被按钮压住（用户截图里就是这样）。
+      所以改成给**整页**留，不管结算面板挂在哪里都够。 */
+@media (pointer: coarse) and (max-width: 900px) {
+  body.is-battle .sheet { padding-bottom: 200px; }
+}
+
+/* 横屏矮屏（手机横过来）：战斗画面优先，页头压扁 */
+@media (max-height: 480px) and (orientation: landscape) {
+  .sheet-head { padding-top: 4px; padding-bottom: 4px; }
+  .sheet-head h1 { font-size: 19px; }
+  .sheet-head .small { display: none; }
+  /* 底部的说明文字在横屏时会把画面挤扁 */
+  .note { display: none; }
+}
+
+/* ---------------- 竖屏对战：**能打** ----------------
+   原来这里写的是"竖屏只显示《把手机横过来》，藏掉战斗界面" ——
+   理由是"横板对战在 412px 宽的竖屏上摆不开，按钮一放就盖住画面"。
+   但用户明确要求「**无论大世界还是作战**」都要能在手机上玩，
+   藏掉等于手机用户根本打不了。所以改成"挤一挤也要装下"：
+     页头/说明压扁 → 舞台吃中间那块 → HUD 与触控按钮落在下沿，
+   按钮本来就挂在 body 上（见 arena.js），不会再被挤走。 */
+.rotate-hint { display: none; }
+
+@media (orientation: portrait) and (max-width: 820px) {
+  body.is-battle .rotate-hint { display: none; }        /* 不再挡路 */
+  body.is-battle .battle-layout { display: flex; }
+  body.is-battle .sheet-head { padding: 4px 0; }
+  body.is-battle .sheet-head h1 { font-size: 18px; }
+  body.is-battle .sheet-head .sub, body.is-battle .note { display: none; }
+
+  /* 舞台：占满宽度，高度吃到"按钮上方"为止。
+     ⚠️ 不能写 `height: auto` —— 那会把原来的 clamp(360px,52vh,620px) 覆盖掉，
+        高度塌成内容高度（实测 canvas 只剩 124px）。要给**明确高度**。 */
+  body.is-battle .battle-stage {
+    width: 100%;
+    height: 42vh;
+    min-height: 240px;
+  }
+  body.is-battle .battle-wrap { width: 100%; }
+
+  /* 竖屏改成**单列**：舞台在上占满宽度，信息栏落到下面。
+     ⚠️ 不能"把信息栏藏掉" —— 开局按钮（data-mode=ai/pvp）就在那个面板里，
+        藏了之后点不到开局（实测超时）。单列既让舞台占满宽度，
+        又让按钮还在（页面会往下滚一点，可以接受）。 */
+  body.is-battle .battle-layout { display: block; }
+  body.is-battle .battle-wrap { width: 100%; }
+}
+
+/* ---------------- 同问（好友对战）与难度基准：窄屏 ----------------
+   两块比分牌**不并成一列** —— 抢答的时候"我几分、对面几分"必须一眼扫到，
+   上下叠起来就得来回找。挤一挤也要并排：缩小字号、收窄内边距。
+   沿 320 / 360 / 412 / 578 这几种真机宽度都看过（用户的大屏手机开显示缩放时
+   CSS 视口可能只有 320，只在 412 下测是不够的）。 */
+@media (max-width: 820px) {
+  .duel-board { gap: 6px; }
+  .duel-side { padding: 6px 8px; }
+  .duel-name { font-size: 14px; }
+  .duel-num { font-size: 22px; }
+  .duel-vs-word { font-size: 13px; letter-spacing: 1px; }
+  .duel-room { letter-spacing: 1px; }
+  .mode-tab { padding: 5px 9px; font-size: 13px; }
+  .npc-card { width: 132px; }
+  .join-input { width: 96px; }
+
+  /* ⚠️ 落指下限要在**宽度这一层**也钉一遍，不能只写在 `pointer: coarse` 里。
+     实测：窄屏上档位按钮只有 37px 高（低于 40px 的下限）——因为那些浏览器
+     环境里 pointer 未必报 coarse（Playwright 的移动仿真就不一定报），
+     而"屏窄"是确定的。宽屏触控设备由文件末尾那条 coarse 兜着。 */
+  .base-chip, .mode-tab, .join-input, .npc-card { min-height: 44px; }
+  .base-chip, .mode-tab { display: inline-flex; align-items: center; }
+}
+
+@media (max-width: 400px) {
+  .duel-board { gap: 4px; }
+  .duel-side { padding: 5px 6px; }
+  .duel-name { font-size: 13px; }
+  .duel-num { font-size: 19px; }
+  .base-chip { padding: 6px 8px; }
+  .base-label { font-size: 14px; }
+}
+
+/* 触屏：这些按钮都是"要点"的，给足 44px 的落指高度 */
+@media (pointer: coarse) {
+  .base-chip, .npc-card, .mode-tab { min-height: 44px; align-items: center; }
+  .join-input { min-height: 44px; }
+
+  /* ⚠️ 顶栏那排**页签不许被压扁**，这一条要按"是不是触摸设备"判，
+     不能按宽度判。原来只在 `max-width: 560px` 里写了"横向滚动 + 不压缩"，
+     而手机**横过来**是 915px 宽 —— 落在那个查询之外，
+     于是这一行（PAGES 有十项 + 剧情）一溢出，页签就被 flex 压到 39px 宽，
+     低于 44px 的落指下限（e2e_mobile_ui 在横屏两项上都报了出来）。
+     页签宽度是拇指的事，跟屏幕多宽没关系：放不下就让它滚。
+
+     而且必须**给导航单独一整行**（order 3 + 占满宽度）。
+     只在原地开横向滚动是不够的：横屏时它跟"纸色/主人/登出"同挤一行，
+     滚出去的那几项在坐标上还落在屏幕里，命中测试量到的是压在上面的登出按钮
+     —— 也就是"看得见、点不着"。这正是 560px 那段注释里记过的老坑，
+     这里按同样的办法解决：让导航独占一行，别跟别的东西抢位置。 */
+  .topbar { flex-wrap: wrap; row-gap: 4px; }
+  .topbar .spacer { display: none; }
+  #top-nav {
+    order: 3; flex: 1 1 100%; min-width: 0;
+    flex-wrap: nowrap; overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  #top-nav::-webkit-scrollbar { display: none; }
+  #top-nav .tab { flex: 0 0 auto; }
+  .topbar .row-tight:last-child { order: 2; margin-left: auto; }
+}

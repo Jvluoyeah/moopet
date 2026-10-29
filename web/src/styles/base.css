@@ -1,0 +1,186 @@
+/* ============================================================
+   基础层：质感、排版、版心、档案册布局
+   ============================================================ */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  background-color: var(--paper);
+  background-image: var(--tex-grid);
+  background-size: var(--grid) var(--grid);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 纸张噪点：铺一层就够，多了像电视雪花 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--tex-noise);
+  mix-blend-mode: multiply;
+}
+:root[data-theme="night"] body::before { mix-blend-mode: screen; }
+
+/* 纤维 + 四角做旧 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--tex-fiber), var(--tex-vignette);
+}
+
+#app { position: relative; z-index: 1; }
+
+a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--blue-deep); }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+
+/* ---------------- 排版 ---------------- */
+h1, h2, h3 { margin: 0; font-weight: 700; line-height: 1.15; }
+
+.display {
+  font-family: var(--font-serif);
+  font-size: var(--fs-display);
+  letter-spacing: var(--tracking-tight);
+  line-height: .95;
+}
+h1, .h1 { font-family: var(--font-serif); font-size: var(--fs-h1); letter-spacing: -.045em; }
+h2, .h2 { font-family: var(--font-serif); font-size: var(--fs-h2); letter-spacing: -.03em; }
+h3, .h3 { font-size: var(--fs-h3); letter-spacing: -.015em; }
+
+.kicker {
+  margin: 0 0 8px;
+  color: var(--blue);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+}
+.lede { max-width: 60ch; color: var(--muted); font-size: 16.5px; line-height: 1.75; }
+.muted { color: var(--muted); }
+.small { font-size: var(--fs-sm); }
+.tiny { font-size: var(--fs-xs); }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.hand { font-family: var(--font-serif); font-style: italic; color: var(--leather); }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.nowrap { white-space: nowrap; }
+.center { text-align: center; }
+.right { text-align: right; }
+
+/* ---------------- 版心与档案册布局 ---------------- */
+.shell {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr) 268px;
+  gap: var(--gap);
+  width: min(var(--page-max), calc(100% - 32px));
+  margin: 0 auto;
+  padding: 22px 0 64px;
+  align-items: start;
+}
+.shell.no-aside { grid-template-columns: 232px minmax(0, 1fr); }
+.shell.full { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1080px) {
+  .shell, .shell.no-aside { grid-template-columns: 1fr; }
+}
+
+/* 左侧：册页目录 */
+.catalogue { position: sticky; top: 88px; }
+@media (max-width: 1080px) { .catalogue { position: static; } }
+
+/* 右侧：便签栏 */
+.aside { position: sticky; top: 88px; display: grid; gap: 14px; }
+@media (max-width: 1080px) { .aside { position: static; } }
+
+/* ---------------- 顶栏 ---------------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 66px;
+  padding: 0 max(16px, calc((100vw - var(--page-max)) / 2));
+  border-bottom: 1px solid var(--line);
+  box-shadow: inset 0 -2px 0 rgba(36, 71, 216, .12);
+  background: color-mix(in srgb, var(--paper) 93%, transparent);
+  backdrop-filter: blur(10px);
+}
+.topbar .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  text-decoration: none;
+  color: var(--ink);
+  white-space: nowrap;
+}
+/* 印章式标志：方块 + 反白字，和参考站的 logo-mark 同一路数 */
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1;
+}
+.brand-small { font-size: var(--fs-xs); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+.topbar .spacer { flex: 1; }
+
+/* ---------------- 通用排布工具 ---------------- */
+.stack { display: grid; gap: 14px; }
+.stack-sm { display: grid; gap: 8px; }
+.stack-lg { display: grid; gap: 24px; }
+.row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.row-tight { display: flex; align-items: center; gap: 6px; }
+.between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: var(--gap); }
+@media (max-width: 720px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ---------------- 过渡与骨架 ---------------- */
+.fade-in { animation: fade-in var(--dur) var(--ease) both; }
+@keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--paper-deep) 25%, var(--paper-edge) 37%, var(--paper-deep) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s linear infinite;
+  min-height: 14px;
+}
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

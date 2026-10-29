@@ -1,0 +1,20 @@
+[
+  {
+    "group": "props",
+    "index": 13,
+    "name": "rock",
+    "F": 556,
+    "R": 520,
+    "x": 1861,
+    "z": 972
+  },
+  {
+    "group": "props",
+    "index": 16,
+    "name": "mushroom",
+    "F": 338,
+    "R": 490,
+    "x": 1768,
+    "z": 1172
+  }
+]

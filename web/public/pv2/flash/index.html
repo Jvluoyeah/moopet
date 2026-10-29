@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>长夜月 · 快闪 PV（30s）</title>
+<!--
+  ==========================================================================
+  长夜月 · 快闪 PV        30 秒 · 双字幕
+  ==========================================================================
+  情绪曲线：冷（慢）→ 转折（加速）→ 快闪（最快）→ 落点（全黑）
+  字幕：中文居中放大，英文细无衬线小字压正下方，打字机音效逐字出
+        「残破的废铁」「它就永远在」两句带 glitch，英文迟 0.2 秒
+
+  播放 /pv2/flash/    导出 tools/pv_render.py --url ".../pv2/flash/?still=1" --all
+  ==========================================================================
+-->
+<style>
+  :root{
+    --paper:#f5f1e8; --ink:#111211; --seal:#a8332a;
+    --sans:"Times New Roman",Times,"Nimbus Roman",Georgia,serif;
+    --serif:"LXGW Bright",ui-serif,Georgia,"Noto Serif SC","Songti SC",STSong,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden}
+  body{font-family:var(--serif);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+  #stage{position:relative;width:100vw;height:100vh;overflow:hidden;background:#000;isolation:isolate}
+
+  #img{position:absolute;inset:-4vw;z-index:1;transform-origin:50% 50%}
+  #img img{width:100%;height:100%;object-fit:cover;display:block}
+  #veil{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 52%,rgba(0,0,0,.20),rgba(0,0,0,.72) 100%)}
+  #sil{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0}
+  #sil .plate{position:absolute;inset:0}
+  #sil .fig{position:absolute;left:50%;top:50%}
+
+  /* ── 字幕 ── */
+  #sub{position:absolute;left:0;right:0;bottom:14vh;z-index:6;text-align:center;
+    padding:0 8vw;pointer-events:none;opacity:0}
+  #sub .cn{font-size:clamp(30px,5.4vw,78px);line-height:1.3;letter-spacing:.06em;font-weight:600;
+    background:linear-gradient(178deg,#ffffff 0%,#fdf6e4 46%,#f0dcae 70%,#d8b877 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 0 1.5px #000) drop-shadow(0 0 1.5px #000)
+           drop-shadow(0 3px 14px rgba(0,0,0,.95))}
+  /* 英文：细无衬线、小、字距拉开，压在中文正下方 */
+  /* 英文：Times New Roman。衬线小字压在大号中文字下面，
+     比无衬线更像印刷品，也更贴这个世界（档案册、铅字）。 */
+  #sub .en{margin-top:.62em;font-family:var(--sans);font-weight:400;
+    font-size:clamp(11px,1.42vw,21px);letter-spacing:.13em;line-height:1.55;
+    color:rgba(245,241,232,.86);text-shadow:0 1px 10px rgba(0,0,0,.95)}
+  #sub .en.glitch{animation:gl .28s steps(2,end) 3}
+  @keyframes gl{
+    0%{transform:translate(0,0);text-shadow:0 1px 10px rgba(0,0,0,.95)}
+    30%{transform:translate(-2px,1px);
+        text-shadow:2px 0 0 rgba(224,104,90,.85),-2px 0 0 rgba(90,180,224,.75),0 1px 10px #000}
+    60%{transform:translate(2px,-1px);
+        text-shadow:-3px 0 0 rgba(224,104,90,.7),3px 0 0 rgba(90,180,224,.6),0 1px 10px #000}
+    100%{transform:translate(0,0);text-shadow:0 1px 10px rgba(0,0,0,.95)}
+  }
+  /* 重音句：中文换成印章红 */
+  #sub.red .cn{background:linear-gradient(178deg,#ffd9c8,#e0685a 60%,#a8332a);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ══════ 四个自制镜头（素材库没有，用 CSS 画） ══════ */
+  .fx{position:absolute;inset:0;overflow:hidden}
+
+  /* ① 战斗受击：剪影被击中 → 后仰 + 冲击波 + 火星 */
+  .fx.hurt{background:var(--ink)}
+  .fx.hurt .dg{position:absolute;left:50%;top:52%;height:58vh;object-fit:contain;
+    filter:brightness(0) invert(1);translate:-50% -50%}
+  .fx.hurt .wave{position:absolute;left:50%;top:52%;translate:-50% -50%;
+    width:12vh;height:12vh;border-radius:50%;border:3px solid rgba(245,241,232,.9);opacity:0}
+  .fx.hurt .hot{position:absolute;left:50%;top:52%;translate:-50% -50%;
+    width:46vh;height:46vh;border-radius:50%;opacity:0;
+    background:radial-gradient(circle,rgba(255,255,255,.9),rgba(255,255,255,0) 62%)}
+  .fx.hurt .sp{position:absolute;width:2.6vh;height:.5vh;background:#f5f1e8;opacity:0}
+
+  /* ② 磨损的铁爪：三根斜插进画面的爪，越推越近 */
+  .fx.claw{background:#0a0908}
+  .fx.claw i{position:absolute;top:-8%;width:11vh;height:82vh;
+    background:linear-gradient(180deg,#585349,#2a2723 46%,#141210);
+    clip-path:polygon(46% 0,96% 16%,70% 100%,30% 100%,4% 16%);
+    transform-origin:50% 0;box-shadow:inset 0 0 3vh rgba(0,0,0,.8)}
+  .fx.claw i:nth-child(2){left:26%} .fx.claw i:nth-child(3){left:44%} .fx.claw i:nth-child(4){left:62%}
+  .fx.claw .wear{position:absolute;inset:0;opacity:.55;
+    background:repeating-linear-gradient(72deg,rgba(255,255,255,.07) 0 1.5px,transparent 1.5px 8px),
+               repeating-linear-gradient(-64deg,rgba(0,0,0,.5) 0 2px,transparent 2px 13px)}
+  .fx.claw .rust{position:absolute;inset:0;opacity:.34;mix-blend-mode:screen;
+    background:radial-gradient(circle at 62% 40%,rgba(168,72,40,.75),transparent 46%),
+               radial-gradient(circle at 34% 72%,rgba(140,59,46,.6),transparent 40%)}
+  .fx.claw .glint{position:absolute;top:0;bottom:0;width:9vh;mix-blend-mode:screen;opacity:0;
+    background:linear-gradient(100deg,transparent,rgba(255,246,228,.85),transparent)}
+
+  /* ③ 闪红光的眼：两只角形眼，红光呼吸 */
+  .fx.eye{background:#050505;display:grid;place-items:center}
+  .fx.eye .pair{display:flex;gap:8vh}
+  .fx.eye b{display:block;width:17vh;height:5.4vh;background:#d0382c;
+    clip-path:polygon(0 46%,20% 0,100% 30%,100% 70%,20% 100%);
+    box-shadow:0 0 7vh 2.4vh rgba(208,56,44,.6);
+    animation:eyep 2.4s ease-in-out infinite}
+  @keyframes eyep{0%,100%{filter:brightness(.72)}46%{filter:brightness(1.5)}}
+  .fx.eye .scan{position:absolute;left:0;right:0;height:2px;background:rgba(255,110,90,.22)}
+
+  /* ④ 虚掩的门缝：一条竖直的亮缝，微微抖 */
+  .fx.crack{background:#050505}
+  .fx.crack .slit{position:absolute;left:50%;top:0;bottom:0;translate:-50% 0;
+    background:linear-gradient(180deg,#fff,#ffedc9 60%,#e8d3a8);filter:blur(.5px);
+    box-shadow:0 0 10vh 2.6vh rgba(255,236,200,.32)}
+  .fx.crack .edge{position:absolute;top:0;bottom:0;background:#0b0b0a}
+  .fx.crack .dust{position:absolute;width:3px;height:3px;border-radius:50%;
+    background:rgba(255,240,210,.75)}
+
+  #grain{position:absolute;inset:0;z-index:8;pointer-events:none;opacity:.28;mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.22'/></svg>")}
+  #black{position:absolute;inset:0;z-index:9;background:#000;opacity:0;pointer-events:none}
+  #flash{position:absolute;inset:0;z-index:9;background:#fff;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="img"><img id="imgEl" alt=""></div>
+  <div id="veil"></div>
+  <div id="sil"></div>
+  <div id="fx" style="position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0"></div>
+  <div id="sub"><div class="cn"></div><div class="en"></div></div>
+  <div id="grain"></div><div id="black"></div><div id="flash"></div>
+</div>
+
+<script>
+const A='../assets/';
+const B=(c,...q)=>A+'breeds/'+c+'/'+q.join('/');
+const pup=c=>A+'breeds/'+c+'/forms/sit.png';
+const CODES=['samoyed','husky','border_collie','german_shepherd','golden','shiba','corgi','bichon'];
+/* REC 必须声明在 BEATS 之前——BEATS 里要用它。放到后面就是暂时性死区，脚本一加载整个挂掉。 */
+const REC=A+'cast/recorder_full.png';
+
+
+/* ══════════════════════════════════════════════════════════════
+   时间轴 30.0 秒
+   beat: {t 起, d 长, cn, en, red 是否红字, gl 是否 glitch, shots}
+   shot: [类型, 素材, 相对 beat 的起点, 时长]
+        img=场景图 / sil=狗或人剪影 / paper=白底黑剪影 / black=纯黑
+   ══════════════════════════════════════════════════════════════ */
+const BEATS=[
+  /* ── A 冷：3.3 秒一句（原来 4.0，收紧） ─────────────────── */
+  {t:0.0, d:3.3, cn:'在这个连呼吸都会结冰的世界。',
+   en:'In a world where even breath turns to ice.',
+   shots:[['img','scene/tower_out',0,3.3]]},
+
+  {t:3.3, d:3.3, cn:'你只是个握着档案册的绝望者。',
+   en:'You are just a desperate soul clutching a dossier.',
+   shots:[['sil',{figs:[{src:REC,h:70,x:0}]},0,3.3]]},
+
+  /* ── B 转折：继续加速 ─────────────────────────────────── */
+  {t:6.6, d:1.4, cn:'直到，', en:'Until,',
+   shots:[['img','scene/door_light',0,1.4]]},
+
+  {t:8.0, d:2.2, cn:'你签下了那个名字。', en:'You signed that name.',
+   shots:[['img','scene/desk_top',0,2.2]]},
+
+  {t:10.2, d:2.6, cn:'唤醒了一堆残破的废铁。',
+   en:'And awakened a pile of broken scrap metal.', gl:1,
+   shots:[['sil',{figs:[{src:pup(CODES[3]),h:56,x:-24}]},0,0.65],
+          ['sil',{figs:[{src:pup(CODES[1]),h:56,x:-8}]},0.65,0.65],
+          ['sil',{figs:[{src:pup(CODES[5]),h:56,x:8}]},1.3,0.65],
+          ['sil',{figs:[{src:pup(CODES[0]),h:58,x:24}]},1.95,0.65]]},
+
+  /* ── C 快闪：全部切成 0.5 秒一刀 ───────────────────────── */
+  {t:12.8, d:2.0, cn:'它为你流不出血。', en:'It cannot bleed for you.',
+   shots:[['fx','hurt',0,0.5],['fx','claw',0.5,0.5],
+          ['fx','eye',1.0,0.5],
+          ['sil',{figs:[{src:pup(CODES[2]),h:58,x:6}]},1.5,0.5]]},
+
+  {t:14.8, d:2.0, cn:'它为你学不会疼。', en:'It cannot feel pain for you.',
+   shots:[['fx','eye',0,0.5],['fx','hurt',0.5,0.5],
+          ['fx','crack',1.0,0.5],
+          ['sil',{figs:[{src:REC,h:60,x:-8}]},1.5,0.5]]},
+
+  {t:16.8, d:2.0, cn:'它只会用僵硬的金属腿，',
+   en:'It only knows how to drag its stiff metal legs,',
+   shots:[['fx','claw',0,0.5],
+          ['sil',{figs:[{src:pup(CODES[0]),h:56,x:-20}]},0.5,0.5],
+          ['fx','crack',1.0,0.5],
+          ['sil',{figs:[{src:pup(CODES[3]),h:56,x:20}]},1.5,0.5]]},
+
+  {t:18.8, d:2.2, cn:'笨拙地走向你。', en:'To clumsily walk toward you.',
+   shots:[['approach',CODES[0],0,2.2]]},
+
+  /* ── D 落点：全黑，重音砸下 ───────────────────────────── */
+  {t:21.0, d:2.6, cn:'只要你还肯推开那扇门。',
+   en:'As long as you still open that door.',
+   shots:[['doorapproach',null,0,1.8],['black',null,1.8,0.8]]},
+
+  {t:23.6, d:2.4, cn:'它就永远在。', en:'It will always be there.', red:1, gl:1,
+   shots:[['black',null,0,1.2],
+          ['sil',{figs:[{src:REC,h:58,x:-14},{src:pup(CODES[0]),h:24,x:14,dy:4}]},1.2,1.2]]},
+];
+const TOTAL=26.0;
+
+/* ══ 打字机音效（合成，不需要素材） ═══════════════════════════ */
+let AC=null; const actx=()=>{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC;};
+function click(t,v=.16){
+  const c=actx(),n=c.createBufferSource();
+  const L=Math.floor(c.sampleRate*0.035),b=c.createBuffer(1,L,c.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<L;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/L,9);
+  n.buffer=b;
+  const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=2100; bp.Q.value=1.1;
+  const g=c.createGain(); g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(.0001,t+.05);
+  n.connect(bp); bp.connect(g); g.connect(c.destination); n.start(t);
+  if(v>.12){ const c2=actx(),o=c2.createOscillator(),g2=c2.createGain();   // 空格/回车更沉一点
+    o.type='square'; o.frequency.value=118; g2.gain.setValueAtTime(v*.35,t);
+    g2.gain.exponentialRampToValueAtTime(.0001,t+.07);
+    o.connect(g2); g2.connect(c.destination); o.start(t); o.stop(t+.08); }
+}
+function ding(t){ const c=actx(),o=c.createOscillator(),g=c.createGain();
+  o.type='sine'; o.frequency.value=1180; g.gain.setValueAtTime(.10,t);
+  g.gain.exponentialRampToValueAtTime(.0001,t+.5);
+  o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.55); }
+let sched=null; const typed={};
+function pumpAudio(){
+  if(!sched) return;
+  const c=actx(), now=c.currentTime, base=sched.start;
+  for(const bt of BEATS){
+    const key=bt.t;
+    if(typed[key]) continue;
+    const at=base+bt.t;
+    if(at>now+0.5) continue;
+    typed[key]=1;
+    /* 逐字机打：中文每 2 字一下，英文按词 */
+    const n=Math.max(2,Math.round(bt.cn.length/2));
+    const step=Math.min(0.16,(bt.d*0.55)/n);
+    for(let i=0;i<n;i++) click(at+0.05+i*step, .13+ (i%3===0?.05:0));
+    click(at+0.05+n*step+0.06,.22);              // 回车
+    if(bt.red) ding(at+0.05+n*step+0.12);
+  }
+}
+
+/* ══ 渲染 ═════════════════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),imgWrap=$('img'),imgEl=$('imgEl'),sil=$('sil'),
+      sub=$('sub'),subCn=sub.querySelector('.cn'),subEn=sub.querySelector('.en'),
+      black=$('black'),flash=$('flash');
+let memo={},SEEK=false;
+
+const beatAt=t=>{ for(const b of BEATS) if(t>=b.t&&t<b.t+b.d) return b; return BEATS[BEATS.length-1]; };
+/* 四个自制镜头的 DOM 骨架 */
+function mkFx(kind){
+  const d=document.createElement('div'); d.className='fx '+kind;
+  if(kind==='hurt'){
+    d.innerHTML=`<img class="dg" src="${pup(CODES[0])}"><div class="hot"></div>`
+      +`<div class="wave"></div>`+[0,1,2,3,4,5].map(()=>'<div class="sp"></div>').join('');
+  } else if(kind==='claw'){
+    d.innerHTML='<i></i><i></i><i></i><div class="wear"></div><div class="rust"></div>'
+      +'<div class="glint"></div>';
+  } else if(kind==='eye'){
+    d.innerHTML='<div class="pair"><b></b><b></b></div><div class="scan"></div>';
+  } else {
+    d.innerHTML='<div class="slit"></div><div class="edge" style="left:0;width:49.2%"></div>'
+      +'<div class="edge" style="right:0;width:49.2%"></div>'
+      +[0,1,2,3,4,5,6,7].map(()=>'<div class="dust"></div>').join('');
+  }
+  return d;
+}
+/* 每个自制镜头的运动（只吃 p，0→1，方便逐帧导出） */
+function updFx(el,kind,p,t){
+  const q=x=>Math.max(0,Math.min(1,x));
+  if(kind==='hurt'){
+    const hit=q((p-0.16)/0.10);                     // 命中
+    const rec=q((p-0.26)/0.74);                     // 后仰
+    const g=el.querySelector('.dg');
+    g.style.transform=`translateX(${(rec*10).toFixed(1)}vw) `
+      +`rotate(${(rec*13).toFixed(1)}deg) scale(${(1+hit*0.05).toFixed(3)})`;
+    g.style.filter='brightness(0) invert(1) '
+      +`opacity(${(1-hit*0.75+rec*0.75).toFixed(2)})`;
+    const w=el.querySelector('.wave'), ho=el.querySelector('.hot');
+    if(hit>0&&hit<1){ w.style.width=w.style.height=(12+hit*86).toFixed(0)+'vh';
+      w.style.opacity=((1-hit)*0.85).toFixed(2); } else w.style.opacity=0;
+    ho.style.opacity=(hit>0?(1-hit)*0.9:0).toFixed(2);
+    el.querySelectorAll('.sp').forEach((s,i)=>{
+      const e=q((p-0.18)/0.5), a=(-40+i*16)*Math.PI/180;
+      s.style.left=`calc(50% + ${(Math.cos(a)*e*46).toFixed(1)}vw)`;
+      s.style.top=`calc(52% + ${(Math.sin(a)*e*40).toFixed(1)}vh)`;
+      s.style.transform=`rotate(${(-40+i*16).toFixed(0)}deg)`;
+      s.style.opacity=(1-e).toFixed(2);
+    });
+  } else if(kind==='claw'){
+    const e=q(p);
+    el.querySelectorAll('i').forEach((c,i)=>{
+      c.style.transform=`translateY(${(-30+e*34).toFixed(1)}vh) rotate(${((i-1.5)*4).toFixed(1)}deg) `
+        +`scale(${(0.85+e*0.55).toFixed(3)})`;
+    });
+    const gl=el.querySelector('.glint'); gl.style.left=(-20+e*130).toFixed(1)+'%';
+    gl.style.opacity=(Math.sin(p*Math.PI)*0.9).toFixed(2);
+  } else if(kind==='eye'){
+    const e=q((p-0.1)/0.6);
+    el.querySelectorAll('b').forEach((b,i)=>{
+      b.style.width=(1+e*17).toFixed(1)+'vh';
+      b.style.opacity=(0.25+e*0.75).toFixed(2);
+    });
+    const sc=el.querySelector('.scan');
+    sc.style.top=(18+((t*38)%64)).toFixed(1)+'%';
+    sc.style.opacity=(0.10+Math.abs(Math.sin(t*3))*0.22).toFixed(2);
+  } else {
+    const e=q(p);
+    const sl=el.querySelector('.slit');
+    const wob=0.6+Math.abs(Math.sin(t*9))*0.5;      // 缝在抖
+    sl.style.width=(1.4+e*1.4)*wob.toFixed(2)+'vh';
+    sl.style.opacity=(0.75+Math.sin(t*7)*0.2).toFixed(2);
+    const gap=(1.6+Math.sin(t*5)*0.4).toFixed(2);
+    el.querySelectorAll('.edge')[0].style.width=`calc(49.2% - ${gap}vh)`;
+    el.querySelectorAll('.edge')[1].style.width=`calc(49.2% - ${gap}vh)`;
+    el.querySelectorAll('.dust').forEach((d2,i)=>{
+      const y=((t*11+i*9)%100), x=(Math.sin(t*1.6+i)*2.2+i*0.5-1.8);
+      d2.style.left=`calc(50% + ${x.toFixed(2)}vh)`;
+      d2.style.top=y.toFixed(1)+'%';
+      d2.style.opacity=(0.5+Math.sin(t*2+i)*0.4).toFixed(2);
+    });
+  }
+}
+
+function silFig(src,h,x=0,dy=0){
+  const im=document.createElement('img'); im.className='fig'; im.src=src;
+  im.style.cssText=`height:${h}vh;object-fit:contain;`
+    +`translate:calc(-50% + ${x}vw) calc(-50% + ${dy}vh);`;
+  im.style.filter='brightness(0) invert(1)';
+  return im;
+}
+
+function render(t){
+  const b=beatAt(t), k=(t-b.t)/b.d;
+  const onNew=(memo.key!==b.t);
+  if(onNew){ memo={key:b.t}; }
+
+  /* ── 这一 beat 里的镜头 ── */
+  let sh=b.shots[b.shots.length-1];
+  for(const s of b.shots) if(t>=b.t+s[2] && t<b.t+s[2]+s[3]) sh=s;
+  const kind=sh[0], sd=sh[1], slocal=t-(b.t+sh[2]), sp=Math.max(0,Math.min(1,slocal/sh[3]));
+
+  let src=null, silOn=0, silFig_=null, paperOn=0, blackLvl=0, fxOn=0, fxKind=null;
+  if(kind==='img'){ src=sd; }
+  else if(kind==='sil'){ silOn=1; silFig_=sd; }
+  else if(kind==='paper'){ paperOn=1; }
+  else if(kind==='approach'){        /* 笨拙地走向你：记录员站定，狗从远处走近他 */
+    silOn=1;
+    silFig_={figs:[{src:REC,h:64,x:-4},
+                   {src:pup(sd),h:13+sp*33,x:26-sp*15,dy:sp*7}]};
+  }
+  else if(kind==='doorapproach'){    /* 推开那扇门：他从画面左侧走到门缝的光里 */
+    src='scene/door_light';
+    silOn=1;
+    silFig_={figs:[{src:REC,h:58,x:-30+sp*26,dy:6-sp*5}]};
+  }
+  else if(kind==='black'){ blackLvl=1; }
+  else if(kind==='fx'){ fxOn=1; fxKind=sd; }
+
+  /* 背景图 */
+  if(src){
+    if(imgEl.dataset.k!==src){ imgEl.dataset.k=src; imgEl.src=A+src+'.png'; }
+    imgWrap.style.opacity=1;
+    const from=1.02+ (b.t>20?0.10:0), to=1.14+(b.t>20?0.06:0);
+    imgWrap.style.transition='none';
+    imgWrap.style.transform=`scale(${(from+(to-from)*k).toFixed(4)})`;
+    if(!SEEK&&onNew){ imgWrap.style.transition=`transform ${b.d}s linear`;
+      imgWrap.style.transform=`scale(${to})`; }
+  } else { imgWrap.style.opacity=0; imgEl.dataset.k=''; }
+
+  /* 剪影（黑底白影 = 机械狗 / 白底黑影 = 别人的册子里） */
+  if(silOn&&silFig_){
+    const figs=silFig_.figs||[];
+    const key='sil:'+b.t+':'+figs.map(f=>f.src+f.h+f.x+(f.dy||0)).join('|');
+    if(sil.dataset.k!==key){
+      sil.dataset.k=key;
+      const box=document.createElement('div'); box.style.cssText='position:absolute;inset:0';
+      const pl=document.createElement('div'); pl.className='plate';
+      pl.style.background='var(--ink)'; box.appendChild(pl);
+      figs.forEach(f=>box.appendChild(silFig(f.src,f.h,f.x||0,f.dy||0)));
+      sil.replaceChildren(box);
+    }
+  } else if(sil.dataset.k){ sil.dataset.k=''; sil.replaceChildren(); }
+  sil.style.opacity=silOn?1:0;
+
+  /* 四个自制镜头 */
+  if(fxOn){
+    const key='fx:'+fxKind;
+    if(fx.dataset.k!==key){ fx.dataset.k=key; fx.replaceChildren(mkFx(fxKind)); }
+    updFx(fx.firstElementChild, fxKind, sp, t);
+  } else if(fx.dataset.k){ fx.dataset.k=''; fx.replaceChildren(); }
+  fx.style.opacity=fxOn?1:0;
+
+  /* 黑场 / 白闪 */
+  black.style.opacity=blackLvl;
+  flash.style.opacity=0;
+
+  /* ── 字幕：中文 + 英文（英文迟 0.2s / 带 glitch） ── */
+  const kin=Math.min(1,(t-b.t)/0.38);            // 淡入
+  const kout=Math.min(1,(b.t+b.d-t)/0.28);       // 淡出
+  const op=Math.max(0,Math.min(kin,kout));
+  if(subCn.textContent!==b.cn){ subCn.textContent=b.cn; subEn.textContent=b.en; }
+  sub.className=(b.red?'red':'');
+  sub.style.opacity=op.toFixed(3);
+  /* 英文比中文迟 0.2 秒出现 */
+  const enIn=Math.min(1,Math.max(0,(t-b.t-0.20)/0.38));
+  subEn.style.opacity=(enIn*kout).toFixed(3);
+  subEn.classList.toggle('glitch', !!b.gl && t>b.t+0.2 && t<b.t+1.05);
+
+  memo.tick=(memo.tick||0)+1;
+}
+
+/* ══ 播放 / 逐帧导出 ═══════════════════════════════════════ */
+let t0=0,raf=0,playing=false;
+function loop(now){
+  if(!playing)return;
+  const t=(now-t0)/1000;
+  try{ pumpAudio(); }catch(e){}
+  if(t>=TOTAL){ playing=false; render(TOTAL-0.001); return; }
+  render(t); raf=requestAnimationFrame(loop);
+}
+function start(){
+  cancelAnimationFrame(raf);
+  memo={}; for(const k in typed) delete typed[k];
+  try{ actx().resume(); sched={start:actx().currentTime+0.12}; }catch(e){}
+  t0=performance.now(); playing=true; render(0); raf=requestAnimationFrame(loop);
+}
+addEventListener('click',start);
+addEventListener('keydown',e=>{ if(e.code==='Space'){e.preventDefault();start();} });
+
+SEEK=/[?&]still=1/.test(location.search);
+window.__total=()=>TOTAL;
+window.__seek=tt=>{ SEEK=true; playing=false; cancelAnimationFrame(raf); render(tt); return true; };
+window.__ready=()=>Promise.resolve();
+render(0);
+</script>
+</body>
+</html>

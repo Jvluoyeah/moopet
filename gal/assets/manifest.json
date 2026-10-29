@@ -1,0 +1,2007 @@
+{
+  "version": 1,
+  "buildId": "2026-09-13T07:17:25.031Z-671ef8",
+  "engineVersion": "1.0.0",
+  "title": "长夜月 · 机械狗档案册",
+  "gameId": "1232571e-35b1-412e-8628-e9c35d7f97cd",
+  "entryChapter": "开始",
+  "chapters": [
+    {
+      "id": "开始",
+      "sourceId": "8b370f48-c304-466c-b6c0-a6413359de18",
+      "name": "开始",
+      "file": "chapters/a2b1e9cb1a77.json",
+      "size": 38901,
+      "hash": "a2b1e9cb1a77be32751be11ab0863fa8"
+    },
+    {
+      "id": "第一章",
+      "sourceId": "346e1675-d6aa-4fd5-9b6d-6d2fe433632e",
+      "name": "第一章",
+      "file": "chapters/dd82336b87de.json",
+      "size": 107066,
+      "hash": "dd82336b87deede8ec66c72b893488eb"
+    },
+    {
+      "id": "第二章",
+      "sourceId": "cfcf64b2-fa77-47d6-895f-fe94d02366e3",
+      "name": "第二章",
+      "file": "chapters/5d23924fc04e.json",
+      "size": 92257,
+      "hash": "5d23924fc04eda13cec1a231105d1f3c"
+    },
+    {
+      "id": "第三章",
+      "sourceId": "c7da3497-c3fa-40d6-863a-796579aeb66e",
+      "name": "第三章",
+      "file": "chapters/609749a0c21b.json",
+      "size": 85563,
+      "hash": "609749a0c21bf393ba09bf3958b8afcc"
+    },
+    {
+      "id": "第四章",
+      "sourceId": "2e7e90b2-6365-40c7-9fcd-a64da77a5123",
+      "name": "第四章",
+      "file": "chapters/7a93f5b7be34.json",
+      "size": 85284,
+      "hash": "7a93f5b7be343dc763ea233b2b002968"
+    },
+    {
+      "id": "第五章",
+      "sourceId": "d3919e9a-f300-4a2b-87ba-0d1dfd8defdf",
+      "name": "第五章",
+      "file": "chapters/0b0a3463f52f.json",
+      "size": 109902,
+      "hash": "0b0a3463f52f00ddb50dbdb025c857b8"
+    },
+    {
+      "id": "第六章",
+      "sourceId": "b27be00c-d915-4f7a-ac6d-ca390257246d",
+      "name": "第六章",
+      "file": "chapters/c72739597cc9.json",
+      "size": 99076,
+      "hash": "c72739597cc9f6d92271a5c9d109c258"
+    },
+    {
+      "id": "第七章",
+      "sourceId": "64054adc-99f8-4811-a985-3c151337e89d",
+      "name": "第七章",
+      "file": "chapters/862e1052607d.json",
+      "size": 98983,
+      "hash": "862e1052607d9e9187d86ed67d4f5a0f"
+    },
+    {
+      "id": "第八章",
+      "sourceId": "d042a421-27f5-4902-9557-9abc2745e2da",
+      "name": "第八章",
+      "file": "chapters/244fe0b21072.json",
+      "size": 137167,
+      "hash": "244fe0b21072061eef1033dc04c63a5c"
+    },
+    {
+      "id": "尾声",
+      "sourceId": "e1f7d71f-16ab-4593-8d89-36a60787730f",
+      "name": "尾声",
+      "file": "chapters/3db16959f3bc.json",
+      "size": 6126,
+      "hash": "3db16959f3bc8e32ad5adf9c000041de"
+    }
+  ],
+  "meta": {
+    "file": "meta.json",
+    "size": 82716,
+    "hash": "247e287e5cec4de057be2a501e1c5cba"
+  },
+  "assets": {
+    "2d7bfa329f874193bb6dd29c65c9dd6a": {
+      "type": "audio",
+      "originalName": "room-registry.wav",
+      "file": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
+      "size": 26460044,
+      "mime": "audio/wav"
+    },
+    "11bcdc68c94f9fb06d5f7daf1a33f9db": {
+      "type": "audio",
+      "originalName": "开门.mp3",
+      "file": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
+      "size": 73187,
+      "mime": "audio/mpeg"
+    },
+    "b160e0e6295e8cc3dccfe83a1ece7e57": {
+      "type": "image",
+      "originalName": "snow.png",
+      "file": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
+      "size": 1606,
+      "mime": "image/png"
+    },
+    "6371ebd9ec0699a73092b40d956698c2": {
+      "type": "data",
+      "originalName": "Release1.mp4",
+      "file": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
+      "size": 62178225,
+      "mime": "video/mp4"
+    },
+    "5c5321089158edabb9de22ee165fc2c5": {
+      "type": "audio",
+      "originalName": "plaza-stonering.wav",
+      "file": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
+      "size": 30693644,
+      "mime": "audio/wav"
+    },
+    "b32a566b65e351af27dc0eed1506bf3a": {
+      "type": "audio",
+      "originalName": "theme-longnight.wav",
+      "file": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
+      "size": 29635244,
+      "mime": "audio/wav"
+    },
+    "21d678e91ce900e87e0dfd826d291132": {
+      "type": "audio",
+      "originalName": "it-speaks.wav",
+      "file": "audio/21d678e91ce900e87e0dfd826d291132.wav",
+      "size": 32810444,
+      "mime": "audio/wav"
+    },
+    "5d76501c12ff8e3cddaf76eaa7c5d175": {
+      "type": "audio",
+      "originalName": "火车.mp3",
+      "file": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
+      "size": 644746,
+      "mime": "audio/mpeg"
+    },
+    "d37b41a1ead817e53ccc19cda7be1225": {
+      "type": "image",
+      "originalName": "长夜月广场-石环.png",
+      "file": "images/d37b41a1ead817e53ccc19cda7be1225.png",
+      "size": 4543037,
+      "mime": "image/png"
+    },
+    "e7db5d9d60d780560341d5c8ffc5e4f8": {
+      "type": "image",
+      "originalName": "石环的局部.png",
+      "file": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
+      "size": 5469841,
+      "mime": "image/png"
+    },
+    "84edd6f79917a27517e52ce22ed3fadb": {
+      "type": "image",
+      "originalName": "长夜月公园.png",
+      "file": "images/84edd6f79917a27517e52ce22ed3fadb.png",
+      "size": 3366857,
+      "mime": "image/png"
+    },
+    "eed2030a48f05d3ea5527e85c70588a0": {
+      "type": "image",
+      "originalName": "月塔的窗.png",
+      "file": "images/eed2030a48f05d3ea5527e85c70588a0.png",
+      "size": 3416427,
+      "mime": "image/png"
+    },
+    "1d47d58bff4c3827ea42b5996b66cfd0": {
+      "type": "image",
+      "originalName": "门缝底下那条光.png",
+      "file": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
+      "size": 3082642,
+      "mime": "image/png"
+    },
+    "1a8d5f4e6f3bd146281cfcee48f87b42": {
+      "type": "image",
+      "originalName": "月光竞技场.png",
+      "file": "images/1a8d5f4e6f3bd146281cfcee48f87b42.png",
+      "size": 2832823,
+      "mime": "image/png"
+    },
+    "f1743f8c2db9c4e6972bc50b2656180b": {
+      "type": "image",
+      "originalName": "登记处 -内（柜台）.png",
+      "file": "images/f1743f8c2db9c4e6972bc50b2656180b.png",
+      "size": 2284699,
+      "mime": "image/png"
+    },
+    "5d9661b42a15e7cb07e561a619a7339a": {
+      "type": "image",
+      "originalName": "柜台的台面.png",
+      "file": "images/5d9661b42a15e7cb07e561a619a7339a.png",
+      "size": 3882599,
+      "mime": "image/png"
+    },
+    "24b61cb51e21b2f23cea7acfb8c69579": {
+      "type": "image",
+      "originalName": "训练场.png",
+      "file": "images/24b61cb51e21b2f23cea7acfb8c69579.png",
+      "size": 3375463,
+      "mime": "image/png"
+    },
+    "2503b43f836a6c5132364f4b4741257b": {
+      "type": "image",
+      "originalName": "户外雪地.png",
+      "file": "images/2503b43f836a6c5132364f4b4741257b.png",
+      "size": 1971840,
+      "mime": "image/png"
+    },
+    "cf55bb020483267995419047752f4c5f": {
+      "type": "image",
+      "originalName": "八格位的图鉴架.png",
+      "file": "images/cf55bb020483267995419047752f4c5f.png",
+      "size": 3913516,
+      "mime": "image/png"
+    },
+    "098653683e7782ec1090265b4e18ffe0": {
+      "type": "image",
+      "originalName": "八格位的图鉴架(有狗).png",
+      "file": "images/098653683e7782ec1090265b4e18ffe0.png",
+      "size": 5444597,
+      "mime": "image/png"
+    },
+    "ab50f1bf4ff47e0c4d66d9c80857f240": {
+      "type": "image",
+      "originalName": "册子摊开的一页.png",
+      "file": "images/ab50f1bf4ff47e0c4d66d9c80857f240.png",
+      "size": 3436326,
+      "mime": "image/png"
+    },
+    "d90e9c2b4e1fa4a0c3ca9130d45adc1a": {
+      "type": "image",
+      "originalName": "天台.png",
+      "file": "images/d90e9c2b4e1fa4a0c3ca9130d45adc1a.png",
+      "size": 2130964,
+      "mime": "image/png"
+    },
+    "5f97c39312f6c35d6acc67b5c69ca365": {
+      "type": "image",
+      "originalName": "登记处-外（门）.png",
+      "file": "images/5f97c39312f6c35d6acc67b5c69ca365.png",
+      "size": 3546086,
+      "mime": "image/png"
+    },
+    "f38b3d9f3b3f7ac45cf78686f3c5e9b0": {
+      "type": "image",
+      "originalName": "月塔-外.png",
+      "file": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
+      "size": 2781620,
+      "mime": "image/png"
+    },
+    "ec5d0d142719d43a646895373fd620da": {
+      "type": "image",
+      "originalName": "月塔-一楼归档处.png",
+      "file": "images/ec5d0d142719d43a646895373fd620da.png",
+      "size": 2740527,
+      "mime": "image/png"
+    },
+    "5dceed98516305f05e35693868c51aba": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/5dceed98516305f05e35693868c51aba.png",
+      "size": 135854,
+      "mime": "image/png"
+    },
+    "82c76f61b90365ed16cca9733c23666d": {
+      "type": "data",
+      "originalName": "侧头·动.png",
+      "file": "data/82c76f61b90365ed16cca9733c23666d.png",
+      "size": 182023,
+      "mime": "image/png"
+    },
+    "8908427ec5e6438b4213113712f35dc0": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/8908427ec5e6438b4213113712f35dc0.png",
+      "size": 95543,
+      "mime": "image/png"
+    },
+    "f63f55beeef8a9527b2701b974215da9": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/f63f55beeef8a9527b2701b974215da9.png",
+      "size": 129259,
+      "mime": "image/png"
+    },
+    "a1c9a770563b03e361ef5ae9946c8c8e": {
+      "type": "data",
+      "originalName": "技能.png",
+      "file": "data/a1c9a770563b03e361ef5ae9946c8c8e.png",
+      "size": 131379,
+      "mime": "image/png"
+    },
+    "13002be92a0b85efd97ddc7e0e3d5301": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/13002be92a0b85efd97ddc7e0e3d5301.png",
+      "size": 170139,
+      "mime": "image/png"
+    },
+    "803eb02fd1dae8de5b9c89c1dc8d1cc2": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/803eb02fd1dae8de5b9c89c1dc8d1cc2.png",
+      "size": 164533,
+      "mime": "image/png"
+    },
+    "7903020dfbf44138294928a48b004a52": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/7903020dfbf44138294928a48b004a52.png",
+      "size": 113776,
+      "mime": "image/png"
+    },
+    "975736ec9c953b007ae8ea4b441a39dd": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/975736ec9c953b007ae8ea4b441a39dd.png",
+      "size": 94487,
+      "mime": "image/png"
+    },
+    "058fa9def30e4149dcaa35cc2e513804": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/058fa9def30e4149dcaa35cc2e513804.png",
+      "size": 123328,
+      "mime": "image/png"
+    },
+    "7f6f3ff1111567f97a94eae31d14842a": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/7f6f3ff1111567f97a94eae31d14842a.png",
+      "size": 117992,
+      "mime": "image/png"
+    },
+    "97f594ac77e16d02f6f410991d302365": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/97f594ac77e16d02f6f410991d302365.png",
+      "size": 100320,
+      "mime": "image/png"
+    },
+    "9581768d331585c9eb5a6fdda5d55543": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/9581768d331585c9eb5a6fdda5d55543.png",
+      "size": 88487,
+      "mime": "image/png"
+    },
+    "c68a5b747ae772c8d19b9ee2e0e4b1a2": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/c68a5b747ae772c8d19b9ee2e0e4b1a2.png",
+      "size": 146934,
+      "mime": "image/png"
+    },
+    "d6b39161fd5e0814a3b4e9b686a69644": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/d6b39161fd5e0814a3b4e9b686a69644.png",
+      "size": 117624,
+      "mime": "image/png"
+    },
+    "8e28ed7a9b2fa1a2f3b1f04fb1b5f0a3": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/8e28ed7a9b2fa1a2f3b1f04fb1b5f0a3.png",
+      "size": 143380,
+      "mime": "image/png"
+    },
+    "22bcb5534b1a2fcf6b62327f095e4471": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/22bcb5534b1a2fcf6b62327f095e4471.png",
+      "size": 117830,
+      "mime": "image/png"
+    },
+    "8db09eef283e70f25a9d7b54e7126ca1": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/8db09eef283e70f25a9d7b54e7126ca1.png",
+      "size": 137047,
+      "mime": "image/png"
+    },
+    "048e0f8e6b53652aff4ca26361aa09c0": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/048e0f8e6b53652aff4ca26361aa09c0.png",
+      "size": 137488,
+      "mime": "image/png"
+    },
+    "d1f891b52a542d3fc7a0d6f89b4bb6f6": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/d1f891b52a542d3fc7a0d6f89b4bb6f6.png",
+      "size": 124089,
+      "mime": "image/png"
+    },
+    "023c790f40070ac7736cf1a1eb08c720": {
+      "type": "data",
+      "originalName": "背对.png",
+      "file": "data/023c790f40070ac7736cf1a1eb08c720.png",
+      "size": 113759,
+      "mime": "image/png"
+    },
+    "d6966c9c073f2033c219bf6b8098e859": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/d6966c9c073f2033c219bf6b8098e859.png",
+      "size": 152059,
+      "mime": "image/png"
+    },
+    "3f240281795a6962c1ec3c7ceaac4543": {
+      "type": "data",
+      "originalName": "侧头·动.png",
+      "file": "data/3f240281795a6962c1ec3c7ceaac4543.png",
+      "size": 144557,
+      "mime": "image/png"
+    },
+    "4e6ec888e36c986d7ac2183a5c09800e": {
+      "type": "data",
+      "originalName": "低头.png",
+      "file": "data/4e6ec888e36c986d7ac2183a5c09800e.png",
+      "size": 120460,
+      "mime": "image/png"
+    },
+    "f54b95e6afab64d61ad303d5546eae20": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/f54b95e6afab64d61ad303d5546eae20.png",
+      "size": 71081,
+      "mime": "image/png"
+    },
+    "ccdf59a1eecb2ec0c12749e54332db02": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/ccdf59a1eecb2ec0c12749e54332db02.png",
+      "size": 147517,
+      "mime": "image/png"
+    },
+    "3837dbeabbc96dbb177d74ff2743f480": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/3837dbeabbc96dbb177d74ff2743f480.png",
+      "size": 171687,
+      "mime": "image/png"
+    },
+    "fa2986a90ada5f75ec4b7ac733b08fc9": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/fa2986a90ada5f75ec4b7ac733b08fc9.png",
+      "size": 159763,
+      "mime": "image/png"
+    },
+    "f9f25daf18d499c2b9b255ed598f745d": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/f9f25daf18d499c2b9b255ed598f745d.png",
+      "size": 120711,
+      "mime": "image/png"
+    },
+    "8f25ae31fbeab6e7d46d85fe16d23fc0": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/8f25ae31fbeab6e7d46d85fe16d23fc0.png",
+      "size": 119384,
+      "mime": "image/png"
+    },
+    "f1858e319ffb84b78fd48daa3c427504": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/f1858e319ffb84b78fd48daa3c427504.png",
+      "size": 103077,
+      "mime": "image/png"
+    },
+    "d7b24b602337c81b6191dab0c27086bd": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/d7b24b602337c81b6191dab0c27086bd.png",
+      "size": 75588,
+      "mime": "image/png"
+    },
+    "61f5fc429c64d095e3dd5aa057da816d": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/61f5fc429c64d095e3dd5aa057da816d.png",
+      "size": 152661,
+      "mime": "image/png"
+    },
+    "caebd30ddf646431b1f13e791347f4ed": {
+      "type": "data",
+      "originalName": "跑·四.png",
+      "file": "data/caebd30ddf646431b1f13e791347f4ed.png",
+      "size": 110570,
+      "mime": "image/png"
+    },
+    "228df31b66a8575d887a1156279ed1e9": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/228df31b66a8575d887a1156279ed1e9.png",
+      "size": 113277,
+      "mime": "image/png"
+    },
+    "6f044065665cd2d036cfc9ecc7154d7e": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/6f044065665cd2d036cfc9ecc7154d7e.png",
+      "size": 81846,
+      "mime": "image/png"
+    },
+    "fb596abfdb9341b1511c1fba6bf9c8cc": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/fb596abfdb9341b1511c1fba6bf9c8cc.png",
+      "size": 82643,
+      "mime": "image/png"
+    },
+    "8e4619572819c801830af7e5dfaf4ba7": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/8e4619572819c801830af7e5dfaf4ba7.png",
+      "size": 128294,
+      "mime": "image/png"
+    },
+    "f16c72aa5e04212caa402d6d7283b1dc": {
+      "type": "data",
+      "originalName": "咬·二.png",
+      "file": "data/f16c72aa5e04212caa402d6d7283b1dc.png",
+      "size": 110013,
+      "mime": "image/png"
+    },
+    "002c28d49af2fe05130a2c246111f1bc": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/002c28d49af2fe05130a2c246111f1bc.png",
+      "size": 116671,
+      "mime": "image/png"
+    },
+    "3e6c46a093e3cb601439ed626af3fcab": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/3e6c46a093e3cb601439ed626af3fcab.png",
+      "size": 82660,
+      "mime": "image/png"
+    },
+    "cd2a19975ab4e273e0fc02224a42d122": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/cd2a19975ab4e273e0fc02224a42d122.png",
+      "size": 122066,
+      "mime": "image/png"
+    },
+    "809efc47ca4a49a5e7f11c0d303f6abe": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/809efc47ca4a49a5e7f11c0d303f6abe.png",
+      "size": 132814,
+      "mime": "image/png"
+    },
+    "7a4091597b513f8a3ef2658d6a9c5da3": {
+      "type": "data",
+      "originalName": "背对.png",
+      "file": "data/7a4091597b513f8a3ef2658d6a9c5da3.png",
+      "size": 162643,
+      "mime": "image/png"
+    },
+    "803ca0df6ce8e97461e717951cf41d0e": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/803ca0df6ce8e97461e717951cf41d0e.png",
+      "size": 222227,
+      "mime": "image/png"
+    },
+    "18a23418a158e4654b5332ac318a101f": {
+      "type": "data",
+      "originalName": "侧头·动.png",
+      "file": "data/18a23418a158e4654b5332ac318a101f.png",
+      "size": 211215,
+      "mime": "image/png"
+    },
+    "a691c24825f340aaa5f99b1f3c5cb6eb": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/a691c24825f340aaa5f99b1f3c5cb6eb.png",
+      "size": 134898,
+      "mime": "image/png"
+    },
+    "d6e6d6ea97686bf39562c8c9df176720": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/d6e6d6ea97686bf39562c8c9df176720.png",
+      "size": 158188,
+      "mime": "image/png"
+    },
+    "56c3d4cc5e903e40b27b200ee3922e83": {
+      "type": "data",
+      "originalName": "技能.png",
+      "file": "data/56c3d4cc5e903e40b27b200ee3922e83.png",
+      "size": 131582,
+      "mime": "image/png"
+    },
+    "6aec377d67c29a8fb4374f64a18857af": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/6aec377d67c29a8fb4374f64a18857af.png",
+      "size": 182279,
+      "mime": "image/png"
+    },
+    "503f25aabc99a80e6242f1bb32d5e811": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/503f25aabc99a80e6242f1bb32d5e811.png",
+      "size": 139208,
+      "mime": "image/png"
+    },
+    "f23d314c4722a7f99f05506648eefdbc": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/f23d314c4722a7f99f05506648eefdbc.png",
+      "size": 148612,
+      "mime": "image/png"
+    },
+    "9a5b3a177318f92c74bafd77fa056e7e": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/9a5b3a177318f92c74bafd77fa056e7e.png",
+      "size": 108304,
+      "mime": "image/png"
+    },
+    "fb56e87abc9846e0b48992186b316554": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/fb56e87abc9846e0b48992186b316554.png",
+      "size": 141738,
+      "mime": "image/png"
+    },
+    "cd1f90e972326a0e4f1433bf4eaa7eef": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/cd1f90e972326a0e4f1433bf4eaa7eef.png",
+      "size": 103542,
+      "mime": "image/png"
+    },
+    "adaeeca9a50f1a4c1c259504c09fbe9b": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/adaeeca9a50f1a4c1c259504c09fbe9b.png",
+      "size": 70058,
+      "mime": "image/png"
+    },
+    "fd3ca20cfaae3bc1dfe8a468372fb1e1": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/fd3ca20cfaae3bc1dfe8a468372fb1e1.png",
+      "size": 98362,
+      "mime": "image/png"
+    },
+    "41b6f7a8c210eadf816e64531486e343": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/41b6f7a8c210eadf816e64531486e343.png",
+      "size": 130991,
+      "mime": "image/png"
+    },
+    "5a4d5dd3b5c0aaba15d9a223173906d4": {
+      "type": "data",
+      "originalName": "歪头.png",
+      "file": "data/5a4d5dd3b5c0aaba15d9a223173906d4.png",
+      "size": 180484,
+      "mime": "image/png"
+    },
+    "71efe8de3a5495f0e139dc4db9574e94": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/71efe8de3a5495f0e139dc4db9574e94.png",
+      "size": 146181,
+      "mime": "image/png"
+    },
+    "c8a80cc032cbc9e26d2adf8d2e762b26": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/c8a80cc032cbc9e26d2adf8d2e762b26.png",
+      "size": 157987,
+      "mime": "image/png"
+    },
+    "a58606049c3cc62f2455de67d3e7de0f": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/a58606049c3cc62f2455de67d3e7de0f.png",
+      "size": 107009,
+      "mime": "image/png"
+    },
+    "f852d618e555ed16dd037106daa1e3be": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/f852d618e555ed16dd037106daa1e3be.png",
+      "size": 186503,
+      "mime": "image/png"
+    },
+    "caf5e4f1fc6e74edbef15838a3f7d63c": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/caf5e4f1fc6e74edbef15838a3f7d63c.png",
+      "size": 162306,
+      "mime": "image/png"
+    },
+    "734362584f5de64293c9566780362fa4": {
+      "type": "data",
+      "originalName": "背对.png",
+      "file": "data/734362584f5de64293c9566780362fa4.png",
+      "size": 178669,
+      "mime": "image/png"
+    },
+    "b4b1f07838b26be5a568583153409417": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/b4b1f07838b26be5a568583153409417.png",
+      "size": 219383,
+      "mime": "image/png"
+    },
+    "8a4afc69a00816783f9de3cf13ca1349": {
+      "type": "data",
+      "originalName": "侧头·动.png",
+      "file": "data/8a4afc69a00816783f9de3cf13ca1349.png",
+      "size": 211933,
+      "mime": "image/png"
+    },
+    "59c99aed9da338812a44cdea31cbb6e0": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/59c99aed9da338812a44cdea31cbb6e0.png",
+      "size": 201091,
+      "mime": "image/png"
+    },
+    "fa1627b98472b15347ad0ec8451a6059": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/fa1627b98472b15347ad0ec8451a6059.png",
+      "size": 156194,
+      "mime": "image/png"
+    },
+    "359ebefc4b4531a076c5946207725b34": {
+      "type": "data",
+      "originalName": "技能.png",
+      "file": "data/359ebefc4b4531a076c5946207725b34.png",
+      "size": 179133,
+      "mime": "image/png"
+    },
+    "f15e8e32e2ac82c42fa86929815ccdaa": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/f15e8e32e2ac82c42fa86929815ccdaa.png",
+      "size": 188456,
+      "mime": "image/png"
+    },
+    "f61f9380a9028111b1868047d9ec576d": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/f61f9380a9028111b1868047d9ec576d.png",
+      "size": 196574,
+      "mime": "image/png"
+    },
+    "faa6034263ee214de778011423182ddd": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/faa6034263ee214de778011423182ddd.png",
+      "size": 137251,
+      "mime": "image/png"
+    },
+    "ab308e75f88ee8784643edb0d4ddea60": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/ab308e75f88ee8784643edb0d4ddea60.png",
+      "size": 133391,
+      "mime": "image/png"
+    },
+    "1a35c2bd81ef3210c7f28435afb68c85": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/1a35c2bd81ef3210c7f28435afb68c85.png",
+      "size": 122311,
+      "mime": "image/png"
+    },
+    "506b9f4a5c329a0c5ddae25b6cf0b515": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/506b9f4a5c329a0c5ddae25b6cf0b515.png",
+      "size": 162324,
+      "mime": "image/png"
+    },
+    "7f71c5f6825638aef878043e209c1c85": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/7f71c5f6825638aef878043e209c1c85.png",
+      "size": 114462,
+      "mime": "image/png"
+    },
+    "36310c132b5afb8104b3e2272b3ba270": {
+      "type": "data",
+      "originalName": "跑·四.png",
+      "file": "data/36310c132b5afb8104b3e2272b3ba270.png",
+      "size": 179500,
+      "mime": "image/png"
+    },
+    "e822c9c31fd9e44fe0c447e3fdeba3ed": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/e822c9c31fd9e44fe0c447e3fdeba3ed.png",
+      "size": 107861,
+      "mime": "image/png"
+    },
+    "df30c08b7efb15373767d790845f1038": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/df30c08b7efb15373767d790845f1038.png",
+      "size": 202727,
+      "mime": "image/png"
+    },
+    "ff1f0101dbd416f4aa26bcda8ba96bda": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/ff1f0101dbd416f4aa26bcda8ba96bda.png",
+      "size": 192802,
+      "mime": "image/png"
+    },
+    "b169dd57dc142524f4167c0794588c47": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/b169dd57dc142524f4167c0794588c47.png",
+      "size": 198844,
+      "mime": "image/png"
+    },
+    "f8ec50782bb167427d4c2d7897b65b74": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/f8ec50782bb167427d4c2d7897b65b74.png",
+      "size": 177728,
+      "mime": "image/png"
+    },
+    "996d07736ed0a80496f3fbe74bac14ef": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/996d07736ed0a80496f3fbe74bac14ef.png",
+      "size": 176018,
+      "mime": "image/png"
+    },
+    "a1f7e475d350ffe23971316da0494622": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/a1f7e475d350ffe23971316da0494622.png",
+      "size": 154528,
+      "mime": "image/png"
+    },
+    "f685206eff3018279c4700d56f7413cc": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/f685206eff3018279c4700d56f7413cc.png",
+      "size": 149799,
+      "mime": "image/png"
+    },
+    "9995501ff465e87cca3a281133c42103": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/9995501ff465e87cca3a281133c42103.png",
+      "size": 154476,
+      "mime": "image/png"
+    },
+    "c13ebe8f876683d2ff0126f457436c8f": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/c13ebe8f876683d2ff0126f457436c8f.png",
+      "size": 113703,
+      "mime": "image/png"
+    },
+    "10d1eb3ae09e402e936506a98bff8711": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/10d1eb3ae09e402e936506a98bff8711.png",
+      "size": 128772,
+      "mime": "image/png"
+    },
+    "7674778f90753f004389084714a97506": {
+      "type": "data",
+      "originalName": "技能.png",
+      "file": "data/7674778f90753f004389084714a97506.png",
+      "size": 124427,
+      "mime": "image/png"
+    },
+    "a3e6d1b7607f9e4a697157f839afc4dc": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/a3e6d1b7607f9e4a697157f839afc4dc.png",
+      "size": 153853,
+      "mime": "image/png"
+    },
+    "41be8a6afc71dcee7f8e546680e6780f": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/41be8a6afc71dcee7f8e546680e6780f.png",
+      "size": 158061,
+      "mime": "image/png"
+    },
+    "f7418d2658baf58292a07fd5a4539f35": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/f7418d2658baf58292a07fd5a4539f35.png",
+      "size": 107132,
+      "mime": "image/png"
+    },
+    "3dbe9d4104090231284a56c220a32bc8": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/3dbe9d4104090231284a56c220a32bc8.png",
+      "size": 119914,
+      "mime": "image/png"
+    },
+    "cfdd452305c4934db0c4694d09f8d66d": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/cfdd452305c4934db0c4694d09f8d66d.png",
+      "size": 116036,
+      "mime": "image/png"
+    },
+    "b8316f0bab34ec345af239ef695ad4ee": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/b8316f0bab34ec345af239ef695ad4ee.png",
+      "size": 115051,
+      "mime": "image/png"
+    },
+    "0a63acd6e6bb2059a4cfbbc921e85d2b": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/0a63acd6e6bb2059a4cfbbc921e85d2b.png",
+      "size": 103753,
+      "mime": "image/png"
+    },
+    "594ec6d3bb6c0e8f952d0be2aadff595": {
+      "type": "data",
+      "originalName": "跑·四.png",
+      "file": "data/594ec6d3bb6c0e8f952d0be2aadff595.png",
+      "size": 150705,
+      "mime": "image/png"
+    },
+    "3a2966f87676dc012e14a3453cd762ce": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/3a2966f87676dc012e14a3453cd762ce.png",
+      "size": 79940,
+      "mime": "image/png"
+    },
+    "a900eb25453cea4e6cae4619776577b9": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/a900eb25453cea4e6cae4619776577b9.png",
+      "size": 141373,
+      "mime": "image/png"
+    },
+    "bd33f9be154f60e2695f7f3a717f3c45": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/bd33f9be154f60e2695f7f3a717f3c45.png",
+      "size": 135583,
+      "mime": "image/png"
+    },
+    "c160cd65e1f1b3e2a6f8cd5af3a2d9e6": {
+      "type": "data",
+      "originalName": "歪头.png",
+      "file": "data/c160cd65e1f1b3e2a6f8cd5af3a2d9e6.png",
+      "size": 144395,
+      "mime": "image/png"
+    },
+    "195f8dc2a887a45fda65398a50ea664a": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/195f8dc2a887a45fda65398a50ea664a.png",
+      "size": 161840,
+      "mime": "image/png"
+    },
+    "4ca60e5af7e1aefbba5c782f352e6ece": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/4ca60e5af7e1aefbba5c782f352e6ece.png",
+      "size": 145880,
+      "mime": "image/png"
+    },
+    "e301ecfd3eb4ef838d5704a0387c5bf4": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/e301ecfd3eb4ef838d5704a0387c5bf4.png",
+      "size": 129165,
+      "mime": "image/png"
+    },
+    "e87a20afb258aafb77494520b3babde6": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/e87a20afb258aafb77494520b3babde6.png",
+      "size": 131057,
+      "mime": "image/png"
+    },
+    "7bb76af03ebf90d5bec438e3a6d45b3f": {
+      "type": "data",
+      "originalName": "背对.png",
+      "file": "data/7bb76af03ebf90d5bec438e3a6d45b3f.png",
+      "size": 111138,
+      "mime": "image/png"
+    },
+    "b8218044ec78237d3cc404c6f5ccaccd": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/b8218044ec78237d3cc404c6f5ccaccd.png",
+      "size": 151170,
+      "mime": "image/png"
+    },
+    "d7601332ced3d5b202f48751719a7a97": {
+      "type": "data",
+      "originalName": "低头.png",
+      "file": "data/d7601332ced3d5b202f48751719a7a97.png",
+      "size": 83348,
+      "mime": "image/png"
+    },
+    "a7848c9245264f6fd9b92645d3778da2": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/a7848c9245264f6fd9b92645d3778da2.png",
+      "size": 70916,
+      "mime": "image/png"
+    },
+    "110f93aceeef8bd4146fa71f2746d00f": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/110f93aceeef8bd4146fa71f2746d00f.png",
+      "size": 134738,
+      "mime": "image/png"
+    },
+    "d3a623ecd5d97e44c8ebae27140b593c": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/d3a623ecd5d97e44c8ebae27140b593c.png",
+      "size": 140432,
+      "mime": "image/png"
+    },
+    "a60b515882a29f56adf6557d3494971a": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/a60b515882a29f56adf6557d3494971a.png",
+      "size": 160936,
+      "mime": "image/png"
+    },
+    "c056c9da690035761b3dd50a25ea19b6": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/c056c9da690035761b3dd50a25ea19b6.png",
+      "size": 108164,
+      "mime": "image/png"
+    },
+    "8f94d506465ebbf3e9a3461e51f242d1": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/8f94d506465ebbf3e9a3461e51f242d1.png",
+      "size": 100378,
+      "mime": "image/png"
+    },
+    "38315b671a92b9925cfce55c1f4b3095": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/38315b671a92b9925cfce55c1f4b3095.png",
+      "size": 75668,
+      "mime": "image/png"
+    },
+    "3db09389cc0655de585836b313bbab93": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/3db09389cc0655de585836b313bbab93.png",
+      "size": 74398,
+      "mime": "image/png"
+    },
+    "919db84a75d8e52d5036291b076ad6ac": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/919db84a75d8e52d5036291b076ad6ac.png",
+      "size": 155854,
+      "mime": "image/png"
+    },
+    "3e1a488664e87a5fc9d04b1587aab744": {
+      "type": "data",
+      "originalName": "受伤.png",
+      "file": "data/3e1a488664e87a5fc9d04b1587aab744.png",
+      "size": 109163,
+      "mime": "image/png"
+    },
+    "b1a365a64121f1bef7050fa708f3cb3b": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/b1a365a64121f1bef7050fa708f3cb3b.png",
+      "size": 92803,
+      "mime": "image/png"
+    },
+    "ab605517243988b725fef969bf9555d7": {
+      "type": "data",
+      "originalName": "睡脸.png",
+      "file": "data/ab605517243988b725fef969bf9555d7.png",
+      "size": 169030,
+      "mime": "image/png"
+    },
+    "99f32f761aa0406305a0588daba9acde": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/99f32f761aa0406305a0588daba9acde.png",
+      "size": 152184,
+      "mime": "image/png"
+    },
+    "b480883a8abc6270e4b9d86a7830acfa": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/b480883a8abc6270e4b9d86a7830acfa.png",
+      "size": 84897,
+      "mime": "image/png"
+    },
+    "fd32617d075c4e9d08b37f48c74bbdaa": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/fd32617d075c4e9d08b37f48c74bbdaa.png",
+      "size": 143877,
+      "mime": "image/png"
+    },
+    "0b498e7761a35b214e34b33e17c9f0cc": {
+      "type": "data",
+      "originalName": "咬·二.png",
+      "file": "data/0b498e7761a35b214e34b33e17c9f0cc.png",
+      "size": 113057,
+      "mime": "image/png"
+    },
+    "f7903d3973d1785682e7281910956440": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/f7903d3973d1785682e7281910956440.png",
+      "size": 125677,
+      "mime": "image/png"
+    },
+    "091c3b68de20df5b634dcbb747ede6df": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/091c3b68de20df5b634dcbb747ede6df.png",
+      "size": 107103,
+      "mime": "image/png"
+    },
+    "2597e89b893f7668b5c795a5cf1cbce1": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/2597e89b893f7668b5c795a5cf1cbce1.png",
+      "size": 144727,
+      "mime": "image/png"
+    },
+    "415bf12a0d1ef3c78a8e4c2f99984175": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/415bf12a0d1ef3c78a8e4c2f99984175.png",
+      "size": 125525,
+      "mime": "image/png"
+    },
+    "2b7c327ec3e3cf50945cae3d14722d4f": {
+      "type": "data",
+      "originalName": "背对.png",
+      "file": "data/2b7c327ec3e3cf50945cae3d14722d4f.png",
+      "size": 108784,
+      "mime": "image/png"
+    },
+    "3c66cb479e429005e6a91d2aa241fa87": {
+      "type": "data",
+      "originalName": "低头.png",
+      "file": "data/3c66cb479e429005e6a91d2aa241fa87.png",
+      "size": 82771,
+      "mime": "image/png"
+    },
+    "43346f2dcfaad6a29f2c30c376064617": {
+      "type": "data",
+      "originalName": "叼东西.png",
+      "file": "data/43346f2dcfaad6a29f2c30c376064617.png",
+      "size": 67288,
+      "mime": "image/png"
+    },
+    "330920c5ad1c0eea501efd3c8f675e1c": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/330920c5ad1c0eea501efd3c8f675e1c.png",
+      "size": 95886,
+      "mime": "image/png"
+    },
+    "0c2705a79560d6d25c124b9f5993ee25": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/0c2705a79560d6d25c124b9f5993ee25.png",
+      "size": 154415,
+      "mime": "image/png"
+    },
+    "7483dbcd5ec9965cd978c43439794231": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/7483dbcd5ec9965cd978c43439794231.png",
+      "size": 178561,
+      "mime": "image/png"
+    },
+    "8052c8f24e25f22d0524c6deafcc1dc3": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/8052c8f24e25f22d0524c6deafcc1dc3.png",
+      "size": 159663,
+      "mime": "image/png"
+    },
+    "e1a2153e3720bb0241e587c902deb3ef": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/e1a2153e3720bb0241e587c902deb3ef.png",
+      "size": 123319,
+      "mime": "image/png"
+    },
+    "d89cff46dada321ca4cdbfcf76dbf1e8": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/d89cff46dada321ca4cdbfcf76dbf1e8.png",
+      "size": 143787,
+      "mime": "image/png"
+    },
+    "29d9216cfe31951cf77ba71bda293926": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/29d9216cfe31951cf77ba71bda293926.png",
+      "size": 109874,
+      "mime": "image/png"
+    },
+    "47c2495a3f0da725168b9f840303ef54": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/47c2495a3f0da725168b9f840303ef54.png",
+      "size": 138268,
+      "mime": "image/png"
+    },
+    "c7ff596fb50f60077abfaec45c88ff69": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/c7ff596fb50f60077abfaec45c88ff69.png",
+      "size": 115970,
+      "mime": "image/png"
+    },
+    "6fa96fde7040ae55379de7e366d42ec1": {
+      "type": "data",
+      "originalName": "跑·四.png",
+      "file": "data/6fa96fde7040ae55379de7e366d42ec1.png",
+      "size": 96946,
+      "mime": "image/png"
+    },
+    "7a0fd23cb8f77ee46c9dfa691a4ed1fd": {
+      "type": "data",
+      "originalName": "受伤.png",
+      "file": "data/7a0fd23cb8f77ee46c9dfa691a4ed1fd.png",
+      "size": 151403,
+      "mime": "image/png"
+    },
+    "e0d5e7891c589d5a049366247f6863cd": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/e0d5e7891c589d5a049366247f6863cd.png",
+      "size": 84475,
+      "mime": "image/png"
+    },
+    "a7f8427a20d1f7102c27c2fe77fc01e1": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/a7f8427a20d1f7102c27c2fe77fc01e1.png",
+      "size": 102505,
+      "mime": "image/png"
+    },
+    "69e3f85dc73c0bb0a46be1e18823290e": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/69e3f85dc73c0bb0a46be1e18823290e.png",
+      "size": 111618,
+      "mime": "image/png"
+    },
+    "30ee3bb56d9bdc7ccfeb57ca7c1f2949": {
+      "type": "data",
+      "originalName": "歪头.png",
+      "file": "data/30ee3bb56d9bdc7ccfeb57ca7c1f2949.png",
+      "size": 191324,
+      "mime": "image/png"
+    },
+    "64c9988c2d779c567f36a2cb3390ffb6": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/64c9988c2d779c567f36a2cb3390ffb6.png",
+      "size": 107994,
+      "mime": "image/png"
+    },
+    "1c1adc18883112a865646a1adcf948ba": {
+      "type": "data",
+      "originalName": "咬·二.png",
+      "file": "data/1c1adc18883112a865646a1adcf948ba.png",
+      "size": 129142,
+      "mime": "image/png"
+    },
+    "f36a2179ee1c6463d5b35dae066ef960": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/f36a2179ee1c6463d5b35dae066ef960.png",
+      "size": 130243,
+      "mime": "image/png"
+    },
+    "216e8e737caacb175b48bc2dbc23ea31": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/216e8e737caacb175b48bc2dbc23ea31.png",
+      "size": 84265,
+      "mime": "image/png"
+    },
+    "7881bc2abbabf6a169e01386e8064333": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/7881bc2abbabf6a169e01386e8064333.png",
+      "size": 148994,
+      "mime": "image/png"
+    },
+    "d27b96ebe430f21dd6369138261905a0": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/d27b96ebe430f21dd6369138261905a0.png",
+      "size": 156704,
+      "mime": "image/png"
+    },
+    "393346e5a0ecf74a63dbee8dcb320ee0": {
+      "type": "data",
+      "originalName": "背对.png",
+      "file": "data/393346e5a0ecf74a63dbee8dcb320ee0.png",
+      "size": 126807,
+      "mime": "image/png"
+    },
+    "70632ac4a243f33b23f2f3fabaca0ece": {
+      "type": "data",
+      "originalName": "侧头.png",
+      "file": "data/70632ac4a243f33b23f2f3fabaca0ece.png",
+      "size": 184338,
+      "mime": "image/png"
+    },
+    "d199adb7b68e19eb1b61ae476bba12f1": {
+      "type": "data",
+      "originalName": "滚.png",
+      "file": "data/d199adb7b68e19eb1b61ae476bba12f1.png",
+      "size": 141599,
+      "mime": "image/png"
+    },
+    "4ff35da8c8efd0884327dd538c4a1512": {
+      "type": "data",
+      "originalName": "挥手.png",
+      "file": "data/4ff35da8c8efd0884327dd538c4a1512.png",
+      "size": 179123,
+      "mime": "image/png"
+    },
+    "7def529ad8c3001045f972b21f1b47ba": {
+      "type": "data",
+      "originalName": "技能.png",
+      "file": "data/7def529ad8c3001045f972b21f1b47ba.png",
+      "size": 141118,
+      "mime": "image/png"
+    },
+    "401bb3ad82d26b2bf0881579ff08244a": {
+      "type": "data",
+      "originalName": "技能·二.png",
+      "file": "data/401bb3ad82d26b2bf0881579ff08244a.png",
+      "size": 122779,
+      "mime": "image/png"
+    },
+    "aeada957fc6d7935ef5440bb9d184e0d": {
+      "type": "data",
+      "originalName": "开心脸.png",
+      "file": "data/aeada957fc6d7935ef5440bb9d184e0d.png",
+      "size": 226402,
+      "mime": "image/png"
+    },
+    "05d997389b06b903f69493a6dbe4dfe6": {
+      "type": "data",
+      "originalName": "咧嘴.png",
+      "file": "data/05d997389b06b903f69493a6dbe4dfe6.png",
+      "size": 144743,
+      "mime": "image/png"
+    },
+    "2dc617a0ceb7ae0a8c4ef99390f95137": {
+      "type": "data",
+      "originalName": "默认.png",
+      "file": "data/2dc617a0ceb7ae0a8c4ef99390f95137.png",
+      "size": 143664,
+      "mime": "image/png"
+    },
+    "8bf178ba27d2ae76431d7208bc862671": {
+      "type": "data",
+      "originalName": "趴下.png",
+      "file": "data/8bf178ba27d2ae76431d7208bc862671.png",
+      "size": 159566,
+      "mime": "image/png"
+    },
+    "0f1e8494faab33b10dbf0bed106d6ba2": {
+      "type": "data",
+      "originalName": "跑.png",
+      "file": "data/0f1e8494faab33b10dbf0bed106d6ba2.png",
+      "size": 103094,
+      "mime": "image/png"
+    },
+    "0e7472a83a49fbbdccb5f2c00f8a25f8": {
+      "type": "data",
+      "originalName": "跑·二.png",
+      "file": "data/0e7472a83a49fbbdccb5f2c00f8a25f8.png",
+      "size": 133617,
+      "mime": "image/png"
+    },
+    "5ffab27d2f906bbfabea60c694958749": {
+      "type": "data",
+      "originalName": "跑·三.png",
+      "file": "data/5ffab27d2f906bbfabea60c694958749.png",
+      "size": 127277,
+      "mime": "image/png"
+    },
+    "c01467dea33f5985af4557e67033ad24": {
+      "type": "data",
+      "originalName": "睡.png",
+      "file": "data/c01467dea33f5985af4557e67033ad24.png",
+      "size": 87302,
+      "mime": "image/png"
+    },
+    "010f0138a246d4c32d79a5ce4a7978f8": {
+      "type": "data",
+      "originalName": "睡着了.png",
+      "file": "data/010f0138a246d4c32d79a5ce4a7978f8.png",
+      "size": 139132,
+      "mime": "image/png"
+    },
+    "7cfa8850ef650d7a43be16f2d994eb8b": {
+      "type": "data",
+      "originalName": "跳.png",
+      "file": "data/7cfa8850ef650d7a43be16f2d994eb8b.png",
+      "size": 134304,
+      "mime": "image/png"
+    },
+    "5ffd7a4f5371708a106536c6d4755d88": {
+      "type": "data",
+      "originalName": "歪头.png",
+      "file": "data/5ffd7a4f5371708a106536c6d4755d88.png",
+      "size": 150782,
+      "mime": "image/png"
+    },
+    "a02aa8a4f9df227b5846f1cb2478daf0": {
+      "type": "data",
+      "originalName": "咬.png",
+      "file": "data/a02aa8a4f9df227b5846f1cb2478daf0.png",
+      "size": 132662,
+      "mime": "image/png"
+    },
+    "ff2f4c06d23cc44db770e987ed86b215": {
+      "type": "data",
+      "originalName": "赢.png",
+      "file": "data/ff2f4c06d23cc44db770e987ed86b215.png",
+      "size": 163630,
+      "mime": "image/png"
+    },
+    "7c001b1aab3ade353acfd656bf5d9b50": {
+      "type": "data",
+      "originalName": "站着.png",
+      "file": "data/7c001b1aab3ade353acfd656bf5d9b50.png",
+      "size": 145086,
+      "mime": "image/png"
+    },
+    "bd1f31412a10f766946331e2ef654b6c": {
+      "type": "data",
+      "originalName": "站着·动.png",
+      "file": "data/bd1f31412a10f766946331e2ef654b6c.png",
+      "size": 138351,
+      "mime": "image/png"
+    },
+    "04ffcf4fdf7da4be36ab98b515ecad90": {
+      "type": "data",
+      "originalName": "正面.png",
+      "file": "data/04ffcf4fdf7da4be36ab98b515ecad90.png",
+      "size": 169261,
+      "mime": "image/png"
+    },
+    "290a22512430ebb3b423aff1525a0f88": {
+      "type": "data",
+      "originalName": "登记处的女人.png",
+      "file": "data/290a22512430ebb3b423aff1525a0f88.png",
+      "size": 1637890,
+      "mime": "image/png"
+    },
+    "04a7bb6ab91b6c7ca55e3386f92d9ae3": {
+      "type": "data",
+      "originalName": "对手记录员.png",
+      "file": "data/04a7bb6ab91b6c7ca55e3386f92d9ae3.png",
+      "size": 1724544,
+      "mime": "image/png"
+    },
+    "2e1b5456472da9d9cec4091c8e7457fa": {
+      "type": "data",
+      "originalName": "记录员形象.png",
+      "file": "data/2e1b5456472da9d9cec4091c8e7457fa.png",
+      "size": 1709880,
+      "mime": "image/png"
+    },
+    "dbaaa16e87bf5727f6de4828f95d6a09": {
+      "type": "data",
+      "originalName": "老记录员.png",
+      "file": "data/dbaaa16e87bf5727f6de4828f95d6a09.png",
+      "size": 1838629,
+      "mime": "image/png"
+    }
+  },
+  "systemBindings": {
+    "internal.system.title": "ui:@avg.internal.default-shell/title-screen",
+    "internal.system.save": "ui:@avg.internal.default-shell/save-screen",
+    "internal.system.load": "ui:@avg.internal.default-shell/save-screen",
+    "internal.system.settings": "ui:@avg.internal.default-shell/settings-screen",
+    "internal.system.history": "ui:@avg.internal.default-shell/history-screen",
+    "internal.system.gallery": "ui:@avg.internal.default-shell/gallery-screen",
+    "internal.system.input": "ui:@avg.internal.default-shell/input-dialog",
+    "internal.system.message": "ui:@avg.internal.default-shell/message-box"
+  },
+  "actionBindings": {
+    "internal.input.advance": [
+      "mousedown",
+      " ",
+      "Enter",
+      "wheeldown"
+    ],
+    "internal.input.skip": [
+      "Control"
+    ],
+    "internal.input.auto-toggle": [
+      "a"
+    ],
+    "internal.input.hide-dialogue": [
+      "contextmenu",
+      "Delete"
+    ],
+    "internal.input.replay-voice": [
+      "r"
+    ],
+    "avg.internal.default-shell.quick-save": [
+      "F5"
+    ],
+    "avg.internal.default-shell.quick-load": [
+      "F9"
+    ],
+    "avg.internal.default-shell.open-history": [
+      "middleclick"
+    ]
+  },
+  "pathToHash": {
+    "bgm/room-registry.wav": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
+    "2d7bfa329f874193bb6dd29c65c9dd6a": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
+    "se/开门.mp3": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
+    "11bcdc68c94f9fb06d5f7daf1a33f9db": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
+    "particles/snow.png": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
+    "b160e0e6295e8cc3dccfe83a1ece7e57": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
+    "video/release1.mp4": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
+    "6371ebd9ec0699a73092b40d956698c2": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
+    "bgm/plaza-stonering.wav": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
+    "5c5321089158edabb9de22ee165fc2c5": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
+    "bgm/theme-longnight.wav": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
+    "b32a566b65e351af27dc0eed1506bf3a": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
+    "bgm/it-speaks.wav": "audio/21d678e91ce900e87e0dfd826d291132.wav",
+    "21d678e91ce900e87e0dfd826d291132": "audio/21d678e91ce900e87e0dfd826d291132.wav",
+    "se/火车.mp3": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
+    "5d76501c12ff8e3cddaf76eaa7c5d175": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
+    "backgrounds/长夜月广场-石环.png": "images/d37b41a1ead817e53ccc19cda7be1225.png",
+    "d37b41a1ead817e53ccc19cda7be1225": "images/d37b41a1ead817e53ccc19cda7be1225.png",
+    "backgrounds/石环的局部.png": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
+    "e7db5d9d60d780560341d5c8ffc5e4f8": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
+    "backgrounds/长夜月公园.png": "images/84edd6f79917a27517e52ce22ed3fadb.png",
+    "84edd6f79917a27517e52ce22ed3fadb": "images/84edd6f79917a27517e52ce22ed3fadb.png",
+    "backgrounds/月塔的窗.png": "images/eed2030a48f05d3ea5527e85c70588a0.png",
+    "eed2030a48f05d3ea5527e85c70588a0": "images/eed2030a48f05d3ea5527e85c70588a0.png",
+    "backgrounds/门缝底下那条光.png": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
+    "1d47d58bff4c3827ea42b5996b66cfd0": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
+    "backgrounds/月光竞技场.png": "images/1a8d5f4e6f3bd146281cfcee48f87b42.png",
+    "1a8d5f4e6f3bd146281cfcee48f87b42": "images/1a8d5f4e6f3bd146281cfcee48f87b42.png",
+    "backgrounds/登记处 -内（柜台）.png": "images/f1743f8c2db9c4e6972bc50b2656180b.png",
+    "f1743f8c2db9c4e6972bc50b2656180b": "images/f1743f8c2db9c4e6972bc50b2656180b.png",
+    "backgrounds/柜台的台面.png": "images/5d9661b42a15e7cb07e561a619a7339a.png",
+    "5d9661b42a15e7cb07e561a619a7339a": "images/5d9661b42a15e7cb07e561a619a7339a.png",
+    "backgrounds/训练场.png": "images/24b61cb51e21b2f23cea7acfb8c69579.png",
+    "24b61cb51e21b2f23cea7acfb8c69579": "images/24b61cb51e21b2f23cea7acfb8c69579.png",
+    "backgrounds/户外雪地.png": "images/2503b43f836a6c5132364f4b4741257b.png",
+    "2503b43f836a6c5132364f4b4741257b": "images/2503b43f836a6c5132364f4b4741257b.png",
+    "backgrounds/八格位的图鉴架.png": "images/cf55bb020483267995419047752f4c5f.png",
+    "cf55bb020483267995419047752f4c5f": "images/cf55bb020483267995419047752f4c5f.png",
+    "backgrounds/八格位的图鉴架(有狗).png": "images/098653683e7782ec1090265b4e18ffe0.png",
+    "098653683e7782ec1090265b4e18ffe0": "images/098653683e7782ec1090265b4e18ffe0.png",
+    "backgrounds/册子摊开的一页.png": "images/ab50f1bf4ff47e0c4d66d9c80857f240.png",
+    "ab50f1bf4ff47e0c4d66d9c80857f240": "images/ab50f1bf4ff47e0c4d66d9c80857f240.png",
+    "backgrounds/天台.png": "images/d90e9c2b4e1fa4a0c3ca9130d45adc1a.png",
+    "d90e9c2b4e1fa4a0c3ca9130d45adc1a": "images/d90e9c2b4e1fa4a0c3ca9130d45adc1a.png",
+    "backgrounds/登记处-外（门）.png": "images/5f97c39312f6c35d6acc67b5c69ca365.png",
+    "5f97c39312f6c35d6acc67b5c69ca365": "images/5f97c39312f6c35d6acc67b5c69ca365.png",
+    "backgrounds/月塔-外.png": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
+    "f38b3d9f3b3f7ac45cf78686f3c5e9b0": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
+    "backgrounds/月塔-一楼归档处.png": "images/ec5d0d142719d43a646895373fd620da.png",
+    "ec5d0d142719d43a646895373fd620da": "images/ec5d0d142719d43a646895373fd620da.png",
+    "5dceed98516305f05e35693868c51aba": "data/5dceed98516305f05e35693868c51aba.png",
+    "dog/bichon/侧头.png": "data/5dceed98516305f05e35693868c51aba.png",
+    "82c76f61b90365ed16cca9733c23666d": "data/82c76f61b90365ed16cca9733c23666d.png",
+    "dog/bichon/侧头·动.png": "data/82c76f61b90365ed16cca9733c23666d.png",
+    "8908427ec5e6438b4213113712f35dc0": "data/8908427ec5e6438b4213113712f35dc0.png",
+    "dog/bichon/滚.png": "data/8908427ec5e6438b4213113712f35dc0.png",
+    "f63f55beeef8a9527b2701b974215da9": "data/f63f55beeef8a9527b2701b974215da9.png",
+    "dog/bichon/挥手.png": "data/f63f55beeef8a9527b2701b974215da9.png",
+    "a1c9a770563b03e361ef5ae9946c8c8e": "data/a1c9a770563b03e361ef5ae9946c8c8e.png",
+    "dog/bichon/技能.png": "data/a1c9a770563b03e361ef5ae9946c8c8e.png",
+    "13002be92a0b85efd97ddc7e0e3d5301": "data/13002be92a0b85efd97ddc7e0e3d5301.png",
+    "dog/bichon/开心脸.png": "data/13002be92a0b85efd97ddc7e0e3d5301.png",
+    "803eb02fd1dae8de5b9c89c1dc8d1cc2": "data/803eb02fd1dae8de5b9c89c1dc8d1cc2.png",
+    "dog/bichon/咧嘴.png": "data/803eb02fd1dae8de5b9c89c1dc8d1cc2.png",
+    "7903020dfbf44138294928a48b004a52": "data/7903020dfbf44138294928a48b004a52.png",
+    "dog/bichon/默认.png": "data/7903020dfbf44138294928a48b004a52.png",
+    "975736ec9c953b007ae8ea4b441a39dd": "data/975736ec9c953b007ae8ea4b441a39dd.png",
+    "dog/bichon/趴下.png": "data/975736ec9c953b007ae8ea4b441a39dd.png",
+    "058fa9def30e4149dcaa35cc2e513804": "data/058fa9def30e4149dcaa35cc2e513804.png",
+    "dog/bichon/跑.png": "data/058fa9def30e4149dcaa35cc2e513804.png",
+    "7f6f3ff1111567f97a94eae31d14842a": "data/7f6f3ff1111567f97a94eae31d14842a.png",
+    "dog/bichon/跑·二.png": "data/7f6f3ff1111567f97a94eae31d14842a.png",
+    "97f594ac77e16d02f6f410991d302365": "data/97f594ac77e16d02f6f410991d302365.png",
+    "dog/bichon/跑·三.png": "data/97f594ac77e16d02f6f410991d302365.png",
+    "9581768d331585c9eb5a6fdda5d55543": "data/9581768d331585c9eb5a6fdda5d55543.png",
+    "dog/bichon/睡.png": "data/9581768d331585c9eb5a6fdda5d55543.png",
+    "c68a5b747ae772c8d19b9ee2e0e4b1a2": "data/c68a5b747ae772c8d19b9ee2e0e4b1a2.png",
+    "dog/bichon/睡着了.png": "data/c68a5b747ae772c8d19b9ee2e0e4b1a2.png",
+    "d6b39161fd5e0814a3b4e9b686a69644": "data/d6b39161fd5e0814a3b4e9b686a69644.png",
+    "dog/bichon/跳.png": "data/d6b39161fd5e0814a3b4e9b686a69644.png",
+    "8e28ed7a9b2fa1a2f3b1f04fb1b5f0a3": "data/8e28ed7a9b2fa1a2f3b1f04fb1b5f0a3.png",
+    "dog/bichon/咬.png": "data/8e28ed7a9b2fa1a2f3b1f04fb1b5f0a3.png",
+    "22bcb5534b1a2fcf6b62327f095e4471": "data/22bcb5534b1a2fcf6b62327f095e4471.png",
+    "dog/bichon/赢.png": "data/22bcb5534b1a2fcf6b62327f095e4471.png",
+    "8db09eef283e70f25a9d7b54e7126ca1": "data/8db09eef283e70f25a9d7b54e7126ca1.png",
+    "dog/bichon/站着.png": "data/8db09eef283e70f25a9d7b54e7126ca1.png",
+    "048e0f8e6b53652aff4ca26361aa09c0": "data/048e0f8e6b53652aff4ca26361aa09c0.png",
+    "dog/bichon/站着·动.png": "data/048e0f8e6b53652aff4ca26361aa09c0.png",
+    "d1f891b52a542d3fc7a0d6f89b4bb6f6": "data/d1f891b52a542d3fc7a0d6f89b4bb6f6.png",
+    "dog/bichon/正面.png": "data/d1f891b52a542d3fc7a0d6f89b4bb6f6.png",
+    "023c790f40070ac7736cf1a1eb08c720": "data/023c790f40070ac7736cf1a1eb08c720.png",
+    "dog/border_collie/背对.png": "data/023c790f40070ac7736cf1a1eb08c720.png",
+    "d6966c9c073f2033c219bf6b8098e859": "data/d6966c9c073f2033c219bf6b8098e859.png",
+    "dog/border_collie/侧头.png": "data/d6966c9c073f2033c219bf6b8098e859.png",
+    "3f240281795a6962c1ec3c7ceaac4543": "data/3f240281795a6962c1ec3c7ceaac4543.png",
+    "dog/border_collie/侧头·动.png": "data/3f240281795a6962c1ec3c7ceaac4543.png",
+    "4e6ec888e36c986d7ac2183a5c09800e": "data/4e6ec888e36c986d7ac2183a5c09800e.png",
+    "dog/border_collie/低头.png": "data/4e6ec888e36c986d7ac2183a5c09800e.png",
+    "f54b95e6afab64d61ad303d5546eae20": "data/f54b95e6afab64d61ad303d5546eae20.png",
+    "dog/border_collie/滚.png": "data/f54b95e6afab64d61ad303d5546eae20.png",
+    "ccdf59a1eecb2ec0c12749e54332db02": "data/ccdf59a1eecb2ec0c12749e54332db02.png",
+    "dog/border_collie/挥手.png": "data/ccdf59a1eecb2ec0c12749e54332db02.png",
+    "3837dbeabbc96dbb177d74ff2743f480": "data/3837dbeabbc96dbb177d74ff2743f480.png",
+    "dog/border_collie/开心脸.png": "data/3837dbeabbc96dbb177d74ff2743f480.png",
+    "fa2986a90ada5f75ec4b7ac733b08fc9": "data/fa2986a90ada5f75ec4b7ac733b08fc9.png",
+    "dog/border_collie/咧嘴.png": "data/fa2986a90ada5f75ec4b7ac733b08fc9.png",
+    "f9f25daf18d499c2b9b255ed598f745d": "data/f9f25daf18d499c2b9b255ed598f745d.png",
+    "dog/border_collie/默认.png": "data/f9f25daf18d499c2b9b255ed598f745d.png",
+    "8f25ae31fbeab6e7d46d85fe16d23fc0": "data/8f25ae31fbeab6e7d46d85fe16d23fc0.png",
+    "dog/border_collie/趴下.png": "data/8f25ae31fbeab6e7d46d85fe16d23fc0.png",
+    "f1858e319ffb84b78fd48daa3c427504": "data/f1858e319ffb84b78fd48daa3c427504.png",
+    "dog/border_collie/跑.png": "data/f1858e319ffb84b78fd48daa3c427504.png",
+    "d7b24b602337c81b6191dab0c27086bd": "data/d7b24b602337c81b6191dab0c27086bd.png",
+    "dog/border_collie/跑·二.png": "data/d7b24b602337c81b6191dab0c27086bd.png",
+    "61f5fc429c64d095e3dd5aa057da816d": "data/61f5fc429c64d095e3dd5aa057da816d.png",
+    "dog/border_collie/跑·三.png": "data/61f5fc429c64d095e3dd5aa057da816d.png",
+    "caebd30ddf646431b1f13e791347f4ed": "data/caebd30ddf646431b1f13e791347f4ed.png",
+    "dog/border_collie/跑·四.png": "data/caebd30ddf646431b1f13e791347f4ed.png",
+    "228df31b66a8575d887a1156279ed1e9": "data/228df31b66a8575d887a1156279ed1e9.png",
+    "dog/border_collie/睡.png": "data/228df31b66a8575d887a1156279ed1e9.png",
+    "6f044065665cd2d036cfc9ecc7154d7e": "data/6f044065665cd2d036cfc9ecc7154d7e.png",
+    "dog/border_collie/睡着了.png": "data/6f044065665cd2d036cfc9ecc7154d7e.png",
+    "fb596abfdb9341b1511c1fba6bf9c8cc": "data/fb596abfdb9341b1511c1fba6bf9c8cc.png",
+    "dog/border_collie/跳.png": "data/fb596abfdb9341b1511c1fba6bf9c8cc.png",
+    "8e4619572819c801830af7e5dfaf4ba7": "data/8e4619572819c801830af7e5dfaf4ba7.png",
+    "dog/border_collie/咬.png": "data/8e4619572819c801830af7e5dfaf4ba7.png",
+    "f16c72aa5e04212caa402d6d7283b1dc": "data/f16c72aa5e04212caa402d6d7283b1dc.png",
+    "dog/border_collie/咬·二.png": "data/f16c72aa5e04212caa402d6d7283b1dc.png",
+    "002c28d49af2fe05130a2c246111f1bc": "data/002c28d49af2fe05130a2c246111f1bc.png",
+    "dog/border_collie/赢.png": "data/002c28d49af2fe05130a2c246111f1bc.png",
+    "3e6c46a093e3cb601439ed626af3fcab": "data/3e6c46a093e3cb601439ed626af3fcab.png",
+    "dog/border_collie/站着.png": "data/3e6c46a093e3cb601439ed626af3fcab.png",
+    "cd2a19975ab4e273e0fc02224a42d122": "data/cd2a19975ab4e273e0fc02224a42d122.png",
+    "dog/border_collie/站着·动.png": "data/cd2a19975ab4e273e0fc02224a42d122.png",
+    "809efc47ca4a49a5e7f11c0d303f6abe": "data/809efc47ca4a49a5e7f11c0d303f6abe.png",
+    "dog/border_collie/正面.png": "data/809efc47ca4a49a5e7f11c0d303f6abe.png",
+    "7a4091597b513f8a3ef2658d6a9c5da3": "data/7a4091597b513f8a3ef2658d6a9c5da3.png",
+    "dog/corgi/背对.png": "data/7a4091597b513f8a3ef2658d6a9c5da3.png",
+    "803ca0df6ce8e97461e717951cf41d0e": "data/803ca0df6ce8e97461e717951cf41d0e.png",
+    "dog/corgi/侧头.png": "data/803ca0df6ce8e97461e717951cf41d0e.png",
+    "18a23418a158e4654b5332ac318a101f": "data/18a23418a158e4654b5332ac318a101f.png",
+    "dog/corgi/侧头·动.png": "data/18a23418a158e4654b5332ac318a101f.png",
+    "a691c24825f340aaa5f99b1f3c5cb6eb": "data/a691c24825f340aaa5f99b1f3c5cb6eb.png",
+    "dog/corgi/滚.png": "data/a691c24825f340aaa5f99b1f3c5cb6eb.png",
+    "d6e6d6ea97686bf39562c8c9df176720": "data/d6e6d6ea97686bf39562c8c9df176720.png",
+    "dog/corgi/挥手.png": "data/d6e6d6ea97686bf39562c8c9df176720.png",
+    "56c3d4cc5e903e40b27b200ee3922e83": "data/56c3d4cc5e903e40b27b200ee3922e83.png",
+    "dog/corgi/技能.png": "data/56c3d4cc5e903e40b27b200ee3922e83.png",
+    "6aec377d67c29a8fb4374f64a18857af": "data/6aec377d67c29a8fb4374f64a18857af.png",
+    "dog/corgi/开心脸.png": "data/6aec377d67c29a8fb4374f64a18857af.png",
+    "503f25aabc99a80e6242f1bb32d5e811": "data/503f25aabc99a80e6242f1bb32d5e811.png",
+    "dog/corgi/默认.png": "data/503f25aabc99a80e6242f1bb32d5e811.png",
+    "f23d314c4722a7f99f05506648eefdbc": "data/f23d314c4722a7f99f05506648eefdbc.png",
+    "dog/corgi/趴下.png": "data/f23d314c4722a7f99f05506648eefdbc.png",
+    "9a5b3a177318f92c74bafd77fa056e7e": "data/9a5b3a177318f92c74bafd77fa056e7e.png",
+    "dog/corgi/跑.png": "data/9a5b3a177318f92c74bafd77fa056e7e.png",
+    "fb56e87abc9846e0b48992186b316554": "data/fb56e87abc9846e0b48992186b316554.png",
+    "dog/corgi/跑·二.png": "data/fb56e87abc9846e0b48992186b316554.png",
+    "cd1f90e972326a0e4f1433bf4eaa7eef": "data/cd1f90e972326a0e4f1433bf4eaa7eef.png",
+    "dog/corgi/跑·三.png": "data/cd1f90e972326a0e4f1433bf4eaa7eef.png",
+    "adaeeca9a50f1a4c1c259504c09fbe9b": "data/adaeeca9a50f1a4c1c259504c09fbe9b.png",
+    "dog/corgi/睡.png": "data/adaeeca9a50f1a4c1c259504c09fbe9b.png",
+    "fd3ca20cfaae3bc1dfe8a468372fb1e1": "data/fd3ca20cfaae3bc1dfe8a468372fb1e1.png",
+    "dog/corgi/睡着了.png": "data/fd3ca20cfaae3bc1dfe8a468372fb1e1.png",
+    "41b6f7a8c210eadf816e64531486e343": "data/41b6f7a8c210eadf816e64531486e343.png",
+    "dog/corgi/跳.png": "data/41b6f7a8c210eadf816e64531486e343.png",
+    "5a4d5dd3b5c0aaba15d9a223173906d4": "data/5a4d5dd3b5c0aaba15d9a223173906d4.png",
+    "dog/corgi/歪头.png": "data/5a4d5dd3b5c0aaba15d9a223173906d4.png",
+    "71efe8de3a5495f0e139dc4db9574e94": "data/71efe8de3a5495f0e139dc4db9574e94.png",
+    "dog/corgi/咬.png": "data/71efe8de3a5495f0e139dc4db9574e94.png",
+    "c8a80cc032cbc9e26d2adf8d2e762b26": "data/c8a80cc032cbc9e26d2adf8d2e762b26.png",
+    "dog/corgi/赢.png": "data/c8a80cc032cbc9e26d2adf8d2e762b26.png",
+    "a58606049c3cc62f2455de67d3e7de0f": "data/a58606049c3cc62f2455de67d3e7de0f.png",
+    "dog/corgi/站着.png": "data/a58606049c3cc62f2455de67d3e7de0f.png",
+    "f852d618e555ed16dd037106daa1e3be": "data/f852d618e555ed16dd037106daa1e3be.png",
+    "dog/corgi/站着·动.png": "data/f852d618e555ed16dd037106daa1e3be.png",
+    "caf5e4f1fc6e74edbef15838a3f7d63c": "data/caf5e4f1fc6e74edbef15838a3f7d63c.png",
+    "dog/corgi/正面.png": "data/caf5e4f1fc6e74edbef15838a3f7d63c.png",
+    "734362584f5de64293c9566780362fa4": "data/734362584f5de64293c9566780362fa4.png",
+    "dog/golden/背对.png": "data/734362584f5de64293c9566780362fa4.png",
+    "b4b1f07838b26be5a568583153409417": "data/b4b1f07838b26be5a568583153409417.png",
+    "dog/golden/侧头.png": "data/b4b1f07838b26be5a568583153409417.png",
+    "8a4afc69a00816783f9de3cf13ca1349": "data/8a4afc69a00816783f9de3cf13ca1349.png",
+    "dog/golden/侧头·动.png": "data/8a4afc69a00816783f9de3cf13ca1349.png",
+    "59c99aed9da338812a44cdea31cbb6e0": "data/59c99aed9da338812a44cdea31cbb6e0.png",
+    "dog/golden/滚.png": "data/59c99aed9da338812a44cdea31cbb6e0.png",
+    "fa1627b98472b15347ad0ec8451a6059": "data/fa1627b98472b15347ad0ec8451a6059.png",
+    "dog/golden/挥手.png": "data/fa1627b98472b15347ad0ec8451a6059.png",
+    "359ebefc4b4531a076c5946207725b34": "data/359ebefc4b4531a076c5946207725b34.png",
+    "dog/golden/技能.png": "data/359ebefc4b4531a076c5946207725b34.png",
+    "f15e8e32e2ac82c42fa86929815ccdaa": "data/f15e8e32e2ac82c42fa86929815ccdaa.png",
+    "dog/golden/开心脸.png": "data/f15e8e32e2ac82c42fa86929815ccdaa.png",
+    "f61f9380a9028111b1868047d9ec576d": "data/f61f9380a9028111b1868047d9ec576d.png",
+    "dog/golden/咧嘴.png": "data/f61f9380a9028111b1868047d9ec576d.png",
+    "faa6034263ee214de778011423182ddd": "data/faa6034263ee214de778011423182ddd.png",
+    "dog/golden/默认.png": "data/faa6034263ee214de778011423182ddd.png",
+    "ab308e75f88ee8784643edb0d4ddea60": "data/ab308e75f88ee8784643edb0d4ddea60.png",
+    "dog/golden/趴下.png": "data/ab308e75f88ee8784643edb0d4ddea60.png",
+    "1a35c2bd81ef3210c7f28435afb68c85": "data/1a35c2bd81ef3210c7f28435afb68c85.png",
+    "dog/golden/跑.png": "data/1a35c2bd81ef3210c7f28435afb68c85.png",
+    "506b9f4a5c329a0c5ddae25b6cf0b515": "data/506b9f4a5c329a0c5ddae25b6cf0b515.png",
+    "dog/golden/跑·二.png": "data/506b9f4a5c329a0c5ddae25b6cf0b515.png",
+    "7f71c5f6825638aef878043e209c1c85": "data/7f71c5f6825638aef878043e209c1c85.png",
+    "dog/golden/跑·三.png": "data/7f71c5f6825638aef878043e209c1c85.png",
+    "36310c132b5afb8104b3e2272b3ba270": "data/36310c132b5afb8104b3e2272b3ba270.png",
+    "dog/golden/跑·四.png": "data/36310c132b5afb8104b3e2272b3ba270.png",
+    "e822c9c31fd9e44fe0c447e3fdeba3ed": "data/e822c9c31fd9e44fe0c447e3fdeba3ed.png",
+    "dog/golden/睡.png": "data/e822c9c31fd9e44fe0c447e3fdeba3ed.png",
+    "df30c08b7efb15373767d790845f1038": "data/df30c08b7efb15373767d790845f1038.png",
+    "dog/golden/睡着了.png": "data/df30c08b7efb15373767d790845f1038.png",
+    "ff1f0101dbd416f4aa26bcda8ba96bda": "data/ff1f0101dbd416f4aa26bcda8ba96bda.png",
+    "dog/golden/跳.png": "data/ff1f0101dbd416f4aa26bcda8ba96bda.png",
+    "b169dd57dc142524f4167c0794588c47": "data/b169dd57dc142524f4167c0794588c47.png",
+    "dog/golden/咬.png": "data/b169dd57dc142524f4167c0794588c47.png",
+    "f8ec50782bb167427d4c2d7897b65b74": "data/f8ec50782bb167427d4c2d7897b65b74.png",
+    "dog/golden/赢.png": "data/f8ec50782bb167427d4c2d7897b65b74.png",
+    "996d07736ed0a80496f3fbe74bac14ef": "data/996d07736ed0a80496f3fbe74bac14ef.png",
+    "dog/golden/站着.png": "data/996d07736ed0a80496f3fbe74bac14ef.png",
+    "a1f7e475d350ffe23971316da0494622": "data/a1f7e475d350ffe23971316da0494622.png",
+    "dog/golden/站着·动.png": "data/a1f7e475d350ffe23971316da0494622.png",
+    "f685206eff3018279c4700d56f7413cc": "data/f685206eff3018279c4700d56f7413cc.png",
+    "dog/golden/正面.png": "data/f685206eff3018279c4700d56f7413cc.png",
+    "9995501ff465e87cca3a281133c42103": "data/9995501ff465e87cca3a281133c42103.png",
+    "dog/gsd/侧头.png": "data/9995501ff465e87cca3a281133c42103.png",
+    "c13ebe8f876683d2ff0126f457436c8f": "data/c13ebe8f876683d2ff0126f457436c8f.png",
+    "dog/gsd/滚.png": "data/c13ebe8f876683d2ff0126f457436c8f.png",
+    "10d1eb3ae09e402e936506a98bff8711": "data/10d1eb3ae09e402e936506a98bff8711.png",
+    "dog/gsd/挥手.png": "data/10d1eb3ae09e402e936506a98bff8711.png",
+    "7674778f90753f004389084714a97506": "data/7674778f90753f004389084714a97506.png",
+    "dog/gsd/技能.png": "data/7674778f90753f004389084714a97506.png",
+    "a3e6d1b7607f9e4a697157f839afc4dc": "data/a3e6d1b7607f9e4a697157f839afc4dc.png",
+    "dog/gsd/开心脸.png": "data/a3e6d1b7607f9e4a697157f839afc4dc.png",
+    "41be8a6afc71dcee7f8e546680e6780f": "data/41be8a6afc71dcee7f8e546680e6780f.png",
+    "dog/gsd/咧嘴.png": "data/41be8a6afc71dcee7f8e546680e6780f.png",
+    "f7418d2658baf58292a07fd5a4539f35": "data/f7418d2658baf58292a07fd5a4539f35.png",
+    "dog/gsd/默认.png": "data/f7418d2658baf58292a07fd5a4539f35.png",
+    "3dbe9d4104090231284a56c220a32bc8": "data/3dbe9d4104090231284a56c220a32bc8.png",
+    "dog/gsd/趴下.png": "data/3dbe9d4104090231284a56c220a32bc8.png",
+    "cfdd452305c4934db0c4694d09f8d66d": "data/cfdd452305c4934db0c4694d09f8d66d.png",
+    "dog/gsd/跑.png": "data/cfdd452305c4934db0c4694d09f8d66d.png",
+    "b8316f0bab34ec345af239ef695ad4ee": "data/b8316f0bab34ec345af239ef695ad4ee.png",
+    "dog/gsd/跑·二.png": "data/b8316f0bab34ec345af239ef695ad4ee.png",
+    "0a63acd6e6bb2059a4cfbbc921e85d2b": "data/0a63acd6e6bb2059a4cfbbc921e85d2b.png",
+    "dog/gsd/跑·三.png": "data/0a63acd6e6bb2059a4cfbbc921e85d2b.png",
+    "594ec6d3bb6c0e8f952d0be2aadff595": "data/594ec6d3bb6c0e8f952d0be2aadff595.png",
+    "dog/gsd/跑·四.png": "data/594ec6d3bb6c0e8f952d0be2aadff595.png",
+    "3a2966f87676dc012e14a3453cd762ce": "data/3a2966f87676dc012e14a3453cd762ce.png",
+    "dog/gsd/睡.png": "data/3a2966f87676dc012e14a3453cd762ce.png",
+    "a900eb25453cea4e6cae4619776577b9": "data/a900eb25453cea4e6cae4619776577b9.png",
+    "dog/gsd/睡着了.png": "data/a900eb25453cea4e6cae4619776577b9.png",
+    "bd33f9be154f60e2695f7f3a717f3c45": "data/bd33f9be154f60e2695f7f3a717f3c45.png",
+    "dog/gsd/跳.png": "data/bd33f9be154f60e2695f7f3a717f3c45.png",
+    "c160cd65e1f1b3e2a6f8cd5af3a2d9e6": "data/c160cd65e1f1b3e2a6f8cd5af3a2d9e6.png",
+    "dog/gsd/歪头.png": "data/c160cd65e1f1b3e2a6f8cd5af3a2d9e6.png",
+    "195f8dc2a887a45fda65398a50ea664a": "data/195f8dc2a887a45fda65398a50ea664a.png",
+    "dog/gsd/咬.png": "data/195f8dc2a887a45fda65398a50ea664a.png",
+    "4ca60e5af7e1aefbba5c782f352e6ece": "data/4ca60e5af7e1aefbba5c782f352e6ece.png",
+    "dog/gsd/赢.png": "data/4ca60e5af7e1aefbba5c782f352e6ece.png",
+    "e301ecfd3eb4ef838d5704a0387c5bf4": "data/e301ecfd3eb4ef838d5704a0387c5bf4.png",
+    "dog/gsd/站着.png": "data/e301ecfd3eb4ef838d5704a0387c5bf4.png",
+    "e87a20afb258aafb77494520b3babde6": "data/e87a20afb258aafb77494520b3babde6.png",
+    "dog/gsd/正面.png": "data/e87a20afb258aafb77494520b3babde6.png",
+    "7bb76af03ebf90d5bec438e3a6d45b3f": "data/7bb76af03ebf90d5bec438e3a6d45b3f.png",
+    "dog/husky/背对.png": "data/7bb76af03ebf90d5bec438e3a6d45b3f.png",
+    "b8218044ec78237d3cc404c6f5ccaccd": "data/b8218044ec78237d3cc404c6f5ccaccd.png",
+    "dog/husky/侧头.png": "data/b8218044ec78237d3cc404c6f5ccaccd.png",
+    "d7601332ced3d5b202f48751719a7a97": "data/d7601332ced3d5b202f48751719a7a97.png",
+    "dog/husky/低头.png": "data/d7601332ced3d5b202f48751719a7a97.png",
+    "a7848c9245264f6fd9b92645d3778da2": "data/a7848c9245264f6fd9b92645d3778da2.png",
+    "dog/husky/滚.png": "data/a7848c9245264f6fd9b92645d3778da2.png",
+    "110f93aceeef8bd4146fa71f2746d00f": "data/110f93aceeef8bd4146fa71f2746d00f.png",
+    "dog/husky/挥手.png": "data/110f93aceeef8bd4146fa71f2746d00f.png",
+    "d3a623ecd5d97e44c8ebae27140b593c": "data/d3a623ecd5d97e44c8ebae27140b593c.png",
+    "dog/husky/开心脸.png": "data/d3a623ecd5d97e44c8ebae27140b593c.png",
+    "a60b515882a29f56adf6557d3494971a": "data/a60b515882a29f56adf6557d3494971a.png",
+    "dog/husky/咧嘴.png": "data/a60b515882a29f56adf6557d3494971a.png",
+    "c056c9da690035761b3dd50a25ea19b6": "data/c056c9da690035761b3dd50a25ea19b6.png",
+    "dog/husky/默认.png": "data/c056c9da690035761b3dd50a25ea19b6.png",
+    "8f94d506465ebbf3e9a3461e51f242d1": "data/8f94d506465ebbf3e9a3461e51f242d1.png",
+    "dog/husky/趴下.png": "data/8f94d506465ebbf3e9a3461e51f242d1.png",
+    "38315b671a92b9925cfce55c1f4b3095": "data/38315b671a92b9925cfce55c1f4b3095.png",
+    "dog/husky/跑.png": "data/38315b671a92b9925cfce55c1f4b3095.png",
+    "3db09389cc0655de585836b313bbab93": "data/3db09389cc0655de585836b313bbab93.png",
+    "dog/husky/跑·二.png": "data/3db09389cc0655de585836b313bbab93.png",
+    "919db84a75d8e52d5036291b076ad6ac": "data/919db84a75d8e52d5036291b076ad6ac.png",
+    "dog/husky/跑·三.png": "data/919db84a75d8e52d5036291b076ad6ac.png",
+    "3e1a488664e87a5fc9d04b1587aab744": "data/3e1a488664e87a5fc9d04b1587aab744.png",
+    "dog/husky/受伤.png": "data/3e1a488664e87a5fc9d04b1587aab744.png",
+    "b1a365a64121f1bef7050fa708f3cb3b": "data/b1a365a64121f1bef7050fa708f3cb3b.png",
+    "dog/husky/睡.png": "data/b1a365a64121f1bef7050fa708f3cb3b.png",
+    "ab605517243988b725fef969bf9555d7": "data/ab605517243988b725fef969bf9555d7.png",
+    "dog/husky/睡脸.png": "data/ab605517243988b725fef969bf9555d7.png",
+    "99f32f761aa0406305a0588daba9acde": "data/99f32f761aa0406305a0588daba9acde.png",
+    "dog/husky/睡着了.png": "data/99f32f761aa0406305a0588daba9acde.png",
+    "b480883a8abc6270e4b9d86a7830acfa": "data/b480883a8abc6270e4b9d86a7830acfa.png",
+    "dog/husky/跳.png": "data/b480883a8abc6270e4b9d86a7830acfa.png",
+    "fd32617d075c4e9d08b37f48c74bbdaa": "data/fd32617d075c4e9d08b37f48c74bbdaa.png",
+    "dog/husky/咬.png": "data/fd32617d075c4e9d08b37f48c74bbdaa.png",
+    "0b498e7761a35b214e34b33e17c9f0cc": "data/0b498e7761a35b214e34b33e17c9f0cc.png",
+    "dog/husky/咬·二.png": "data/0b498e7761a35b214e34b33e17c9f0cc.png",
+    "f7903d3973d1785682e7281910956440": "data/f7903d3973d1785682e7281910956440.png",
+    "dog/husky/赢.png": "data/f7903d3973d1785682e7281910956440.png",
+    "091c3b68de20df5b634dcbb747ede6df": "data/091c3b68de20df5b634dcbb747ede6df.png",
+    "dog/husky/站着.png": "data/091c3b68de20df5b634dcbb747ede6df.png",
+    "2597e89b893f7668b5c795a5cf1cbce1": "data/2597e89b893f7668b5c795a5cf1cbce1.png",
+    "dog/husky/站着·动.png": "data/2597e89b893f7668b5c795a5cf1cbce1.png",
+    "415bf12a0d1ef3c78a8e4c2f99984175": "data/415bf12a0d1ef3c78a8e4c2f99984175.png",
+    "dog/husky/正面.png": "data/415bf12a0d1ef3c78a8e4c2f99984175.png",
+    "2b7c327ec3e3cf50945cae3d14722d4f": "data/2b7c327ec3e3cf50945cae3d14722d4f.png",
+    "dog/samoyed/背对.png": "data/2b7c327ec3e3cf50945cae3d14722d4f.png",
+    "3c66cb479e429005e6a91d2aa241fa87": "data/3c66cb479e429005e6a91d2aa241fa87.png",
+    "dog/samoyed/低头.png": "data/3c66cb479e429005e6a91d2aa241fa87.png",
+    "43346f2dcfaad6a29f2c30c376064617": "data/43346f2dcfaad6a29f2c30c376064617.png",
+    "dog/samoyed/叼东西.png": "data/43346f2dcfaad6a29f2c30c376064617.png",
+    "330920c5ad1c0eea501efd3c8f675e1c": "data/330920c5ad1c0eea501efd3c8f675e1c.png",
+    "dog/samoyed/滚.png": "data/330920c5ad1c0eea501efd3c8f675e1c.png",
+    "0c2705a79560d6d25c124b9f5993ee25": "data/0c2705a79560d6d25c124b9f5993ee25.png",
+    "dog/samoyed/挥手.png": "data/0c2705a79560d6d25c124b9f5993ee25.png",
+    "7483dbcd5ec9965cd978c43439794231": "data/7483dbcd5ec9965cd978c43439794231.png",
+    "dog/samoyed/开心脸.png": "data/7483dbcd5ec9965cd978c43439794231.png",
+    "8052c8f24e25f22d0524c6deafcc1dc3": "data/8052c8f24e25f22d0524c6deafcc1dc3.png",
+    "dog/samoyed/咧嘴.png": "data/8052c8f24e25f22d0524c6deafcc1dc3.png",
+    "e1a2153e3720bb0241e587c902deb3ef": "data/e1a2153e3720bb0241e587c902deb3ef.png",
+    "dog/samoyed/默认.png": "data/e1a2153e3720bb0241e587c902deb3ef.png",
+    "d89cff46dada321ca4cdbfcf76dbf1e8": "data/d89cff46dada321ca4cdbfcf76dbf1e8.png",
+    "dog/samoyed/趴下.png": "data/d89cff46dada321ca4cdbfcf76dbf1e8.png",
+    "29d9216cfe31951cf77ba71bda293926": "data/29d9216cfe31951cf77ba71bda293926.png",
+    "dog/samoyed/跑.png": "data/29d9216cfe31951cf77ba71bda293926.png",
+    "47c2495a3f0da725168b9f840303ef54": "data/47c2495a3f0da725168b9f840303ef54.png",
+    "dog/samoyed/跑·二.png": "data/47c2495a3f0da725168b9f840303ef54.png",
+    "c7ff596fb50f60077abfaec45c88ff69": "data/c7ff596fb50f60077abfaec45c88ff69.png",
+    "dog/samoyed/跑·三.png": "data/c7ff596fb50f60077abfaec45c88ff69.png",
+    "6fa96fde7040ae55379de7e366d42ec1": "data/6fa96fde7040ae55379de7e366d42ec1.png",
+    "dog/samoyed/跑·四.png": "data/6fa96fde7040ae55379de7e366d42ec1.png",
+    "7a0fd23cb8f77ee46c9dfa691a4ed1fd": "data/7a0fd23cb8f77ee46c9dfa691a4ed1fd.png",
+    "dog/samoyed/受伤.png": "data/7a0fd23cb8f77ee46c9dfa691a4ed1fd.png",
+    "e0d5e7891c589d5a049366247f6863cd": "data/e0d5e7891c589d5a049366247f6863cd.png",
+    "dog/samoyed/睡.png": "data/e0d5e7891c589d5a049366247f6863cd.png",
+    "a7f8427a20d1f7102c27c2fe77fc01e1": "data/a7f8427a20d1f7102c27c2fe77fc01e1.png",
+    "dog/samoyed/睡着了.png": "data/a7f8427a20d1f7102c27c2fe77fc01e1.png",
+    "69e3f85dc73c0bb0a46be1e18823290e": "data/69e3f85dc73c0bb0a46be1e18823290e.png",
+    "dog/samoyed/跳.png": "data/69e3f85dc73c0bb0a46be1e18823290e.png",
+    "30ee3bb56d9bdc7ccfeb57ca7c1f2949": "data/30ee3bb56d9bdc7ccfeb57ca7c1f2949.png",
+    "dog/samoyed/歪头.png": "data/30ee3bb56d9bdc7ccfeb57ca7c1f2949.png",
+    "64c9988c2d779c567f36a2cb3390ffb6": "data/64c9988c2d779c567f36a2cb3390ffb6.png",
+    "dog/samoyed/咬.png": "data/64c9988c2d779c567f36a2cb3390ffb6.png",
+    "1c1adc18883112a865646a1adcf948ba": "data/1c1adc18883112a865646a1adcf948ba.png",
+    "dog/samoyed/咬·二.png": "data/1c1adc18883112a865646a1adcf948ba.png",
+    "f36a2179ee1c6463d5b35dae066ef960": "data/f36a2179ee1c6463d5b35dae066ef960.png",
+    "dog/samoyed/赢.png": "data/f36a2179ee1c6463d5b35dae066ef960.png",
+    "216e8e737caacb175b48bc2dbc23ea31": "data/216e8e737caacb175b48bc2dbc23ea31.png",
+    "dog/samoyed/站着.png": "data/216e8e737caacb175b48bc2dbc23ea31.png",
+    "7881bc2abbabf6a169e01386e8064333": "data/7881bc2abbabf6a169e01386e8064333.png",
+    "dog/samoyed/站着·动.png": "data/7881bc2abbabf6a169e01386e8064333.png",
+    "d27b96ebe430f21dd6369138261905a0": "data/d27b96ebe430f21dd6369138261905a0.png",
+    "dog/samoyed/正面.png": "data/d27b96ebe430f21dd6369138261905a0.png",
+    "393346e5a0ecf74a63dbee8dcb320ee0": "data/393346e5a0ecf74a63dbee8dcb320ee0.png",
+    "dog/shiba/背对.png": "data/393346e5a0ecf74a63dbee8dcb320ee0.png",
+    "70632ac4a243f33b23f2f3fabaca0ece": "data/70632ac4a243f33b23f2f3fabaca0ece.png",
+    "dog/shiba/侧头.png": "data/70632ac4a243f33b23f2f3fabaca0ece.png",
+    "d199adb7b68e19eb1b61ae476bba12f1": "data/d199adb7b68e19eb1b61ae476bba12f1.png",
+    "dog/shiba/滚.png": "data/d199adb7b68e19eb1b61ae476bba12f1.png",
+    "4ff35da8c8efd0884327dd538c4a1512": "data/4ff35da8c8efd0884327dd538c4a1512.png",
+    "dog/shiba/挥手.png": "data/4ff35da8c8efd0884327dd538c4a1512.png",
+    "7def529ad8c3001045f972b21f1b47ba": "data/7def529ad8c3001045f972b21f1b47ba.png",
+    "dog/shiba/技能.png": "data/7def529ad8c3001045f972b21f1b47ba.png",
+    "401bb3ad82d26b2bf0881579ff08244a": "data/401bb3ad82d26b2bf0881579ff08244a.png",
+    "dog/shiba/技能·二.png": "data/401bb3ad82d26b2bf0881579ff08244a.png",
+    "aeada957fc6d7935ef5440bb9d184e0d": "data/aeada957fc6d7935ef5440bb9d184e0d.png",
+    "dog/shiba/开心脸.png": "data/aeada957fc6d7935ef5440bb9d184e0d.png",
+    "05d997389b06b903f69493a6dbe4dfe6": "data/05d997389b06b903f69493a6dbe4dfe6.png",
+    "dog/shiba/咧嘴.png": "data/05d997389b06b903f69493a6dbe4dfe6.png",
+    "2dc617a0ceb7ae0a8c4ef99390f95137": "data/2dc617a0ceb7ae0a8c4ef99390f95137.png",
+    "dog/shiba/默认.png": "data/2dc617a0ceb7ae0a8c4ef99390f95137.png",
+    "8bf178ba27d2ae76431d7208bc862671": "data/8bf178ba27d2ae76431d7208bc862671.png",
+    "dog/shiba/趴下.png": "data/8bf178ba27d2ae76431d7208bc862671.png",
+    "0f1e8494faab33b10dbf0bed106d6ba2": "data/0f1e8494faab33b10dbf0bed106d6ba2.png",
+    "dog/shiba/跑.png": "data/0f1e8494faab33b10dbf0bed106d6ba2.png",
+    "0e7472a83a49fbbdccb5f2c00f8a25f8": "data/0e7472a83a49fbbdccb5f2c00f8a25f8.png",
+    "dog/shiba/跑·二.png": "data/0e7472a83a49fbbdccb5f2c00f8a25f8.png",
+    "5ffab27d2f906bbfabea60c694958749": "data/5ffab27d2f906bbfabea60c694958749.png",
+    "dog/shiba/跑·三.png": "data/5ffab27d2f906bbfabea60c694958749.png",
+    "c01467dea33f5985af4557e67033ad24": "data/c01467dea33f5985af4557e67033ad24.png",
+    "dog/shiba/睡.png": "data/c01467dea33f5985af4557e67033ad24.png",
+    "010f0138a246d4c32d79a5ce4a7978f8": "data/010f0138a246d4c32d79a5ce4a7978f8.png",
+    "dog/shiba/睡着了.png": "data/010f0138a246d4c32d79a5ce4a7978f8.png",
+    "7cfa8850ef650d7a43be16f2d994eb8b": "data/7cfa8850ef650d7a43be16f2d994eb8b.png",
+    "dog/shiba/跳.png": "data/7cfa8850ef650d7a43be16f2d994eb8b.png",
+    "5ffd7a4f5371708a106536c6d4755d88": "data/5ffd7a4f5371708a106536c6d4755d88.png",
+    "dog/shiba/歪头.png": "data/5ffd7a4f5371708a106536c6d4755d88.png",
+    "a02aa8a4f9df227b5846f1cb2478daf0": "data/a02aa8a4f9df227b5846f1cb2478daf0.png",
+    "dog/shiba/咬.png": "data/a02aa8a4f9df227b5846f1cb2478daf0.png",
+    "ff2f4c06d23cc44db770e987ed86b215": "data/ff2f4c06d23cc44db770e987ed86b215.png",
+    "dog/shiba/赢.png": "data/ff2f4c06d23cc44db770e987ed86b215.png",
+    "7c001b1aab3ade353acfd656bf5d9b50": "data/7c001b1aab3ade353acfd656bf5d9b50.png",
+    "dog/shiba/站着.png": "data/7c001b1aab3ade353acfd656bf5d9b50.png",
+    "bd1f31412a10f766946331e2ef654b6c": "data/bd1f31412a10f766946331e2ef654b6c.png",
+    "dog/shiba/站着·动.png": "data/bd1f31412a10f766946331e2ef654b6c.png",
+    "04ffcf4fdf7da4be36ab98b515ecad90": "data/04ffcf4fdf7da4be36ab98b515ecad90.png",
+    "dog/shiba/正面.png": "data/04ffcf4fdf7da4be36ab98b515ecad90.png",
+    "290a22512430ebb3b423aff1525a0f88": "data/290a22512430ebb3b423aff1525a0f88.png",
+    "portraits/登记处的女人.png": "data/290a22512430ebb3b423aff1525a0f88.png",
+    "04a7bb6ab91b6c7ca55e3386f92d9ae3": "data/04a7bb6ab91b6c7ca55e3386f92d9ae3.png",
+    "portraits/对手记录员.png": "data/04a7bb6ab91b6c7ca55e3386f92d9ae3.png",
+    "2e1b5456472da9d9cec4091c8e7457fa": "data/2e1b5456472da9d9cec4091c8e7457fa.png",
+    "portraits/记录员形象.png": "data/2e1b5456472da9d9cec4091c8e7457fa.png",
+    "dbaaa16e87bf5727f6de4828f95d6a09": "data/dbaaa16e87bf5727f6de4828f95d6a09.png",
+    "portraits/老记录员.png": "data/dbaaa16e87bf5727f6de4828f95d6a09.png",
+    "room-registry.wav": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
+    "开门.mp3": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
+    "snow.png": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
+    "release1.mp4": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
+    "plaza-stonering.wav": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
+    "theme-longnight.wav": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
+    "it-speaks.wav": "audio/21d678e91ce900e87e0dfd826d291132.wav",
+    "火车.mp3": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
+    "长夜月广场-石环.png": "images/d37b41a1ead817e53ccc19cda7be1225.png",
+    "石环的局部.png": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
+    "长夜月公园.png": "images/84edd6f79917a27517e52ce22ed3fadb.png",
+    "月塔的窗.png": "images/eed2030a48f05d3ea5527e85c70588a0.png",
+    "门缝底下那条光.png": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
+    "月光竞技场.png": "images/1a8d5f4e6f3bd146281cfcee48f87b42.png",
+    "登记处 -内（柜台）.png": "images/f1743f8c2db9c4e6972bc50b2656180b.png",
+    "柜台的台面.png": "images/5d9661b42a15e7cb07e561a619a7339a.png",
+    "训练场.png": "images/24b61cb51e21b2f23cea7acfb8c69579.png",
+    "户外雪地.png": "images/2503b43f836a6c5132364f4b4741257b.png",
+    "八格位的图鉴架.png": "images/cf55bb020483267995419047752f4c5f.png",
+    "八格位的图鉴架(有狗).png": "images/098653683e7782ec1090265b4e18ffe0.png",
+    "册子摊开的一页.png": "images/ab50f1bf4ff47e0c4d66d9c80857f240.png",
+    "天台.png": "images/d90e9c2b4e1fa4a0c3ca9130d45adc1a.png",
+    "登记处-外（门）.png": "images/5f97c39312f6c35d6acc67b5c69ca365.png",
+    "月塔-外.png": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
+    "月塔-一楼归档处.png": "images/ec5d0d142719d43a646895373fd620da.png",
+    "睡脸.png": "data/ab605517243988b725fef969bf9555d7.png",
+    "叼东西.png": "data/43346f2dcfaad6a29f2c30c376064617.png",
+    "技能·二.png": "data/401bb3ad82d26b2bf0881579ff08244a.png",
+    "登记处的女人.png": "data/290a22512430ebb3b423aff1525a0f88.png",
+    "对手记录员.png": "data/04a7bb6ab91b6c7ca55e3386f92d9ae3.png",
+    "记录员形象.png": "data/2e1b5456472da9d9cec4091c8e7457fa.png",
+    "老记录员.png": "data/dbaaa16e87bf5727f6de4828f95d6a09.png"
+  }
+}

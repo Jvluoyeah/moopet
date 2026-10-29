@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>长夜月 · 八原型剪影</title>
+<!--
+  ==========================================================================
+  长夜月 · 八原型剪影          5 秒 · 单独一段
+  ==========================================================================
+  八个品种的白剪影：依次从左边跑进来 → 站成一排 → 一起往右跑走。
+
+  放在 public/pv2/dogs/ 下，和 PV 共用 assets/breeds 里的狗素材。
+  播放：/pv2/dogs/
+  导出：跑 tools/pv_render.py --url ".../pv2/dogs/?still=1" --all
+        （一样有 __seek(t) 逐帧定位，导出来是帧帧精确的）
+  ==========================================================================
+-->
+<style>
+  :root{
+    --paper:#f5f1e8; --ink:#111211; --seal:#a8332a;
+    --serif:"LXGW Bright",ui-serif,Georgia,"Noto Serif SC","Songti SC",STSong,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden}
+  body{font-family:var(--serif);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+
+  #stage{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--ink);
+         isolation:isolate}
+  /* 地面：一条压暗的横带，让狗"站"在东西上，而不是浮着 */
+  #floor{position:absolute;left:0;right:0;bottom:0;height:32%;z-index:1;
+    background:linear-gradient(0deg,rgba(245,241,232,.07),rgba(245,241,232,0))}
+  #line{position:absolute;left:0;right:0;bottom:31%;height:1px;z-index:1;
+    background:linear-gradient(90deg,transparent,rgba(245,241,232,.28),transparent)}
+
+  #dogs{position:absolute;inset:0;z-index:2}
+  #dogs .d{position:absolute;bottom:26%;height:26vh;object-fit:contain;
+    filter:brightness(0) invert(1);will-change:transform}
+
+  #names{position:absolute;inset:0;z-index:3;pointer-events:none}
+  #names .n{position:absolute;bottom:17%;transform:translateX(-50%);
+    font-size:clamp(9px,1.05vw,15px);letter-spacing:.34em;color:rgba(245,241,232,.72);opacity:0}
+  #names .n i{font-style:normal;display:block;margin-top:.45em;font-size:.82em;
+    letter-spacing:.3em;color:rgba(245,241,232,.4)}
+
+  #cap{position:absolute;left:0;right:0;top:11%;z-index:3;text-align:center;
+    font-size:clamp(16px,2.1vw,34px);letter-spacing:.42em;color:var(--paper);opacity:0;
+    text-indent:.42em}
+  #cap small{display:block;margin-top:.9em;font-size:.42em;letter-spacing:.6em;
+    color:rgba(245,241,232,.5);text-indent:.6em}
+
+  #grain{position:absolute;inset:0;z-index:9;pointer-events:none;opacity:.26;
+    mix-blend-mode:screen;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.22'/></svg>")}
+  #flip{position:absolute;inset:0;z-index:10;background:#000;opacity:0;pointer-events:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="floor"></div><div id="line"></div>
+  <div id="dogs"></div>
+  <div id="names"></div>
+  <div id="cap">八 原 型<small>EIGHT ARCHETYPES</small></div>
+  <div id="grain"></div><div id="flip"></div>
+</div>
+
+<script>
+/* ══ 八原型 ══════════════════════════════════════════════════════ */
+const BREEDS=[['samoyed','萨摩耶','SAMOYED'],['husky','哈士奇','HUSKY'],
+              ['border_collie','边牧','BORDER COLLIE'],['german_shepherd','德牧','GERMAN SHEPHERD'],
+              ['golden','金毛','GOLDEN'],['shiba','柴犬','SHIBA'],
+              ['corgi','柯基','CORGI'],['bichon','比熊','BICHON']];
+const A='../assets/breeds/';
+
+/* ══ 时间轴：8.0 秒 ══════════════════════════════════════════════
+   0.15–3.10  依次从左边跑进来，错开 0.30s，一只一只进场
+   3.10–8.00  站定，一直站到结束。名字逐条亮起，标题浮出来
+              **不跑出去**——这是列队，不是路过
+   ──────────────────────────────────────────────────────────── */
+const TOTAL=8.0;
+const IN_START=0.15, IN_STEP=0.30, IN_DUR=0.85;   // 入场：错开 0.30s，每只跑 0.85s
+const STAND=3.10, NAMES=3.35;
+
+const dogsEl=document.getElementById('dogs'), namesEl=document.getElementById('names');
+const cap=document.getElementById('cap'), flip=document.getElementById('flip');
+
+/* 建 DOM：八只狗 + 八个名字位 */
+const slots=BREEDS.map((b,i)=>(i+0.5)/BREEDS.length);
+BREEDS.forEach(([code,cn,en],i)=>{
+  const img=document.createElement('img');
+  img.className='d'; img.alt=code;
+  img.dataset.run='0';
+  img.src=A+code+'/forms/sit.png';
+  img.dataset.sit=A+code+'/forms/sit.png';
+  img.style.left=(slots[i]*100).toFixed(2)+'%';
+  img.style.transform='translateX(-50%)';
+  img.style.opacity='0';
+  dogsEl.appendChild(img);
+
+  const n=document.createElement('div');
+  n.className='n';
+  n.style.left=(slots[i]*100).toFixed(2)+'%';
+  n.innerHTML=cn+'<i>'+en+'</i>';
+  namesEl.appendChild(n);
+});
+
+const dogs=[...dogsEl.querySelectorAll('.d')], names=[...namesEl.querySelectorAll('.n')];
+
+/* 跑动帧：**按品种实际有几帧**来循环。
+   实测只有边牧/德牧/金毛/萨摩耶有 4 帧，另外四个品种只有 3 帧——
+   硬取第 4 帧会 404，onerror 回退到坐姿又会让跑着的狗突然"坐"一下，是穿帮。 */
+const RUNF={samoyed:4,husky:3,border_collie:4,german_shepherd:4,
+            golden:4,shiba:3,corgi:3,bichon:3};
+function runSrc(code,f){ return A+code+'/actions/run_0'+f+'.png'; }
+dogs.forEach(img=>{ img.onerror=()=>{ img.onerror=null; img.src=img.dataset.sit; }; });
+
+function render(t){
+  const k=x=>Math.max(0,Math.min(1,x));
+  let anyRunning=false;
+
+  dogs.forEach((img,i)=>{
+    const inA=IN_START+i*IN_STEP;                    // 这头狗开始跑的时刻
+    let x=0, run=false, op=1;
+
+    if(t<inA){ x=-118; op=0; }                       // 还没入场
+    else if(t<inA+IN_DUR){                           // 跑进来
+      const e=1-Math.pow(1-k((t-inA)/IN_DUR),3);
+      x=-118*(1-e); run=true; op=Math.min(1,e*3);
+      img.style.translate='0 0';
+    } else {                                         // 站定，一直站到最后
+      const bob=Math.sin((t-inA)*4.2+i)*0.30;        // 站着也有一点起伏（各只相位不同）
+      x=0; op=1;
+      img.style.translate='0 '+bob.toFixed(2)+'vh';
+    }
+
+    img.style.opacity=op.toFixed(3);
+    img.style.transform=`translateX(calc(-50% + ${x.toFixed(2)}vw))`;
+
+    /* 换跑动帧（每 1/12 秒一帧，够用了） */
+    if(run){
+      anyRunning=true;
+      const f=Math.floor(t*11)%(RUNF[BREEDS[i][0]]||3)+1;
+      const src=runSrc(BREEDS[i][0],f);
+      if(img.dataset.run!==String(f)){ img.dataset.run=String(f); img.src=src; }
+    } else if(img.dataset.run!=='0'){
+      img.dataset.run='0'; img.src=img.dataset.sit;
+    }
+
+    /* 名字：站定之后浮出来 */
+    const nk=k((t-NAMES-i*0.06)/0.42);
+    names[i].style.opacity=(nk*0.95).toFixed(3);
+  });
+
+  /* 标题：入场时压住，站定后才浮出来 */
+  const ck=k((t-STAND+0.15)/0.7);
+  cap.style.opacity=(ck*0.92).toFixed(3);
+
+  /* 两头各穿一次黑场 */
+  const inD=k(t/0.10), outD=k((TOTAL-t)/0.14);
+  flip.style.opacity=(1-Math.min(inD,outD)).toFixed(3);
+}
+
+/* ══ 播放 / 逐帧导出 ═══════════════════════════════════════════ */
+let t0=0,raf=0,playing=false,SEEK=false;
+const PRE=[];
+BREEDS.forEach(([c])=>{ PRE.push(A+c+'/forms/sit.png');
+  for(let f=1;f<=(RUNF[c]||3);f++) PRE.push(A+c+'/actions/run_0'+f+'.png'); });
+let loaded=0;
+PRE.forEach(u=>{const im=new Image();
+  im.onload=im.onerror=()=>{ if(++loaded>=PRE.length) console.log('素材就绪'); };
+  im.src=u;});
+
+function loop(now){
+  if(!playing)return;
+  const t=(now-t0)/1000;
+  if(t>=TOTAL){ playing=false; render(TOTAL-0.001); return; }
+  render(t); raf=requestAnimationFrame(loop);
+}
+function start(){ cancelAnimationFrame(raf); t0=performance.now(); playing=true;
+  render(0); raf=requestAnimationFrame(loop); }
+addEventListener('click',start);
+addEventListener('keydown',e=>{ if(e.code==='Space'){e.preventDefault();start();} });
+
+SEEK=/[?&]still=1/.test(location.search);
+window.__total=()=>TOTAL;
+window.__seek=tt=>{ SEEK=true; playing=false; cancelAnimationFrame(raf); render(tt); return true; };
+window.__ready=()=>Promise.resolve();
+render(0);
+</script>
+</body>
+</html>

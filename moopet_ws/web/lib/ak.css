@@ -1,0 +1,92 @@
+/* ak.css — 明日方舟主题（深色工业 + 招牌橙 + 切角/等级环/信号条） */
+:root{
+  --bg:#111315; --bg-soft:#17191b; --surface:#1d2023; --surface-2:#23272a;
+  --border:rgba(243,244,239,.12); --border-strong:rgba(243,244,239,.22);
+  --text-1:#f7f7f4; --text-2:#b9bec3; --text-3:#8b9196;
+  --accent:#ff5e19; --accent-2:#05a7dc; --accent-3:#ffd802;
+  --good:#46c47c; --warn:#f1c644; --bad:#e33b3b;
+  --grad:linear-gradient(135deg,#ff5e19,#ff8a3d 45%,#05a7dc);
+  --grad-soft:linear-gradient(135deg,#1d2023,#23272a);
+  --radius:6px; --radius-sm:4px; --radius-lg:10px;
+  --shadow:0 10px 30px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.4);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  --font-sans:'Noto Sans SC','NotoSansSC','微软雅黑',system-ui,sans-serif;
+  --font-serif:'Noto Serif SC','NotoSerifSC','思源宋体',Georgia,serif;
+  --font-mono:'SFMono-Regular',Consolas,'JetBrains Mono',Menlo,monospace;
+  --font-display:var(--font-serif);
+}
+body{background:var(--bg)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+  background-size:56px 56px}
+.deck{background:var(--bg)}
+
+/* 切角卡片 */
+.card{border-radius:0;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%)}
+.card-accent{border-top:0;border-left:3px solid var(--accent)}
+.kicker{color:var(--accent);letter-spacing:.18em;font-family:var(--font-mono);font-size:12px}
+.eyebrow{letter-spacing:.22em;color:var(--text-3);font-family:var(--font-mono);text-transform:uppercase}
+
+/* 等级环 */
+.ring{width:150px;height:150px;border-radius:50%;border:4px solid var(--accent);
+  background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.ring .v{font-family:var(--font-mono);font-size:40px;font-weight:700;letter-spacing:-.02em;color:var(--text-1)}
+.ring .u{font-family:var(--font-serif);font-size:13px;color:var(--text-3)}
+.ring--cyan{border-color:var(--accent-2)}.ring--gold{border-color:var(--accent-3)}
+.ringwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.ringwrap .lbl{font-family:var(--font-serif);font-weight:700;font-size:12px;color:var(--text-3)}
+
+/* 信号条 / 危险纹 / 强调条 */
+.sig{display:flex;height:6px;margin:16px 0}
+.sig i{display:block;height:100%}
+.hazard{height:8px;background:repeating-linear-gradient(45deg,var(--accent) 0 12px,transparent 12px 22px);opacity:.45}
+.accent-l{position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.accent-t{position:absolute;left:0;top:0;right:0;height:4px;background:var(--accent)}
+.ak-tag{display:inline-block;background:var(--accent);color:#181818;font-weight:900;font-family:var(--font-mono);
+  letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;padding:2px 10px;
+  clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,0 100%)}
+
+/* 列表钻石符 */
+ul.list{list-style:none;padding:0;margin:0}
+ul.list li{margin-bottom:10px;color:var(--text-2);position:relative;padding-left:18px;font-size:14px}
+ul.list li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:8px;background:var(--accent);transform:rotate(45deg)}
+ul.list li b{color:var(--text-1)}
+
+/* eyebrow 大字距 fits */
+.eyebrow{font-size:12px}
+
+/* ===== 密集适配：容纳更多信息（标题/内边距收紧 + 表格） ===== */
+.slide{padding:44px 56px}
+.h1{font-size:46px;line-height:1.14}
+.h2{font-size:30px;line-height:1.25}
+h3,.h3{font-size:19px}
+h4,.h4{font-size:16px}
+.kicker{font-size:11px}
+.lede{font-size:15px;max-width:72ch}
+.card{padding:18px 20px}
+.list li{font-size:13px;margin-bottom:8px}
+.grid{gap:16px}
+.row{gap:18px}
+
+/* 表格 */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:10px 0}
+.tbl th{text-align:left;font-family:var(--font-serif);font-weight:800;color:var(--text-1);
+  padding:9px 10px;border-bottom:1.5px solid var(--border-strong);letter-spacing:.04em}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text-2);vertical-align:top;line-height:1.55}
+.tbl td:first-child{color:var(--text-1);font-weight:600;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .ok{color:var(--ok);font-family:var(--font-mono)}
+.tbl .warn{color:var(--warn);font-family:var(--font-mono)}
+.tbl .bad{color:var(--bad);font-family:var(--font-mono)}
+
+/* 终端/成果实录块 */
+.term{background:#0b0d0f;border:1px solid var(--border-strong);padding:14px 16px;
+  font-family:var(--font-mono);font-size:11.5px;line-height:1.75;color:#c9d7d0;
+  border-left:3px solid var(--accent)}
+.term div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.term .dim{color:var(--text-3)}
+.term .p{color:var(--ok);font-weight:700}
+.term .g{color:var(--good)}
+.term .o{color:var(--accent)}
+.term .b{font-weight:700;color:var(--text-1)}

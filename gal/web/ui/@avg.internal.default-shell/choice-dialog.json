@@ -1,0 +1,178 @@
+{
+  "version": 2,
+  "name": "剧情选项",
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "elements": [
+    {
+      "id": "choice-dialog-list",
+      "refId": "choice-list",
+      "type": "choice-list",
+      "name": "选项列表_故事分支",
+      "rect": {
+        "x": 500,
+        "y": 335,
+        "w": 920,
+        "h": 410
+      },
+      "anchor": "c",
+      "style": {
+        "fontSize": 26,
+        "fontWeight": 500,
+        "letterSpacing": 0.4,
+        "color": "#e8f1f0",
+        "fill": "transparent",
+        "borderColor": "transparent",
+        "borderWidth": 0,
+        "radius": 14,
+        "opacity": 100,
+        "customCss": "font-family: \"Plus Jakarta Sans\", \"M PLUS Rounded 1c\", \"PingFang SC\", \"Hiragino Sans GB\", \"HarmonyOS Sans\", \"Microsoft YaHei\", -apple-system, BlinkMacSystemFont, sans-serif;"
+      },
+      "animation": {
+        "enter": {
+          "preset": "rise",
+          "durationMs": 420,
+          "delayMs": 90
+        },
+        "exit": {
+          "preset": "fade",
+          "durationMs": 190,
+          "delayMs": 0
+        }
+      },
+      "props": {
+        "choiceTemplateSchema": "avg.visual-ui.choice/v1",
+        "direction": "vertical",
+        "gap": 14,
+        "bgImage": "",
+        "previewChoices": [
+          "继续追问她",
+          "保持沉默",
+          "转身离开"
+        ],
+        "previewDisabledIndex": 2
+      }
+    },
+    {
+      "id": "choice-dialog-item",
+      "type": "choice-item",
+      "name": "选项按钮框体_模板",
+      "rect": {
+        "x": 504,
+        "y": 412,
+        "w": 912,
+        "h": 76
+      },
+      "anchor": "c",
+      "style": {
+        "fill": "rgba(7, 16, 24, 0.86)",
+        "borderColor": "rgba(127, 212, 200, 0.36)",
+        "borderWidth": 1,
+        "radius": 14,
+        "opacity": 100
+      },
+      "props": {
+        "choiceListId": "choice-dialog-list",
+        "hoverSound": "",
+        "clickSound": "",
+        "itemImage": "",
+        "itemHoverImage": "",
+        "itemPressedImage": "",
+        "itemDisabledImage": "",
+        "hoverFill": "rgba(20, 48, 54, 0.94)",
+        "pressedFill": "rgba(82, 184, 168, 0.24)",
+        "disabledFill": "rgba(6, 12, 18, 0.58)",
+        "focusColor": "#7fd4c8"
+      }
+    },
+    {
+      "id": "choice-dialog-indicator",
+      "type": "choice-indicator",
+      "name": "选项强调线_模板",
+      "rect": {
+        "x": 505,
+        "y": 424,
+        "w": 3,
+        "h": 52
+      },
+      "anchor": "c",
+      "style": {
+        "fill": "#7fd4c8",
+        "radius": 999,
+        "opacity": 46,
+        "customCss": "border-radius: 0 999px 999px 0 !important;"
+      },
+      "props": {
+        "choiceListId": "choice-dialog-list",
+        "hoverOpacity": 100,
+        "pressedOpacity": 100,
+        "disabledOpacity": 20,
+        "glow": 14
+      }
+    },
+    {
+      "id": "choice-dialog-number",
+      "type": "choice-number",
+      "name": "选项序号_模板",
+      "rect": {
+        "x": 535,
+        "y": 413,
+        "w": 34,
+        "h": 74
+      },
+      "anchor": "c",
+      "style": {
+        "fontFamily": "\"SFMono-Regular\", Consolas, monospace",
+        "fontSize": 15.08,
+        "fontWeight": 700,
+        "letterSpacing": 1.8,
+        "color": "#7fd4c8",
+        "opacity": 62,
+        "textAlign": "left"
+      },
+      "props": {
+        "choiceListId": "choice-dialog-list",
+        "numberFormat": "leading-zero",
+        "numberStart": 1,
+        "numberPrefix": "",
+        "numberSuffix": "",
+        "hoverColor": "#7fd4c8",
+        "pressedColor": "#7fd4c8",
+        "disabledColor": "#7fd4c8",
+        "hoverOpacity": 100,
+        "pressedOpacity": 100,
+        "disabledOpacity": 20
+      }
+    },
+    {
+      "id": "choice-dialog-text",
+      "type": "choice-text",
+      "name": "选项正文_模板",
+      "rect": {
+        "x": 587,
+        "y": 413,
+        "w": 800,
+        "h": 74
+      },
+      "anchor": "c",
+      "style": {
+        "fontFamily": "\"PingFang SC\", \"Microsoft YaHei\", sans-serif",
+        "fontSize": 26,
+        "fontWeight": 500,
+        "letterSpacing": 0.4,
+        "color": "#e8f1f0",
+        "opacity": 100,
+        "textAlign": "left"
+      },
+      "props": {
+        "choiceListId": "choice-dialog-list",
+        "hoverColor": "#f5fffd",
+        "pressedColor": "#ffffff",
+        "disabledColor": "rgba(190, 205, 203, 0.38)",
+        "lineHeight": 1.45
+      }
+    }
+  ]
+}

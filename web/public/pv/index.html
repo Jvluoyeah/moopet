@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>长夜月 · 开场 PV（90s）</title>
+<!--
+  ==========================================================================
+  长夜月 · 开场 PV         一本册子在被翻
+  ==========================================================================
+
+  【目标】
+    90 秒。每一镜是册子的一页。全片只有三种页：
+
+      墨页 INK    墨迹 + 三套动画（门打开 / 去月塔 / 剪影走过）
+                  动画负责推进，不靠图片堆
+      影页 SIL    剪影——黑白 + 角色主题色（夜墨蓝/灰/旧铜/苔绿）
+                  这是全片的主力。人和狗的黑白影对比是最有劲的东西
+      图页 IMG    场景图，每张有自己的运镜 / 调色 / 呼吸
+                  只用来交代地点，不当主角
+
+    翻页 = 穿过黑场（册子翻页是黑的）。不做白闪、擦除、撕裂。
+    文字印在页上：地点 / 章号 / 引文 / 歌词。
+    「长夜月」只在合上册子那一刻出现一次。
+
+  【轴】歌词。LRC 减 20 秒 = 音频时间轴（音频从原曲 0:20 起）。
+        四个 ★立绘位各 5.14 秒，每一页都精确压在一句歌词上。
+
+  【结构】每帧声明式渲染：先算这一页要什么，再统一应用可见性。
+          内容按 key 缓存重建。状态每帧从零算起，不可能残留。
+  ==========================================================================
+-->
+<style>
+  :root{
+    --paper:#f5f1e8; --ink:#111211; --seal:#a8332a;
+    --navy:#16264f; --grey:#8f8d88; --copper:#7a4a24; --moss:#4a6b4f;
+    --serif:"LXGW Bright",ui-serif,Georgia,"Noto Serif SC","Songti SC","STSong",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#000;overflow:hidden}
+  body{font-family:var(--serif);display:grid;place-items:center;-webkit-font-smoothing:antialiased}
+
+  #stage{position:relative;width:100vw;height:100vh;overflow:hidden;background:var(--ink);
+         isolation:isolate}
+  #stage.paper{background:var(--paper)}
+
+  /* ── 页 ───────────────────────────────────────────── */
+  #img{position:absolute;inset:-4vw;z-index:1;transform-origin:50% 50%;will-change:transform}
+  #img img{width:100%;height:100%;object-fit:cover;display:block}
+  #veil{position:absolute;inset:0;z-index:2;pointer-events:none;
+        background:radial-gradient(ellipse at 50% 52%,rgba(0,0,0,.10),rgba(0,0,0,.60) 100%)}
+  #air{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .5s}
+  #grain{position:absolute;inset:0;z-index:14;pointer-events:none;opacity:.32;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='.22'/></svg>")}
+
+  /* ── 影页 ─────────────────────────────────────────── */
+  #sil{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0}
+  #sil .plate{position:absolute;inset:0}
+  #sil .fig{position:absolute;left:50%;top:50%}
+
+  /* ── 墨页：动画 ───────────────────────────────────── */
+  #ink{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;overflow:hidden}
+  #fx{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
+
+  .door{position:absolute;left:50%;top:50%;translate:-50% -50%;width:34vh;height:62vh;perspective:1100px}
+  .door .jam{position:absolute;inset:0;border:2px solid rgba(245,241,232,.22);background:#07070a}
+  .door .leaf{position:absolute;inset:1.5%;transform-origin:left center;
+    background:linear-gradient(180deg,#15151a,#0b0b0e);box-shadow:inset -18px 0 30px rgba(0,0,0,.7)}
+  .door .gap{position:absolute;left:1.5%;top:1.5%;bottom:1.5%;width:0;filter:blur(1px);
+    background:linear-gradient(90deg,#fff,rgba(255,255,255,.15))}
+  .door .ring{position:absolute;right:14%;top:48%;width:2.6vh;height:2.6vh;
+    border:3px solid rgba(245,241,232,.5);border-radius:50%}
+  .door .pool{position:absolute;left:-40%;right:-40%;bottom:-26%;height:30%;
+    background:radial-gradient(ellipse at 50% 0,rgba(255,246,228,.55),rgba(255,246,228,0) 70%)}
+
+  .tower{position:absolute;inset:0;background:#07070a}
+  .tower .far,.tower .mid,.tower .near{position:absolute;bottom:0;left:-60%;width:220%;
+    height:46%;background-repeat:repeat-x;background-position:0 100%}
+  .tower .far{bottom:38%;height:30%;opacity:.4;background-size:14vw 100%;
+    background-image:linear-gradient(180deg,transparent 55%,#0f0f14 55%)}
+  .tower .mid{bottom:14%;height:34%;opacity:.7;background-size:22vw 100%;
+    background-image:linear-gradient(180deg,transparent 42%,#141419 42%)}
+  .tower .near{bottom:0;height:26%;background-size:36vw 100%;
+    background-image:linear-gradient(180deg,transparent 30%,#000 30%)}
+  .tower .spire{position:absolute;left:50%;bottom:20%;translate:-50% 0;width:11vh;height:58vh;
+    background:#000;clip-path:polygon(50% 0,74% 9%,74% 100%,26% 100%,26% 9%)}
+  .tower .lit{position:absolute;left:50%;bottom:52%;translate:-50% 0;width:2.4vh;height:3vh;
+    background:#ffe6b0;filter:blur(.5px)}
+  .tower .moon{position:absolute;right:14%;top:12%;width:7vh;height:7vh;border-radius:50%;
+    background:#f2f0ea;box-shadow:0 0 8vh 2vh rgba(242,240,234,.22)}
+
+  .pass img{position:absolute;bottom:16vh;object-fit:contain;filter:brightness(0) invert(1)}
+
+  /* ── 字 ───────────────────────────────────────────── */
+  #loco{position:absolute;left:5vw;bottom:12vh;z-index:9;pointer-events:none;opacity:0}
+  #loco .cn{font-size:clamp(22px,3.4vw,52px);letter-spacing:.1em;color:var(--paper);
+    text-shadow:0 2px 14px rgba(0,0,0,.85)}
+  #loco .en{margin-top:.35em;font-size:clamp(9px,1.15vw,14px);letter-spacing:.5em;
+    color:rgba(245,241,232,.72)}
+  #loco .rule{margin-top:.7em;width:9em;height:3px;background:var(--seal)}
+
+  #quote{position:absolute;inset:0;z-index:9;pointer-events:none;opacity:0;
+    display:grid;place-items:center;text-align:center;padding:0 8vw}
+  #quote .q{font-size:clamp(24px,5.2vw,74px);line-height:1.34;letter-spacing:.07em;color:var(--paper);
+    text-shadow:0 3px 22px rgba(0,0,0,.9)}
+  #quote .src{margin-top:1.2em;font-size:clamp(9px,1.2vw,14px);letter-spacing:.44em;
+    color:rgba(245,241,232,.62)}
+
+  #chap{position:absolute;right:5vw;top:8vh;z-index:9;pointer-events:none;opacity:0;text-align:right}
+  #chap .n{font-size:clamp(20px,3vw,44px);letter-spacing:.2em;color:rgba(245,241,232,.88)}
+  #chap .e{margin-top:.3em;font-size:clamp(8px,1vw,12px);letter-spacing:.42em;
+    color:rgba(245,241,232,.6)}
+
+  /* ── 立绘页 ───────────────────────────────────────── */
+  #cast{position:absolute;inset:0;z-index:5;pointer-events:none;opacity:0}
+  #cast img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+  /* ── 狗 ───────────────────────────────────────────── */
+  #dog{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;
+    display:grid;place-items:center}
+  #dog img{object-fit:contain}
+
+  /* ── 歌词 ─────────────────────────────────────────── */
+  #lyric{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;--e:0}
+  #lyric .ln{position:absolute;color:#fff;
+    text-shadow:0 0 3px #000,0 0 3px #000,0 0 3px #000,0 1px 8px rgba(0,0,0,.9)}
+  #lyric .ln k{color:#ff6a58}
+  #lyric .rule{position:absolute;left:8vw;bottom:11.6vh;height:3px;width:30vw;background:var(--seal);
+    transform-origin:0 50%;transform:scaleX(var(--e));opacity:0}
+  #lyric::after{content:"";position:absolute;left:0;right:0;bottom:0;height:36vh;opacity:0;
+    background:linear-gradient(0deg,rgba(0,0,0,.62),rgba(0,0,0,0))}
+  /* 主句：下三分之一，从左往右擦除显字 */
+  #lyric.main .ln{left:8vw;right:16vw;bottom:14vh;font-size:clamp(21px,3.7vw,58px);line-height:1.26}
+  #lyric.main::after,#lyric.main .rule{opacity:1}
+  /* 竖排：右侧，从上往下长出来 */
+  #lyric.vert .ln{right:6vw;top:13vh;writing-mode:vertical-rl;font-size:clamp(17px,2.3vw,34px);
+    line-height:1.7;letter-spacing:.16em;max-height:70vh}
+  /* 和声：角落小字，不抢主句 */
+  #lyric.echo .ln{right:6vw;bottom:11vh;font-size:clamp(11px,1.5vw,21px);letter-spacing:.18em;
+    opacity:.78;font-style:italic}
+  /* 冲击：全屏，从中间撕开 */
+  #lyric.punch .ln{left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;padding:0 6vw;
+    font-size:clamp(32px,7vw,104px);line-height:1.16;font-weight:600}
+  #lyric.punch::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.42)}
+  #lyric.punch .ln{position:relative}
+  /* 有立绘卡时：卡片底色是浅的，白字压不住 → 反过来用墨黑字 + 白晕 + 底部安全区 */
+  #lyric.beside .ln{left:0;right:0;top:auto;bottom:8.5vh;text-align:center;padding:0 8vw;
+    writing-mode:horizontal-tb;max-height:none;font-size:clamp(19px,3vw,46px);letter-spacing:.05em;
+    line-height:1.3;font-style:normal;opacity:1;clip-path:none!important;color:var(--ink);
+    text-shadow:0 0 4px #fff,0 0 4px #fff,0 0 9px rgba(255,255,255,.95)}
+  #lyric.beside .ln k{color:var(--seal)}
+  #lyric.beside::after{opacity:1;
+    background:linear-gradient(0deg,rgba(255,255,255,.72),rgba(255,255,255,0))}
+  #lyric.beside .rule{display:none}
+
+  /* ── 末页 ─────────────────────────────────────────── */
+  #title{position:absolute;inset:0;z-index:11;pointer-events:none;opacity:0;
+    display:grid;place-items:end center;padding-bottom:7vh;text-align:center}
+  #title .t{font-size:clamp(38px,9vw,138px);letter-spacing:.24em;color:var(--paper);text-indent:.24em;
+    text-shadow:0 4px 30px rgba(0,0,0,.85)}
+  #title .s{margin-top:.4em;font-size:clamp(9px,1.25vw,14px);letter-spacing:.6em;
+    color:rgba(245,241,232,.72)}
+  #title .rule{margin:1.1em auto 0;width:10em;height:3px;background:var(--seal)}
+
+  #white{position:absolute;inset:0;z-index:12;background:#fff;opacity:0;pointer-events:none}
+  #flip{position:absolute;inset:0;z-index:13;background:#000;opacity:0;pointer-events:none}
+
+  /* ── 呼吸：每张图里"活"的那点东西 ─────────────────── */
+  #air.warm{background:radial-gradient(ellipse at 42% 58%,rgba(255,206,140,.30),rgba(255,206,140,0) 42%);
+    animation:breathe 3.6s ease-in-out infinite}
+  #air.cold{background:radial-gradient(ellipse at 50% 46%,rgba(180,215,255,.22),rgba(180,215,255,0) 46%);
+    animation:flick 1.9s steps(3,end) infinite}
+  #air.window{background:radial-gradient(ellipse at 62% 44%,rgba(255,214,150,.34),rgba(255,214,150,0) 22%);
+    animation:breathe 4.4s ease-in-out infinite}
+  #air.moon{background:none;overflow:hidden}
+  #air.moon::after{content:"";position:absolute;inset:-30% -70%;
+    background:linear-gradient(100deg,rgba(226,238,255,0) 40%,rgba(226,238,255,.22) 50%,rgba(226,238,255,0) 60%);
+    animation:sweep 7s linear infinite}
+  @keyframes breathe{0%,100%{opacity:.72}50%{opacity:1}}
+  @keyframes flick{0%,100%{opacity:.6}33%{opacity:.9}66%{opacity:.72}}
+  @keyframes sweep{0%{transform:translateX(-42%)}100%{transform:translateX(42%)}}
+
+  #hud{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;gap:12px;justify-content:center;
+    align-items:center;padding:11px;font-size:13px;letter-spacing:.14em;color:rgba(245,241,232,.74);
+    background:linear-gradient(0deg,rgba(0,0,0,.76),transparent);transition:opacity .4s}
+  #hud.hide{opacity:0;pointer-events:none}
+  button{font-family:var(--serif);font-size:13px;letter-spacing:.24em;padding:.55em 1.5em .6em 1.8em;
+    cursor:pointer;color:var(--paper);background:transparent;border:1px solid rgba(245,241,232,.42)}
+  button:hover{background:rgba(245,241,232,.12)}
+  #prog{position:fixed;left:0;bottom:0;height:2px;background:var(--seal);width:0;z-index:31}
+  #dbg{position:fixed;right:12px;top:10px;z-index:30;font-size:11px;letter-spacing:.1em;
+    color:rgba(245,241,232,.3)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="img"><img id="imgEl" alt=""></div>
+  <div id="veil"></div>
+  <div id="air"></div>
+  <div id="sil"></div>
+  <div id="ink"></div>
+  <canvas id="fx"></canvas>
+  <div id="cast"></div>
+  <div id="dog"></div>
+  <div id="loco"><div class="cn"></div><div class="en"></div><div class="rule"></div></div>
+  <div id="quote"><div><div class="q"></div><div class="src"></div></div></div>
+  <div id="chap"><div class="n"></div><div class="e"></div></div>
+  <div id="lyric"><div class="ln"></div><div class="rule"></div></div>
+  <div id="title"><div><div class="t">长夜月</div><div class="s">MOOPET DOSSIER</div>
+    <div class="rule"></div></div></div>
+  <div id="white"></div><div id="flip"></div><div id="grain"></div>
+</div>
+<div id="prog"></div><div id="dbg"></div>
+<div id="hud">
+  <button id="play">播 放</button>
+  <span>开场 PV · 90s · <b id="heroName">samoyed</b>（URL 尾加 <code>#husky</code> 换狗）</span>
+</div>
+
+<script>
+/* ==========================================================================
+   0 · 素材
+   ========================================================================== */
+const BREEDS=[['samoyed','萨摩耶'],['husky','哈士奇'],['border_collie','边牧'],['german_shepherd','德牧'],
+              ['golden','金毛'],['shiba','柴犬'],['corgi','柯基'],['bichon','比熊']];
+const CODES=BREEDS.map(b=>b[0]);
+const HERO=CODES.includes(location.hash.replace('#','').trim())
+  ? location.hash.replace('#','').trim() : 'samoyed';
+document.getElementById('heroName').textContent=HERO;
+const pup=(c,...p)=>`../breeds/${c}/${p.join('/')}`;
+const PAGES=['registry_out','registry_in','desk_top','dex_rack','book_page','door_light',
+  'tower_out','tower_archive','tower_window','plaza','park','arena','training','rooftop','ring_close'];
+
+/* 每张图自己的运镜 / 调色 / 呼吸 —— 一图一套，不重复 */
+const MOVE={
+  registry_out :['scale(1.04) translate(0,0)','scale(1.18) translate(-2.2%,-1.6%)'],
+  registry_in  :['scale(1.16) translate(1.6%,1.6%)','scale(1.03) translate(0,0)'],
+  desk_top     :['scale(1.03) translate(0,0)','scale(1.16) translate(1.8%,2.4%)'],
+  dex_rack     :['scale(1.17) translate(-1.6%,0)','scale(1.04) translate(0,0)'],
+  book_page    :['scale(1.03) translate(1.8%,0)','scale(1.16) translate(-1.8%,0)'],
+  door_light   :['scale(1.22) translate(0,0)','scale(1.03) translate(0,0)'],
+  tower_out    :['scale(1.16) translate(1.4%,3.2%)','scale(1.03) translate(0,0)'],
+  tower_archive:['scale(1.03) translate(0,0)','scale(1.17) translate(0,-2.4%)'],
+  tower_window :['scale(1.17) translate(-1.6%,1.4%)','scale(1.04) translate(0,0)'],
+  plaza        :['scale(1.03) translate(-1.8%,0)','scale(1.17) translate(1.8%,0)'],
+  park         :['scale(1.04) translate(0,0)','scale(1.19) translate(0,-1.8%)'],
+  arena        :['scale(1.17) translate(0,-1.6%)','scale(1.03) translate(0,0)'],
+  training     :['scale(1.03) translate(1.8%,0)','scale(1.17) translate(-1.8%,0)'],
+  rooftop      :['scale(1.03) translate(0,1.8%)','scale(1.17) translate(0,-1.8%)'],
+  ring_close   :['scale(1.16) rotate(-.9deg)','scale(1.03) rotate(.9deg)'],
+};
+const GRADE={
+  registry_out:'saturate(1.06) contrast(1.07) brightness(.94)',
+  registry_in :'saturate(1.14) contrast(1.05) brightness(1.02)',
+  desk_top    :'saturate(1.10) contrast(1.09)', dex_rack:'saturate(1.16) contrast(1.08) brightness(1.03)',
+  book_page   :'saturate(.94) contrast(1.08) brightness(1.02)',
+  door_light  :'saturate(1.04) contrast(1.18) brightness(.90)',
+  tower_out   :'saturate(1.10) contrast(1.06) brightness(.98)',
+  tower_archive:'saturate(.86) contrast(1.14)', tower_window:'saturate(1.04) contrast(1.10) brightness(.96)',
+  plaza:'saturate(1.12) contrast(1.06)', park:'saturate(1.14) contrast(1.04) brightness(1.05)',
+  arena:'saturate(.92) contrast(1.15) brightness(.97)', training:'saturate(1.16) contrast(1.06)',
+  rooftop:'saturate(.94) contrast(1.12) brightness(.96)', ring_close:'saturate(.98) contrast(1.12)',
+};
+const AIR={registry_out:'cold',registry_in:'warm',desk_top:'warm',dex_rack:'warm',book_page:'warm',
+  door_light:'cold',tower_out:'cold',tower_archive:'cold',tower_window:'window',plaza:'moon',
+  park:'moon',arena:'cold',training:'warm',rooftop:'cold',ring_close:'moon'};
+const _n=s=>(s.match(/-?\d+(?:\.\d+)?/g)||[]).map(Number);
+const _f=s=>[...s.matchAll(/(scale|translate|rotate)\(([^)]*)\)/g)];
+function lerpTF(a,b,e){
+  const A=_f(a),B2=_f(b);
+  return A.map((m,i)=>{const fn=m[1],na=_n(m[2]),nb=B2[i]?_n(B2[i][2]):na;
+    return `${fn}(${na.map((v,j)=>{const w=nb[j]===undefined?v:nb[j];const x=v+(w-v)*e;
+      return Math.abs(x)>0.0005?+x.toFixed(4):0;}).join(',')})`;}).join(' ');
+}
+const easeIO=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;
+
+/* ==========================================================================
+   1 · 轴的来源：歌词（LRC 减 20 秒）
+   ========================================================================== */
+const LYRICS=[
+  [20.230,2.01,'main','It’s <k>full moon</k> again'],
+  [22.242,2.60,'echo','crazy how time flies'],
+  [24.847,1.62,'main','one might wonder'],
+  [26.465,3.51,'vert','if past path was in a right direction'],
+  [29.971,2.16,'main','but I do believe'],
+  [32.135,2.79,'vert','things come to life by accident'],
+  [34.929,2.00,'echo','when it remains on'],
+  [36.926,2.74,'main','sounds like it’s <k>meant to be</k>'],
+  [39.670,2.88,'punch','<k>Wake up</k>'],
+  [42.554,0.43,'punch','<k>Get Up</k>'],
+  [42.985,1.99,'main','what matters after ending’s<br>how you left a mark'],
+  [44.975,0.62,'echo','(Don’t wait up)'],
+  [45.594,1.91,'punch','<k>Fire in my soul</k><br><k>fire in my heart</k>'],
+  [47.499,2.25,'main','’til you see me on the other side<br>of stars, I’m running'],
+  [49.751,4.73,'vert','All the journeys start some where with a first step'],
+  [54.484,2.34,'main','No one’s sure what lies ahead,'],
+  [56.819,2.78,'main','be bold and braves <k>(stand up)</k>'],
+  [59.598,2.23,'vert','roads may be'],
+  [61.823,2.49,'vert','rough and tough'],
+  [64.312,3.21,'main','though it will lead some where'],
+  [67.523,2.26,'echo','(nothing easy get up and go get it go)'],
+  [69.778,4.70,'main','sometimes it’s journey itself that teaches'],
+  [74.481,4.92,'vert','a lot about the destination not aware of'],
+  [79.400,1.41,'main','no matter how far'],
+  [80.808,1.08,'echo','(no matter how far)'],
+  [81.891,1.13,'main','how you go'],
+  [83.018,1.18,'echo','(how you go)'],
+  [84.199,3.20,'main','how long it may last'],
+  [87.395,2.31,'punch','<k>venture life</k><br>burn your dread'],
+  [89.705,10.3,'echo','(Carpe Diem no time to waste, you gotta<br>venture life go get it burn your dread)'],
+].map(([t,d,kind,text])=>({t:Math.max(0,t-20),d,kind,text}));
+const lyricAt=t=>{let cur=null;for(const L of LYRICS)if(t>=L.t&&t<L.t+L.d)cur=L;return cur;};
+
+/* ==========================================================================
+   2 · 册子：一页一页
+       每一页是一个 beat。type 只有三种：ink / sil / img
+       ★ = 立绘位（5.14s），每一页都压在一句歌词上
+   ========================================================================== */
+const P=[
+  /* ── 引子：册子还没打开 ─────────────────────────── */
+  {t:0.00,l:0.86,type:'ink',ink:'drop',  note:'一滴墨落纸'},
+  {t:0.86,l:1.38,type:'ink',ink:'door',  note:'门打开'},
+  /* ── 第一页：登记处 ─────────────────────────────── */
+  {t:2.24,l:2.61,type:'img',src:'registry_out',loco:['登记处','THE REGISTRY'],note:'登记处·外'},
+  {t:4.85,l:1.62,type:'img',src:'door_light',note:'门缝底下那条光'},
+  {t:6.47,l:3.50,type:'img',src:'registry_in',note:'登记处·内'},
+  {t:9.97,l:2.16,type:'sil',who:['recorder_full'],h:66,tone:'--ink',fig:'paper',
+    note:'记录员 · 黑白影'},
+  {t:12.14,l:2.79,type:'img',src:'dex_rack',loco:['图鉴架','THE DEX'],note:'八格位图鉴架'},
+  {t:14.93,l:2.00,type:'img',src:'book_page',loco:['档案册','MOOPET DOSSIER'],note:'册子摊开'},
+  {t:16.93,l:2.74,type:'img',src:'ring_close',chap:['#0001','FIRST RECORD'],note:'石环上的编号'},
+  /* ── 爆发：八原型快剪 ───────────────────────────── */
+  {t:19.67,l:0.44,type:'dog',form:'sit'},{t:20.11,l:0.44,type:'dog',form:'sit'},
+  {t:20.55,l:0.44,type:'dog',form:'sit'},{t:20.99,l:0.44,type:'dog',form:'sit'},
+  {t:21.43,l:0.44,type:'dog',form:'sit'},{t:21.87,l:0.44,type:'dog',form:'sit'},
+  {t:22.31,l:0.24,type:'dog',form:'sit',full:1},{t:22.55,l:0.44,type:'dog',form:'sit'},
+  /* ── ★ 记录员（what matters after ending's how you left a mark） ── */
+  {t:22.99,l:5.14,type:'cast',who:'recorder',note:'★ 立绘位 · 记录员'},
+  {t:28.13,l:1.38,type:'dog',form:'run',paper:1},
+  {t:29.51,l:2.35,type:'sil',who:['recorder_full'],h:68,tone:'--navy',fig:'paper',
+    note:'记录员 · 夜墨蓝'},
+  {t:31.86,l:2.62,type:'ink',ink:'tower',note:'去月塔'},
+  {t:34.48,l:2.34,type:'img',src:'tower_out',loco:['月塔','MOON TOWER'],note:'月塔·外'},
+  {t:36.82,l:2.78,type:'sil',who:['han_bai'],h:66,tone:'--copper',fig:'paper',
+    note:'韩柏 · 旧铜'},
+  /* ── ★ 秦素（roads may be） ────────────────────── */
+  {t:39.60,l:5.14,type:'cast',who:'qin_su',note:'★ 立绘位 · 秦素'},
+  {t:44.74,l:2.78,type:'img',src:'training',
+    quote:['打赢了不算本事。<br>被家里的东西打赢过，<br>才算长大。','老记录员'],note:'训练场'},
+  {t:47.52,l:2.26,type:'duel',note:'对拍'},
+  {t:49.78,l:4.70,type:'img',src:'tower_archive',loco:['归档处','THE ARCHIVE'],note:'归档处'},
+  /* ── ★ 韩柏（a lot about the destination not aware of） ── */
+  {t:54.48,l:5.14,type:'cast',who:'han_bai',note:'★ 立绘位 · 韩柏'},
+  {t:59.62,l:2.27,type:'sil',who:['qin_su'],h:64,tone:'--grey',fig:'ink',note:'秦素 · 灰'},
+  {t:61.89,l:2.31,type:'ink',ink:'pass',note:'剪影走过'},
+  {t:64.20,l:3.20,type:'sil',who:['zhou_lang'],h:66,tone:'--moss',fig:'paper',
+    note:'周朗 · 苔绿'},
+  /* ── ★ 周朗（venture life burn your dread） ─────── */
+  {t:67.40,l:5.14,type:'cast',who:'zhou_lang',note:'★ 立绘位 · 周朗'},
+  /* ── 白场 ──────────────────────────────────────── */
+  {t:72.54,l:1.96,type:'img',src:'registry_out',note:'回到门口'},
+  {t:74.50,l:1.50,type:'bleach',note:'光吃掉他'},
+  {t:76.00,l:1.80,type:'blank',note:'纯白'},
+  /* ── 合上册子 ──────────────────────────────────── */
+  {t:77.80,l:3.20,type:'sil',who:['recorder_full','qin_su','han_bai','zhou_lang'],h:52,
+    colors:['#16264f','#8f8d88','#7a4a24','#4a6b4f'],tone:'--paper',fig:'paper',dog:1,
+    note:'四个人 · 四色'},
+  {t:81.00,l:2.50,type:'dog',form:'sit',note:'八原型'},
+  {t:83.50,l:3.00,type:'img',src:'park',note:'月亮空镜'},
+  {t:86.50,l:2.50,type:'end',note:'长夜月（全片唯一一次）'},
+  {t:89.00,l:1.00,type:'end',hold:1,note:'定格'},
+];
+const TOTAL=90;
+const pageAt=t=>{for(const p of P)if(t>=p.t&&t<p.t+p.l)return p;return P[P.length-1];};
+const prog=(t,p)=>Math.max(0,Math.min(1,(t-p.t)/p.l));
+/* 翻页的力度：越快越狠；慢页只是轻轻压一下 */
+const force=p=>p.l<=0.5?1:p.l<=1.5?0.72:p.l<=3?0.5:0.34;
+
+/* ==========================================================================
+   3 · 墨（canvas）—— 引子那一滴
+   ========================================================================== */
+const fx=document.getElementById('fx'),cx=fx.getContext('2d');
+let CW=0,CH=0;
+function fitFX(){const r=fx.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.5);
+  CW=fx.width=Math.round(r.width*d);CH=fx.height=Math.round(r.height*d);}
+function blob(g,x,y,r,seed,amt){g.beginPath();
+  for(let i=0;i<=72;i++){const a=i/72*Math.PI*2;
+    const w=Math.sin(a*3+seed)*.5+Math.sin(a*5-seed*1.7)*.3+Math.sin(a*8+seed*.6)*.2;
+    const rr=r*(1+w*amt),X=x+Math.cos(a)*rr,Y=y+Math.sin(a)*rr;i?g.lineTo(X,Y):g.moveTo(X,Y);}
+  g.closePath();}
+function drawDrop(p){
+  cx.clearRect(0,0,CW,CH);
+  const X=CW/2,Y=CH/2,base=Math.min(CW,CH);
+  cx.save();cx.fillStyle='rgba(245,241,232,.96)';cx.globalCompositeOperation='screen';
+  if(p<0.5){const e=1-Math.pow(1-p/0.5,3);
+    blob(cx,X,Y,base*(.04+.20*e),1.4,.13);cx.fill();
+  }else{const e=(p-.5)/0.5;
+    blob(cx,X,Y,base*(.24+.30*e),1.4,.13);cx.fill();
+    cx.globalAlpha=.30*(1-e);blob(cx,X,Y,base*(.42+.34*e),3.1,.18);cx.fill();
+    cx.globalAlpha=1;
+  }
+  cx.restore();
+}
+const clearFX=()=>{if(CW)cx.clearRect(0,0,CW,CH);};
+
+/* ==========================================================================
+   4 · 渲染 —— 声明式
+   ========================================================================== */
+const $=id=>document.getElementById(id);
+const stage=$('stage'),imgWrap=$('img'),imgEl=$('imgEl'),air=$('air'),
+      sil=$('sil'),ink=$('ink'),cast=$('cast'),dog=$('dog'),
+      loco=$('loco'),quote=$('quote'),chap=$('chap'),lyric=$('lyric'),title=$('title'),
+      white=$('white'),flip=$('flip'),dbg=$('dbg'),progEl=$('prog');
+/* 每帧统一从零写可见性的层 */
+const LAYERS={sil,ink,cast,dog,loco,quote,chap,lyric,title,air};
+let memo={},lyKey=null,SEEK=false,flipT=null,flipA=0,flipD=0;
+
+const dogImg=(form='sit',asSil=true)=>{
+  const e=document.createElement('img');
+  const m=/^([a-z]+)_(\d+)$/.exec(form);
+  e.src=m?pup(HERO,'actions',form+'.png'):pup(HERO,'forms',form+'.png');
+  e.onerror=()=>{e.onerror=null;e.src=pup(HERO,'forms','sit.png');};
+  e.style.height='52vh';
+  if(asSil)e.style.filter='brightness(0) invert(1)';
+  return e;
+};
+/* 剪影上色只能用 mask：给 <img> 设 background 只会得到一个色块 */
+function figure(src,h,dx,color,figKind){
+  if(color){
+    const d=document.createElement('div'); d.className='fig';
+    d.style.cssText=`height:${h}vh;aspect-ratio:2/3;background:${color};`
+      +`translate:calc(-50% + ${dx}vw) -50%;`
+      +`-webkit-mask:url("${src}") center/contain no-repeat;`
+      +`mask:url("${src}") center/contain no-repeat`;
+    return d;
+  }
+  const im=document.createElement('img'); im.className='fig'; im.src=src;
+  im.style.cssText=`height:${h}vh;object-fit:contain;translate:calc(-50% + ${dx}vw) -50%;`;
+  im.style.filter=(figKind==='ink')?'brightness(0)':'brightness(0) invert(1)';
+  return im;
+}
+
+function render(t){
+  const p=pageAt(t), type=p.type, k=prog(t,p);
+  const onNew=(memo.key!==p.t+':'+type);
+  if(onNew){
+    memo={key:p.t+':'+type};
+    flipT=t; flipA=force(p); flipD=0.16+force(p)*0.14;   /* 翻页：穿过黑场 */
+  }
+
+  /* ── ① 这一页要什么 ─────────────────────────────── */
+  const need={sil:0,ink:0,cast:0,dog:0,loco:0,quote:0,chap:0,lyric:0,title:0,air:0};
+  let bg='ink', src=null, whiteLvl=0, dropP=null;
+
+  if(type==='img'){ src=p.src; need.air=1; }
+  else if(type==='ink'){
+    need.ink=1;
+    if(p.ink==='drop') dropP=k;
+  }
+  else if(type==='sil'){ need.sil=1; bg=(p.tone==='--paper')?'paper':'ink'; }
+  else if(type==='cast'){ need.cast=1; }
+  else if(type==='dog'){ need.dog=1; bg=p.paper?'paper':'ink'; }
+  else if(type==='duel'){ need.dog=1; }
+  else if(type==='bleach'){ need.cast=1; whiteLvl=Math.max(0,(k-.30)/.70); }
+  else if(type==='blank'){ whiteLvl=1; }
+  else if(type==='end'){ need.title=1; if(!p.hold){src='park'; need.air=1;} }
+
+  const ly=lyricAt(t);
+  if(p.loco) need.loco=1;
+  if(p.quote&&!ly) need.quote=1;      /* 有歌词时引文让位 */
+  if(p.chap) need.chap=1;
+  if(ly) need.lyric=1;
+
+  /* ── ② 图页 ────────────────────────────────────── */
+  stage.className=bg;
+  if(src){
+    if(imgEl.dataset.k!==src){ imgEl.dataset.k=src; imgEl.src=`scene/${src}.png`; }
+    imgWrap.style.opacity=1; imgWrap.style.filter=GRADE[src]||'none';
+    const mv=MOVE[src]||['scale(1.03)','scale(1.12)'];
+    if(SEEK){ imgWrap.style.transition='none'; imgWrap.style.transform=lerpTF(mv[0],mv[1],easeIO(k)); }
+    else if(onNew){
+      imgWrap.style.transition='none'; imgWrap.style.transform=mv[0];
+      requestAnimationFrame(()=>{ imgWrap.style.transition=
+        `transform ${Math.max(1.2,p.l).toFixed(2)}s cubic-bezier(.22,0,.36,1)`;
+        imgWrap.style.transform=mv[1]; });
+    }
+    const a=AIR[src]||'';
+    if(air.dataset.k!==src+a){ air.dataset.k=src+a; air.className=a; }
+  } else {
+    imgWrap.style.opacity=0; imgWrap.style.transform='none';
+    imgEl.dataset.k=''; air.dataset.k=''; air.className='';
+  }
+
+  /* ── ③ 墨页 ────────────────────────────────────── */
+  if(dropP!=null) drawDrop(dropP); else clearFX();
+  if(need.ink&&p.ink&&p.ink!=='drop'&&ink.dataset.k!=='ink:'+p.t){
+    ink.dataset.k='ink:'+p.t;
+    if(p.ink==='door') ink.innerHTML=
+      '<div class="door"><div class="jam"></div><div class="gap"></div>'
+      +'<div class="leaf"></div><div class="ring"></div><div class="pool"></div></div>';
+    else if(p.ink==='tower') ink.innerHTML=
+      '<div class="tower"><div class="moon"></div><div class="far"></div><div class="mid"></div>'
+      +'<div class="spire"><div class="lit"></div></div><div class="near"></div></div>';
+    else ink.innerHTML=
+      `<div class="pass"><img src="cast/recorder_full.png" style="height:52vh;left:-30vw">`
+      +`<img src="${pup(HERO,'forms','sit.png')}" style="height:15vh;left:-20vw"></div>`;
+  }
+  if(need.ink){
+    const e=1-Math.pow(1-k,2.2);
+    if(p.ink==='door'){
+      const op=Math.min(1,Math.max(0,(k-0.18)/0.62));
+      ink.querySelector('.leaf').style.transform=`rotateY(${(-78*op).toFixed(1)}deg)`;
+      const gap=ink.querySelector('.gap'); gap.style.width=(2+op*92)+'%';
+      gap.style.opacity=(0.25+op*0.75).toFixed(2);
+      const pool=ink.querySelector('.pool'); pool.style.opacity=Math.min(1,op*1.5).toFixed(2);
+      pool.style.transform=`scaleX(${(0.4+op*1.1).toFixed(2)})`;
+    } else if(p.ink==='tower'){
+      const d=e*100;
+      ink.querySelector('.far').style.transform=`translateX(${-d*1.6}%)`;
+      ink.querySelector('.mid').style.transform=`translateX(${-d*3.4}%)`;
+      ink.querySelector('.near').style.transform=`translateX(${-d*7}%)`;
+      ink.querySelector('.spire').style.transform=
+        `scale(${(0.45+e*0.75).toFixed(3)}) translateY(${((1-e)*10).toFixed(2)}%)`;
+    } else if(p.ink==='pass'){
+      ink.querySelectorAll('img').forEach((im,i)=>{
+        im.style.transform=`translateX(${(e*(i?120:108)).toFixed(1)}vw) `
+          +`translateY(${(Math.sin(k*22+i)*0.6).toFixed(2)}vh)`;});
+    }
+  }
+
+  /* ── ④ 影页 ────────────────────────────────────── */
+  if(need.sil&&sil.dataset.k!=='sil:'+p.t){
+    sil.dataset.k='sil:'+p.t;
+    const box=document.createElement('div'); box.style.cssText='position:absolute;inset:0';
+    const plate=document.createElement('div'); plate.className='plate';
+    plate.style.background=`var(${p.tone||'--ink'})`;
+    box.appendChild(plate);
+    const list=p.who||[], n=list.length;
+    list.forEach((name,i)=>box.appendChild(
+      figure(`cast/${name}.png`, p.h||62, (i-(n-1)/2)*22, p.colors?p.colors[i]:null, p.fig)));
+    if(p.dog){
+      const d=dogImg('sit',true);
+      d.style.cssText='position:absolute;left:50%;top:50%;height:18vh;'
+        +'filter:brightness(0) invert(1);translate:calc(-50% + 20vw) calc(-50% + 22vh)';
+      box.appendChild(d);
+    }
+    sil.replaceChildren(box);
+  }
+  if(need.sil) sil.firstElementChild.style.transform=`scale(${(1+0.05*k).toFixed(3)})`;
+
+  /* ── ⑤ 立绘页 ──────────────────────────────────── */
+  if(need.cast&&cast.dataset.k!=='cast:'+p.t){
+    cast.dataset.k='cast:'+p.t;
+    const im=document.createElement('img');
+    if(p.who){
+      im.src=`cast/card_${p.who}.png`;
+      im.onerror=()=>{im.onerror=null;im.src=`cast/${p.who}.png`;};
+    } else im.src='cast/recorder_full.png';
+    cast.replaceChildren(im);
+  }
+  if(need.cast){
+    if(p.who) cast.firstElementChild.style.transform=`scale(${(1+0.02*k).toFixed(3)})`;
+    else cast.firstElementChild.style.filter=`brightness(${(1+Math.min(1,k*1.4)*3).toFixed(2)})`;
+  }
+
+  /* ── ⑥ 狗 ──────────────────────────────────────── */
+  if(need.dog){
+    if(type==='duel'){
+      if(dog.dataset.k!=='duel'){
+        dog.dataset.k='duel';
+        const a=dogImg('sit',true), b=dogImg('sit',true);
+        a.src=pup('german_shepherd','forms','sit.png');
+        a.style.cssText='position:absolute;height:38vh;filter:brightness(0) invert(1);'
+          +'translate:-30vw 0;scale:-1 1';
+        b.style.cssText='position:absolute;height:38vh;filter:brightness(0) invert(1);translate:30vw 0';
+        dog.replaceChildren(a,b);
+      }
+    } else {
+      const form=(p.form==='run')?`run_0${Math.floor(t/(30/140/2))%4+1}`:'sit';
+      const idx=(p.form==='sit'&&!p.full)?Math.floor(t/(p.l/8))%8:-1;
+      const key='dog:'+form+':'+idx;
+      if(dog.dataset.k!==key){
+        dog.dataset.k=key;
+        const e=dogImg(form,true);
+        if(!p.paper&&p.form!=='run') e.style.filter='brightness(0) invert(1)';
+        if(idx>=0) e.src=pup(CODES[idx],'forms','sit.png');
+        dog.replaceChildren(e);
+      }
+    }
+  }
+
+  /* ── ⑦ 字 ──────────────────────────────────────── */
+  if(need.loco){
+    loco.querySelector('.cn').textContent=p.loco[0];
+    loco.querySelector('.en').textContent=p.loco[1];
+    loco.style.transform=`translateX(${(-(1-Math.min(1,(t-p.t)/0.5))*3).toFixed(2)}vw)`;
+  }
+  if(need.quote){
+    quote.querySelector('.q').innerHTML=p.quote[0];
+    quote.querySelector('.src').textContent=p.quote[1];
+    quote.style.transform=`scale(${(1.14-0.14*Math.min(1,(t-p.t)/0.35)).toFixed(3)})`;
+  }
+  if(need.chap){
+    chap.querySelector('.n').textContent=p.chap[0];
+    chap.querySelector('.e').textContent=p.chap[1];
+    chap.style.transform=`translateX(${((1-Math.min(1,(t-p.t)/0.4))*2.5).toFixed(2)}vw)`;
+  }
+
+  /* ── ⑧ 歌词：四套排法，四种显字 ─────────────────── */
+  if(ly){
+    const key='ly:'+ly.t+ly.kind+(p.who?'|c':'');
+    if(lyKey!==key){
+      lyKey=key; memo.lyAt=t;
+      lyric.querySelector('.ln').innerHTML=ly.text;
+      lyric.className=ly.kind+((p.who&&ly.kind!=='punch')?' beside':'');
+    }
+    const q=Math.min(1,(t-memo.lyAt)/0.40), e=1-Math.pow(1-q,3);
+    const out=Math.max(0,Math.min(1,(ly.t+ly.d-t)/0.30));
+    lyric.style.opacity=Math.min(e,out);
+    lyric.style.setProperty('--e',e.toFixed(3));
+    const ln=lyric.querySelector('.ln');
+    if(ly.kind==='main'){                    /* 从左往右擦除显字 */
+      ln.style.clipPath=`inset(0 ${((1-e)*100).toFixed(1)}% 0 0)`;
+      ln.style.scale=1; ln.style.translate=`0 ${((1-e)*1.4).toFixed(2)}vh`; ln.style.letterSpacing='';
+    } else if(ly.kind==='vert'){             /* 竖排：从上往下长出来 */
+      ln.style.clipPath=`inset(0 0 ${((1-e)*100).toFixed(1)}% 0)`;
+      ln.style.scale=1; ln.style.translate='0'; ln.style.letterSpacing='';
+    } else if(ly.kind==='echo'){             /* 和声：轻淡入，不抢主句 */
+      ln.style.clipPath='none'; ln.style.scale=1; ln.style.translate=`0 ${((1-e)*0.7).toFixed(2)}vh`;
+    } else {                                 /* 冲击：从中间撕开 + 字距收拢 */
+      ln.style.clipPath=`inset(0 ${((1-e)*50).toFixed(1)}% 0 ${((1-e)*50).toFixed(1)}%)`;
+      ln.style.letterSpacing=`${(0.30-0.24*e).toFixed(3)}em`;
+      ln.style.scale=(1.28-0.28*e).toFixed(3); ln.style.translate='0';
+    }
+  } else lyKey=null;
+
+  /* ── ⑨ 统一应用可见性：每帧从零写，不可能残留 ───── */
+  for(const key in LAYERS){
+    const on=!!need[key], el=LAYERS[key];
+    if(key==='lyric') continue;              /* 歌词的 opacity 由上面按进度算，下面单独处理 */
+    el.style.opacity=on?1:0;
+    el.style.visibility=on?'visible':'hidden';
+  }
+  lyric.style.visibility=need.lyric?'visible':'hidden';
+  if(!need.lyric) lyric.style.opacity=0;
+  white.style.opacity=whiteLvl;
+  white.style.visibility=whiteLvl>0?'visible':'hidden';
+
+  /* ── ⑩ 翻页：穿过黑场 ─────────────────────────── */
+  if(flipT!=null){
+    const d=t-flipT;
+    if(d<flipD){ const x=d/flipD; flip.style.opacity=((1-Math.abs(x*2-1))*flipA).toFixed(3); }
+    else { flip.style.opacity=0; flipT=null; }
+  }
+
+  progEl.style.width=(Math.min(1,t/TOTAL)*100)+'%';
+  if((memo.tick=(memo.tick||0)+1)%6===0)
+    dbg.textContent=`${t.toFixed(2)}s / ${TOTAL}s　${type}${p.who?'·'+p.who:''}　${p.note||''}`;
+}
+
+/* ==========================================================================
+   5 · 音轨（140BPM 合成占位；放真歌时静音即可）
+   ========================================================================== */
+const SPB=60/140,BAR=4*SPB;
+let AC=null;const actx=()=>{if(!AC)AC=new(window.AudioContext||window.webkitAudioContext)();return AC;};
+function env(c,t,a,d,pk){const g=c.createGain();g.gain.setValueAtTime(0,t);
+  g.gain.linearRampToValueAtTime(pk,t+a);g.gain.exponentialRampToValueAtTime(.0001,t+a+d);return g;}
+function kick(t,v=.5){const c=actx(),o=c.createOscillator(),g=env(c,t,.004,.2,v);
+  o.type='sine';o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(44,t+.1);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.24);}
+function snare(t,v=.28){const c=actx(),n=c.createBufferSource();
+  const b=c.createBuffer(1,3200,c.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<3200;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/3200,5);
+  n.buffer=b;const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1900;bp.Q.value=.9;
+  const g=env(c,t,.002,.13,v);n.connect(bp);bp.connect(g);g.connect(c.destination);n.start(t);}
+function hat(t,v=.1,open=false){const c=actx(),n=c.createBufferSource();
+  const L=open?4200:900,b=c.createBuffer(1,L,c.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<L;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/L,open?2.6:7);
+  n.buffer=b;const hp=c.createBiquadFilter();hp.type='highpass';hp.frequency.value=7200;
+  const g=c.createGain();g.gain.value=v;n.connect(hp);hp.connect(g);g.connect(c.destination);n.start(t);}
+function stab(t,fr,dur=.34,v=.1){const c=actx(),g=env(c,t,.012,dur,v);
+  fr.forEach(fq=>{const o=c.createOscillator(),gg=c.createGain();o.type='sawtooth';o.frequency.value=fq;
+    gg.gain.value=.5;const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;
+    o.connect(lp);lp.connect(gg);gg.connect(g);o.start(t);o.stop(t+dur+.06);});g.connect(c.destination);}
+function bass(t,fq,dur){const c=actx(),o=c.createOscillator(),g=env(c,t,.006,dur,.2);
+  o.type='triangle';o.frequency.value=fq;o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+dur+.05);}
+function ping(t){const c=actx(),g=env(c,t,.004,.9,.15);
+  [1568,2349].forEach((fq,i)=>{const o=c.createOscillator();o.type='sine';o.frequency.value=fq;
+    const gg=c.createGain();gg.gain.value=i?.4:1;o.connect(gg);gg.connect(g);o.start(t);o.stop(t+1);});
+  g.connect(c.destination);}
+function puff(t){const c=actx(),n=c.createBufferSource();
+  const b=c.createBuffer(1,2000,c.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<2000;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/2000,3.4);
+  n.buffer=b;const lp=c.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1200;
+  const g=c.createGain();g.gain.value=.2;n.connect(lp);lp.connect(g);g.connect(c.destination);n.start(t);}
+function thud(t,v=.34){const c=actx(),o=c.createOscillator(),g=env(c,t,.003,.26,v);
+  o.type='sine';o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(50,t+.15);
+  o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.3);hat(t,.12);}
+const NT={A:9,C:0,E:4,F:5,G:7};
+const frq=(s,o=3)=>440*Math.pow(2,(s-9+(o-4)*12)/12);
+const CHORD={Am:[NT.A,NT.C,NT.E],F:[NT.F,NT.A,NT.C],C:[NT.C,NT.E,NT.G],G:[NT.G,4+7,4+11]};
+const PROG=['Am','F','C','G'];
+function playBar(b,t){
+  const verse=(b>=3&&b<10)||(b>=23&&b<27)||(b>=34&&b<37);
+  const full=(b>=11&&b<16)||(b>=28&&b<33)||(b>=39&&b<44);
+  const root=PROG[b%4],ch=CHORD[root].map(n=>frq(n,2));
+  for(let q=0;q<4;q++){const bt=t+q*SPB;
+    if(q===0||q===2)kick(bt,verse?.32:.52);
+    if(q===1||q===3)snare(bt,verse?.14:.3);
+    hat(bt,verse?.05:.11,q===3);hat(bt+SPB/2,verse?.035:.075);}
+  for(let q=0;q<4;q++)bass(t+q*SPB,frq(NT[root[0]]===9?9:(root==='F'?5:root==='C'?0:7),2),SPB*.9);
+  if(full)stab(t,ch,BAR*.9,.09);
+  if(b%4===0)stab(t,ch,SPB*.5,.12);
+  if([0,5,11,16,22,28,33,39,44,48].includes(b))thud(t,.42);
+  if(b===0){puff(t);puff(t+2*SPB);}
+  if(b===1)ping(t);
+}
+let sched=null;
+function pump(){if(!sched)return;const now=actx().currentTime;
+  while(sched.next<53&&sched.start+sched.next*BAR<now+1.2){
+    playBar(sched.next,sched.start+sched.next*BAR);sched.next++;}}
+
+/* ==========================================================================
+   6 · 播放 / 逐帧导出
+   ========================================================================== */
+let t0=0,raf=0,playing=false;
+const hud=$('hud');
+const PRE=['cast/card_recorder.png','cast/card_qin_su.png','cast/card_han_bai.png',
+  'cast/card_zhou_lang.png','cast/recorder_full.png','cast/qin_su.png','cast/han_bai.png',
+  'cast/zhou_lang.png','cast/recorder_bust.png'];
+PAGES.forEach(k=>PRE.push('scene/'+k+'.png'));
+CODES.forEach(c=>PRE.push(pup(c,'forms','sit.png')));
+for(let i=1;i<=4;i++)PRE.push(pup(HERO,'actions',`run_0${i}.png`));
+let loaded=0;
+(function(){const n=PRE.length;
+  PRE.forEach(u=>{const im=new Image();
+    const ok=()=>{loaded++;if(loaded>=n){$('play').disabled=false;$('play').textContent='播 放';}};
+    im.onload=()=>(im.decode?im.decode().catch(()=>{}):Promise.resolve()).then(ok);
+    im.onerror=ok;im.src=u;});})();
+$('play').disabled=true;$('play').textContent='载入…';
+
+function loop(now){
+  if(!playing)return;
+  const t=(now-t0)/1000;pump();
+  if(t>=TOTAL){playing=false;render(TOTAL-0.001);hud.classList.remove('hide');return;}
+  render(t);raf=requestAnimationFrame(loop);
+}
+function start(){
+  cancelAnimationFrame(raf);
+  memo={};lyKey=null;flipT=null;fitFX();
+  actx().resume();t0=performance.now();playing=true;
+  render(0);
+  sched={start:actx().currentTime+0.08,next:0};pump();
+  hud.classList.add('hide');raf=requestAnimationFrame(loop);
+}
+$('play').onclick=start;
+addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();start();}});
+addEventListener('resize',fitFX);
+
+SEEK=/[?&]still=1/.test(location.search);
+window.__total=()=>TOTAL;
+window.__seek=function(tt){
+  SEEK=true;playing=false;cancelAnimationFrame(raf);
+  document.querySelectorAll('#air').forEach(el=>{
+    el.style.animationPlayState='paused';el.style.animationDelay=(-tt)+'s';});
+  render(tt);return true;
+};
+fitFX();render(0);
+</script>
+</body>
+</html>

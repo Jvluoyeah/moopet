@@ -1,0 +1,1 @@
+import{du as r,d as e,dv as t,dw as s}from"./main-CiKnn7dZ.js";const u={get parse(){return e("7.3.0","utils.url.parse is deprecated, use native URL API instead."),s},get format(){return e("7.3.0","utils.url.format is deprecated, use native URL API instead."),t},get resolve(){return e("7.3.0","utils.url.resolve is deprecated, use native URL API instead."),r}};export{u};

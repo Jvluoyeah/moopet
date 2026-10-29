@@ -1,0 +1,107 @@
+{
+  "registry_out": {
+    "file": "scene/registry_out.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "登记处-外（门）.png",
+    "srcSize": "2560x1440"
+  },
+  "registry_in": {
+    "file": "scene/registry_in.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "登记处 -内（柜台）.png",
+    "srcSize": "2560x1440"
+  },
+  "desk_top": {
+    "file": "scene/desk_top.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "柜台的台面.png",
+    "srcSize": "2560x1440"
+  },
+  "dex_rack": {
+    "file": "scene/dex_rack.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "八格位的图鉴架.png",
+    "srcSize": "2560x1440"
+  },
+  "book_page": {
+    "file": "scene/book_page.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "册子摊开的一页.png",
+    "srcSize": "2560x1440"
+  },
+  "door_light": {
+    "file": "scene/door_light.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "门缝底下那条光.png",
+    "srcSize": "2560x1440"
+  },
+  "tower_out": {
+    "file": "scene/tower_out.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "月塔-外.png",
+    "srcSize": "2560x1440"
+  },
+  "tower_archive": {
+    "file": "scene/tower_archive.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "月塔-一楼归档处.png",
+    "srcSize": "2560x1440"
+  },
+  "tower_window": {
+    "file": "scene/tower_window.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "月塔的窗.png",
+    "srcSize": "2560x1440"
+  },
+  "plaza": {
+    "file": "scene/plaza.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "长夜月广场-石环.png",
+    "srcSize": "2560x1440"
+  },
+  "park": {
+    "file": "scene/park.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "长夜月公园.png",
+    "srcSize": "2560x1440"
+  },
+  "arena": {
+    "file": "scene/arena.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "月光竞技场.png",
+    "srcSize": "2560x1440"
+  },
+  "training": {
+    "file": "scene/training.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "训练场.png",
+    "srcSize": "2560x1440"
+  },
+  "rooftop": {
+    "file": "scene/rooftop.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "天台.png",
+    "srcSize": "2560x1440"
+  },
+  "ring_close": {
+    "file": "scene/ring_close.png",
+    "w": 2560,
+    "h": 1440,
+    "src": "石环的局部.png",
+    "srcSize": "2560x1440"
+  }
+}

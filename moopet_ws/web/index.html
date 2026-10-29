@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="ak" data-theme-base="lib/" data-themes="ak,ak-cyan">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>养成系机械狗 · W3+W4 工作汇报（明日方舟版）</title>
+<!-- 字体走本机已装 Noto Sans SC / Noto Serif SC（scripts/install_fonts.ps1），不依赖 CDN -->
+<link rel="stylesheet" href="lib/base.css">
+<link rel="stylesheet" id="theme-link" href="lib/ak.css">
+<link rel="stylesheet" href="lib/animations.css">
+</head>
+<body data-themes="ak,ak-cyan" data-theme-base="lib/">
+<div class="deck">
+
+  <!-- S1 封面 -->
+  <section class="slide" data-title="封面">
+    <div data-fx="starfield" style="position:absolute;inset:0"></div>
+    <div class="deck-header"><div class="eyebrow">OPERATION REPORT // W3 + W4</div><div class="eyebrow">MOOPET</div></div>
+    <p class="kicker">养成系机械狗 · 决策引擎完稿</p>
+    <h1 class="h1 anim-rise-in" data-anim="rise-in" style="font-size:56px">从「会答题」<br>到<span class="gradient-text">「懂感情」</span></h1>
+    <p class="lede">两周，让狗会主动开口。</p>
+    <div class="row" style="margin-top:20px;gap:28px;flex-wrap:wrap">
+      <div class="ringwrap"><div class="ring"><span class="counter v" data-to="47">0</span><span class="u">/47 单测</span></div><span class="lbl">本地全绿</span></div>
+      <div class="sig" style="min-width:240px;align-self:center"><i style="background:var(--accent);flex:4.2"></i><i style="background:var(--accent-2);flex:1.3"></i><i style="background:var(--accent-3);flex:1"></i></div>
+    </div>
+    <div class="mono dim2" style="margin-top:18px;font-size:11.5px">汇报人：李文扬　/　架构 · 集成　　·　　长夜月 · 蓝思杯赛道一：灵伴管家（智能体应用）<br>对齐排期 W3+W4 · 上周 W3 因故未汇报，本周合并汇报</div>
+    <div class="deck-footer"><span class="mono dim2">W4/MOOPET_WS · W1-W3 PRESERVED</span><span class="slide-number" data-current="1" data-total="11"></span></div>
+    <div class="notes">本周把 W3+W4 一起汇报。一句话：上周 W3 答题闭环没来得及讲，这周 W4 决策引擎完稿，狗从"会答题"长到"懂感情、会主动开口"，感知→成长→答题→情感→语音主线全打通。</div>
+  </section>
+
+  <!-- S2 目录 -->
+  <section class="slide" data-title="目录">
+    <div class="deck-header"><div class="eyebrow">AGENDA // 汇报结构</div></div>
+    <p class="kicker">目录</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">我们会讲三件事</h2>
+    <div class="grid g3 mt-m anim-stagger-list" data-anim-target>
+      <div class="card card-accent"><h4 style="color:var(--accent)">01 · 结论与核心</h4>
+        <ul class="list"><li>结论先行：两周 5/5 · 47/47 · 0 新增</li><li>核心命题：从「会答题」到「懂感情」</li></ul></div>
+      <div class="card card-accent"><h4 style="color:var(--accent-2)">02 · W3 回顾 + W4 成果</h4>
+        <ul class="list"><li>W3：答题闭环 + 决策引擎骨架</li><li>W4：性格演化 / 情感账户+关怀 / 仪式+日记 / TTS 联调</li></ul></div>
+      <div class="card card-accent"><h4 style="color:var(--accent-3)">03 · 质量 · 成员 · 下一步</h4>
+        <ul class="list"><li>质量验证（本地全绿 + ⏳ Ubuntu）</li><li>成员分工（牛浩然 / 黄鑫禹）</li><li>风险与 W5 火花计划</li></ul></div>
+    </div>
+    <div class="notes">汇报结构：先给结论和核心命题，再展开 W3 回顾与 W4 四大成果，最后是质量验证、成员分工、风险和下一步。</div>
+  </section>
+
+  <!-- S3 结论先行 -->
+  <section class="slide" data-title="结论先行">
+    <div class="deck-header"><div class="eyebrow">RESULT // 结论先行</div></div>
+    <p class="kicker">一句话</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">决策引擎完稿，狗会<span class="gradient-text">主动开口</span>。</h2>
+    <div class="grid g3 mt-m anim-stagger-list" data-anim-target>
+      <div class="card card-accent"><h4 style="font-size:34px"><span class="counter" data-to="5">0</span>/5</h4><p class="dim" style="font-size:12px">排期任务 · 两周无延期</p></div>
+      <div class="card card-accent"><h4 style="font-size:34px"><span class="counter" data-to="47">0</span>/47</h4><p class="dim" style="font-size:12px">单测通过 · 本地可复现</p></div>
+      <div class="card card-accent"><h4 style="font-size:34px"><span class="counter" data-to="0">0</span></h4><p class="dim" style="font-size:12px">新增接口 · 全复用 W1</p></div>
+    </div>
+    <div class="term mt-m">
+      <div class="dim">$ python standalone_demo_w4.py --fast　　　# 两周成果实录</div>
+      <div><span class="dim">[W2]</span> LV.13 / 420 exp · 8 来源感知加点</div>
+      <div><span class="dim">[W3]</span> LV.23 / 1300 exp · 连击×5 <span class="g">+50</span> ×10 <span class="g">+100</span> · 连错3题难度 3→2</div>
+      <div><span class="dim">[W4]</span> 独立型 →(摸头×4) 安静型 →(呼唤+答题) 粘人型</div>
+      <div><span class="dim">[W4]</span> 情感账户 64 → <span class="o">20(冷淡·不主动)</span> → 32(和好) · 里程碑 LV.10</div>
+      <div><span class="dim">[W4]</span> 早安/晚安 · 「认识主人满月」 · <span class="o">成长日记已落库</span></div>
+      <div><span class="dim">[TTS]</span> 🔊 「好像…我更黏主人啦，请多指教！」</div>
+      <div class="p">PASS  47/47 单测 · 16 接口 · W4 零新增</div>
+    </div>
+    <div class="notes">结论：两周 5 项排期任务全部完成、无延期；47/47 单测、0 新增接口。下面是这两周的成果实录——从 W2 的 LV.13 一路到 W4 的粘人型 + 情感账户和好 + 成长日记落库。</div>
+  </section>
+
+  <!-- S4 核心命题 -->
+  <section class="slide" data-title="核心命题">
+    <div data-fx="data-stream" style="position:absolute;inset:0"></div>
+    <div class="deck-header"><div class="eyebrow">CORE // 本周核心</div></div>
+    <p class="kicker">核心命题</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">从「会答题」到「懂感情」</h2>
+    <div class="grid g2 mt-m" style="gap:18px">
+      <div class="card card-accent"><span class="accent-t"></span><h3>W3 · 会答题</h3>
+        <ul class="list">
+          <li><b>quiz_node</b>：出题 /dog/quiz/question、判题 /dog/quiz/answer、连击×5+50 ×10+100、连错 3 题难度降档</li>
+          <li><b>决策引擎骨架</b>：BT 四件套（core/conditions/actions/trees）+ 入口节点</li>
+          <li><b>接口与单测</b>：16 接口 / 28 单测 / /dog/combo 桥接</li>
+        </ul>
+        <div class="dim2 mono" style="margin-top:8px;font-size:11.5px">定位：底层能力 + 留好插口</div></div>
+      <div class="card card-accent"><span class="accent-t" style="background:var(--accent-2)"></span><h3>W4 · 懂感情</h3>
+        <ul class="list">
+          <li><b>性格演化</b>：依恋/表达双轴 → 粘人 / 话痨 / 安静 / 独立（变化主动播报）</li>
+          <li><b>情感账户</b>：0~100，互动 +2 / 闲置 -5，冷淡·平衡·依赖三档，和好机制</li>
+          <li><b>主动关怀</b>：长沉默 ≥2h 搭话 / 深夜轻声话术 / 冷淡期不主动</li>
+          <li><b>仪式与纪念日</b>：早安晚安（按性格说不同的话）、等级里程碑、自定义纪念日</li>
+          <li><b>成长日记 + TTS</b>：按天统计成文落 diary 表；背包 TTS 节点让决策真正开口</li>
+        </ul>
+        <div class="dim2 mono" style="margin-top:8px;font-size:11.5px">定位：情感连接层</div></div>
+    </div>
+    <div class="eyebrow" style="margin-top:20px">MAINLINE // 感知 → 成长 → 答题 → 情感 → 语音</div>
+    <p class="dim2" style="font-size:13px;margin-top:4px">排期 9.18 前的软件主线已全部打通，剩 W5-W6 火花计划与稳定性收尾。</p>
+    <div class="notes">两周是一条成长链。W3 让狗"会做题"，W4 让狗"有性格、懂感情、会主动开口"。主线（感知→成长→答题→情感→语音）全打通。</div>
+  </section>
+
+  <!-- S4 W3 快速回顾 -->
+  <section class="slide" data-title="W3 回顾">
+    <div class="deck-header"><div class="eyebrow">W3 // 快速回顾（上周因故未汇报）</div></div>
+    <p class="kicker">一页带过</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">打好地基，插口留好了。</h2>
+    <table class="tbl anim-rise-in" data-anim="rise-in">
+      <tr><th style="width:20%">W3 交付</th><th style="width:46%">要点</th><th>给 W4 留了什么</th></tr>
+      <tr><td>quiz_node 答题闭环</td><td>等级解锁 3/8/15/20；连击×5→+50、×10→+100（不计周上限）；连错 3 题难度降档（3→2）；判题规则在 quiz_bank（纯逻辑可单测）</td><td>作答事件持续喂决策引擎 → W4 性格「表达度」的来源</td></tr>
+      <tr><td>行为决策引擎骨架</td><td>BT 四件套（core/conditions/actions/trees）+ 决策引擎入口节点（事件路由 → 反应）</td><td>W4 只"填空"：真实化空条件/空动作，树结构不动</td></tr>
+      <tr><td>接口与单测</td><td>16 接口（含 DecisionEventMsg +1）；题库 7 + 答题 6 + 决策 7 = 20 单测；/dog/combo 桥接；demo 终态 LV.23 / 1300 经验 / 本周 380/2000 / 4 成就</td><td>W4 零新增接口，直接在旧接口上叠行为</td></tr>
+    </table>
+    <div class="card mt-m"><span class="accent-l" style="background:var(--accent-2)"></span>
+      <p class="dim" style="margin:0;font-size:13.5px">一句话：W3 的骨架是<b style="color:var(--text-1)">"留好插口"</b>的骨架，W4 的性格 / 关怀 / 纪念日就是插上去的模块——同构演进，零返工。</p>
+    </div>
+    <div class="notes">W3 是留好插口的骨架：W4 的性格、关怀、纪念日直接插上去，树结构不动、接口零新增，没有返工。</div>
+  </section>
+
+  <!-- S5 性格演化 -->
+  <section class="slide" data-title="性格演化">
+    <div data-fx="constellation" style="position:absolute;inset:0"></div>
+    <div class="deck-header"><div class="eyebrow">W4 · 01 // 性格演化</div></div>
+    <p class="kicker">W4 成果①</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">四种性格，是<span class="gradient-text">养</span>出来的。</h2>
+    <div class="grid g2 mt-m" style="gap:18px">
+      <div>
+        <div class="eyebrow" style="margin-bottom:4px">依恋度 高 ↑（陪伴：摸头/握手/散步/指引）</div>
+        <div class="grid g2" style="gap:10px">
+          <div class="card card-outline" style="border-color:var(--accent-2)"><h4 style="color:var(--accent-2)">安静型</h4><p class="dim" style="font-size:11.5px">高依恋 · 低表达<br>"默默陪着主人"</p></div>
+          <div class="card card-outline" style="border-color:var(--accent)"><h4 style="color:var(--accent)">粘人型</h4><p class="dim" style="font-size:11.5px">高依恋 · 高表达<br>"走到哪跟到哪"</p></div>
+          <div class="card card-outline" style="border-color:var(--text-3)"><h4 style="color:var(--text-3)">独立型</h4><p class="dim" style="font-size:11.5px">低依恋 · 低表达<br>"自己玩也开心"</p></div>
+          <div class="card card-outline" style="border-color:var(--good)"><h4 style="color:var(--good)">话痨型</h4><p class="dim" style="font-size:11.5px">低依恋 · 高表达<br>"说不完的话"</p></div>
+        </div>
+        <div class="eyebrow" style="margin-top:8px">表达度 高 →（说话：答题 / 呼唤）</div>
+      </div>
+      <div>
+        <div class="card card-accent"><span class="accent-t"></span><h3>机制 / 计数器 + 衰减</h3>
+          <ul class="list">
+            <li>陪伴行为→依恋轴，说话行为→表达轴，命中该轴 <b>+6</b></li>
+            <li>每次事件双轴自然衰减 <b>-1</b>；每闲置一天 <b>-3</b></li>
+            <li>轴分界 <b>55</b>：双高=粘人 / 高表达=话痨 / 高依恋=安静 / 双低=独立（初始独立型）</li>
+            <li>变化时主动播报："好像…我更黏主人啦，请多指教！"</li>
+          </ul>
+        </div>
+        <div class="card card-accent mt-m"><span class="accent-l"></span><h3>demo 实测演化路径</h3>
+          <p class="dim" style="font-size:12.5px;margin:0">独立型 <span class="mono">→</span> 摸头×4 <span class="mono">→</span> 安静型 <span class="mono">→</span> 呼唤+答题 <span class="mono">→</span> 粘人型（双轴都高）</p>
+        </div>
+      </div>
+    </div>
+    <div class="notes">性格是养出来的：摸头喂依恋轴、答题/呼唤喂表达轴，按分界 55 折成四型；变化时狗会自己说"我好像更黏主人啦"。计数器+衰减，长期忽视会淡回去。</div>
+  </section>
+
+  <!-- S6 情感账户 + 主动关怀 -->
+  <section class="slide" data-title="情感账户">
+    <div class="deck-header"><div class="eyebrow">W4 · 02 // 情感账户 + 主动关怀</div></div>
+    <p class="kicker">W4 成果②</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">长期忽视会伤心；它会在你沉默时<span class="gradient-text">主动开口</span>。</h2>
+    <div class="sig mt-m" style="max-width:560px"><i style="background:var(--bad);flex:1"></i><span class="mono" style="color:var(--text-3);font-size:10.5px;align-self:center;padding:0 8px">0–30 冷淡</span><i style="background:var(--accent-2);flex:1"></i><span class="mono" style="color:var(--text-3);font-size:10.5px;align-self:center;padding:0 8px">30–70 平衡</span><i style="background:var(--good);flex:1"></i><span class="mono" style="color:var(--text-3);font-size:10.5px;align-self:center;padding:0 8px">>70 依赖</span></div>
+    <div class="grid g2 mt-m" style="gap:18px">
+      <div class="card card-accent"><h3>情感账户 0~100</h3>
+        <ul class="list">
+          <li>正向互动 <b>+2</b>（摸头/握手/散步/答对…），封顶 100</li>
+          <li>闲置一天 <b>-5</b>；双轴性格同步淡化 <b>-3/天</b></li>
+          <li><b>&lt;30 冷淡</b>：不再主动搭话（"长期忽视减少主动互动"，设计行为）</li>
+          <li><b>和好机制</b>：回来多互动，账户逐步回温</li>
+        </ul>
+        <div class="dim2 mono" style="margin-top:8px;font-size:11.5px">demo：2 天冷落 64→54→20 冷淡，摸头×6 回 32</div></div>
+      <div class="card card-accent"><span class="accent-t" style="background:var(--accent-2)"></span><h3>主动关怀 · 长沉默 ≥2h</h3>
+        <ul class="list">
+          <li>平衡期：「主人好久没理我了…有点想你，要不要摸摸我？」</li>
+          <li>依赖期：「主人你去哪啦，我等你好久啦！」</li>
+          <li>深夜 23-6 点：「夜深了，主人早点休息哦，我守着你。」</li>
+          <li>冷淡期：沉默（设计行为，非缺陷）</li>
+          <li>触发入口：on_tick 周期检查（节点 60s 定时器）</li>
+        </ul></div>
+    </div>
+    <div class="card card-accent mt-m"><span class="accent-l"></span>
+      <p class="dim" style="margin:0;font-size:13px"><b style="color:var(--text-1)">demo 实测 · 冷落 → 和好：</b>2 天不互动账户下滑进冷淡区（不再主动）→ 回来摸头×6 → 回到平衡。全程数值可复现、可单测（19 项 W4 单测覆盖账户增益/封顶/衰减/档位/抑制）。</p>
+    </div>
+    <div class="notes">情感账户越投入回应越丰富；长期忽视掉进冷淡区就不再主动搭话（设计行为）；回来多互动会回温（和好机制）。</div>
+  </section>
+
+  <!-- S7 仪式 / 纪念日 / 日记 -->
+  <section class="slide" data-title="仪式与日记">
+    <div class="deck-header"><div class="eyebrow">W4 · 03 // 陪伴仪式 + 成长日记</div></div>
+    <p class="kicker">W4 成果③</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">它记得说早安，也记得<span class="gradient-text">你们的日子</span>。</h2>
+    <table class="tbl">
+      <tr><th style="width:22%">仪式</th><th>说明</th></tr>
+      <tr><td>早安 / 晚安</td><td>6-9 点 / 21-23 点窗口，每天一次不重复；<b>按当前性格说不同的话</b>（亮点）</td></tr>
+      <tr><td>等级里程碑</td><td>LV.10/20/…/100 升级即庆祝：「我升到 LV.10 啦！撒花庆祝！」</td></tr>
+      <tr><td>自定义纪念日</td><td>主人可登记（如「认识主人满月」），当天主动提起，每日一次</td></tr>
+      <tr><td>成长日记</td><td>按天统计互动 → 第一人称日记 → diary 表落库（一天一条，UNIQUE(date) 覆盖），跨日自动写昨日</td></tr>
+    </table>
+    <div class="grid g2" style="gap:18px">
+      <div class="card card-accent"><span class="accent-t" style="background:var(--accent-2)"></span><h3>同一句早安 · 四种性格四种说法</h3>
+        <p class="dim" style="font-size:12px">粘人：「主人早上好呀！我在这儿等你好久啦，今天也要一直陪我哦！」<br>话痨：「早安早安！我都想好十件事啦！」<br>安静：「早上好，主人。今天也一起加油。」<br>独立：「早啊主人，我去晒会儿太阳。」</p>
+        <p class="dim2 mono" style="margin-top:6px;font-size:11px">→ 狗2.md「独特性格塑造」落到每一句上</p></div>
+      <div class="card card-accent"><h3>日记示例 · demo 自动生成</h3>
+        <p class="dim" style="font-size:12px">「2025-08-28。今天我 LV.10，心情平静，是粘人型的小狗。<br>主人叫了我 1 次，我都有好好回应；迎来了升级里程碑 1 次。<br>我们的情感账户存到了 30，感觉我们越来越有默契啦。」</p>
+        <p class="dim2 mono" style="margin-top:6px;font-size:11px">→ 正是前端日记页要展示的数据</p></div>
+    </div>
+    <div class="notes">早安晚安每天一次不重复，按当前性格说不同的话（粘人/话痨/安静/独立各一句·亮点）；成长日记按天统计写成第一人称，落 diary 表一条，供前端展示。</div>
+  </section>
+
+  <!-- S8 TTS 双端联调 -->
+  <section class="slide" data-title="双端联调">
+    <div class="deck-header"><div class="eyebrow">W4 · 04 // 双端联调</div></div>
+    <p class="kicker">W4 成果④</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">决策出来的，真的<span class="gradient-text">说出口</span>了。</h2>
+    <div class="grid g4 mt-m" style="gap:12px">
+      <div class="card card-outline" style="border-color:var(--accent-2)"><div class="mono" style="text-align:center;font-size:13px">感知 / 答题 /<br>主动检查</div></div>
+      <div class="card card-outline" style="border-color:var(--good)"><div class="mono" style="text-align:center;font-size:13px">决策引擎<br>（狗侧）反应</div></div>
+      <div class="card card-outline" style="border-color:var(--accent)"><div class="mono" style="text-align:center;font-size:13px">背包 TTS<br>/tts_speak</div></div>
+      <div class="card card-outline" style="border-color:var(--accent-3)"><div class="mono" style="text-align:center;font-size:13px">语音播报 🔊<br>进度→时长</div></div>
+    </div>
+    <div class="grid g2 mt-m" style="gap:18px">
+      <div class="card card-accent"><span class="accent-l"></span><h3>联调要点</h3>
+        <ul class="list">
+          <li>W3 只留了 TTS 客户端（"未就绪记日志"）；W4 补背包服务端即通</li>
+          <li><b>接口 0 新增</b>；demo 模式打印 🔊 播报内容</li>
+          <li>反应同时走 <b>/dog/action</b> 动作执行 + 加点（握手→回执等）</li>
+        </ul></div>
+      <div class="card card-accent"><span class="accent-t" style="background:var(--accent-2)"></span><h3>联调口径</h3>
+        <ul class="list">
+          <li>goal(text/rate/pitch) → feedback(progress) → result(success/duration)</li>
+          <li>仿真时长 = 字数 × 0.08s / 语速（下限 0.5s）</li>
+          <li>接真实 edge-tts 只换内部实现，两端接口不变</li>
+        </ul></div>
+    </div>
+    <div class="notes">W3 决策引擎就留好了 TTS 客户端（没服务端只能记日志），W4 把背包侧 /backpack/tts_speak 服务端补上链路立即通，接口零新增；动作走 /dog/action。</div>
+  </section>
+
+  <!-- S9 质量验证 -->
+  <section class="slide" data-title="质量验证">
+    <div class="deck-header"><div class="eyebrow">QA // 质量验证（两周累计）</div></div>
+    <p class="kicker">两周成果</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">本地全绿；剩 Ubuntu 跑一遍。</h2>
+    <div class="grid g4 anim-stagger-list" data-anim-target style="gap:12px">
+      <div class="card card-accent"><h4 style="font-size:32px"><span class="counter" data-to="47">0</span>/47</h4><p class="dim" style="font-size:11.5px">单测（W2 8 + W3 20 + W4 19）<br>纯逻辑无 ROS 可复跑</p></div>
+      <div class="card card-accent"><h4 style="font-size:32px"><span class="counter" data-to="16">0</span></h4><p class="dim" style="font-size:11.5px">接口 · W4 零新增<br>行为长在旧接口上</p></div>
+      <div class="card card-accent"><h4 style="font-size:32px"><span class="counter" data-to="10">0</span></h4><p class="dim" style="font-size:11.5px">文件 py_compile 全过<br>（含两台 ROS 节点）</p></div>
+      <div class="card card-accent"><h4 style="font-size:32px"><span class="counter" data-to="1">0</span></h4><p class="dim" style="font-size:11.5px">命令复现 demo<br>standalone_demo_w4.py --fast</p></div>
+    </div>
+    <div class="grid g2 mt-m" style="gap:18px">
+      <div class="card card-accent"><span class="accent-l"></span><h3>W4 demo 终态</h3>
+        <p class="dim" style="font-size:12.5px;margin:0">LV.10 ｜ 粘人型（独立→安静→粘人完整演化）｜ 情感账户 20→32（和好实测）｜ 日记已落库（2025-08-28 一条）</p></div>
+      <div class="card"><span class="accent-l" style="background:var(--bad)"></span><h3>⏳ 待验证</h3>
+        <p class="dim" style="font-size:12.5px;margin:0">Ubuntu 侧编译 / TTS 联调 / start_demo 全流程 / 双机联调——两周无新增接口，风险低。</p></div>
+    </div>
+    <div class="notes">本地 47/47 全绿、编译全过、一条命令可复现。只剩 Ubuntu 环境和双机联调，两周都零新增接口所以风险低。</div>
+  </section>
+
+  <!-- S10 成员 -->
+  <section class="slide" data-title="成员分工">
+    <div class="deck-header"><div class="eyebrow">TEAM // 小组成员进展与分工</div></div>
+    <p class="kicker">本周成员在做什么</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">牛浩然 / 黄鑫禹</h2>
+    <div class="grid g2" style="gap:18px">
+      <div class="card card-accent"><span class="accent-t" style="background:var(--accent-2)"></span>
+        <span class="ak-tag">前端 / 后端</span><h3 style="margin-top:8px">牛浩然</h3>
+        <ul class="list">
+          <li>W3 已：答题页 + 题库/判题 API（对接 /dog/quiz、/dog/combo）</li>
+          <li><b>W4 本周（排期）：</b>日记 API（读 diary 表）→ 前端日记页；周报 API（按周汇总）；心情时间序列 API + 前端心情曲线</li>
+          <li><b>数据已就绪：</b>diary 表在落库（一天一条）、daily_stats() / DogDiary.latest() 现成、/dog/state 心情广播沿用 W2</li>
+          <li><b>验收：</b>前端能展示「某天日记 + 心情曲线」</li>
+        </ul></div>
+      <div class="card card-accent"><span class="accent-t"></span>
+        <span class="ak-tag">创意 / 测试</span><h3 style="margin-top:8px">黄鑫禹</h3>
+        <ul class="list">
+          <li>W3 已：语音问答链路 + 5 场景验证 + 连击体验验证</li>
+          <li><b>W4 本周（排期）：</b>角色串联演示（表情→决策→动作→TTS 全链路走查）；手感实测（抚摸/冷落/和好/仪式节奏）；调参建议（性格轴增益/衰减、账户速率、关怀阈值）</li>
+          <li><b>素材已就绪：</b>性格化话术 + TTS 仿真播报 + start_demo.sh 一键启动</li>
+          <li><b>验收：</b>串联演示无卡点 + 一份调参建议清单</li>
+        </ul></div>
+    </div>
+    <p class="dim2" style="margin-top:14px;font-size:12.5px">协作方式不变：任务清单已单独成文（docs/任务清单_W4_*.md），含依赖、验收标准、现在就能做的第一步。</p>
+    <div class="notes">牛浩然：日记/周报 API + 心情时序 + 前端日记页/心情曲线（数据我已落库）。黄鑫禹：角色串联演示 + 手感实测 + 调参建议。任务清单在 docs/任务清单_W4_*.md。</div>
+  </section>
+
+  <!-- S11 风险/下一步/支持 -->
+  <section class="slide" data-title="风险与下一步">
+    <div class="deck-header"><div class="eyebrow">NEXT // 风险 · 下一步 · 支持</div></div>
+    <p class="kicker">风险 · 下一步 · 支持</p>
+    <h2 class="h2 anim-rise-in" data-anim="rise-in">唯一待办是 Ubuntu 验证；W5 做<span class="gradient-text">火花计划</span>。</h2>
+    <table class="tbl">
+      <tr><th style="width:26%">风险 / 待办</th><th style="width:30%">影响</th><th>应对</th></tr>
+      <tr><td>Ubuntu 侧编译/联调未完成</td><td>两周成果未在真实 ROS 环境回归</td><td>首要待办；W4 无新增接口，一次编译即可验证</td></tr>
+      <tr><td>性格/情感参数为初版经验值</td><td>节奏、话术密度恐与理想有偏差</td><td>黄鑫禹手感实测 → 调参建议 → 快速迭代</td></tr>
+      <tr><td>TTS 为仿真实现</td><td>音色 / 语速非最终效果</td><td>接口已定，后续替换 edge-tts 不动两端</td></tr>
+      <tr><td>前端日记页依赖联调窗口</td><td>日记页演示或顺延</td><td>表与统计已就绪，一次接口对齐即可开工</td></tr>
+    </table>
+    <div class="grid g2 mt-m" style="gap:18px">
+      <div class="card card-accent"><span class="accent-t" style="background:var(--accent-2)"></span><h3>W5 计划（对齐排期）</h3>
+        <ul class="list">
+          <li>火花计划：每日任务 / 打卡 / 奖励接入决策与结算</li>
+          <li>（streak / daily_task / daily_reward 表 W1 已预置）</li>
+          <li>综合：两端功能联演 + 演示脚本定稿</li>
+        </ul></div>
+      <div class="card card-accent"><span class="accent-l"></span><h3>需要的支持</h3>
+        <ul class="list">
+          <li>① Ubuntu + ROS2 环境完成编译 / 联调验证（两周共性待办）</li>
+          <li>② 与牛浩然 / 黄鑫禹各 30min 对齐接口与联调排期</li>
+          <li>③ 需实体机演示窗口，请提前协调（W6-W7 计划内）</li>
+        </ul></div>
+    </div>
+    <div class="notes">风险四条都有对策：Ubuntu 验证首要待办但零新增接口；性格参数靠黄鑫禹手感实测来调；TTS 接口已定后面换实现不动两端；日记页就差一次接口对齐。W5 接火花计划。</div>
+  </section>
+
+</div>
+<div class="progress-bar"><span></span></div>
+<script src="lib/runtime.js"></script>
+<script src="lib/fx-runtime.js"></script>
+</body>
+</html>

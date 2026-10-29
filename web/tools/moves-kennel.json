@@ -1,0 +1,38 @@
+[
+  {
+    "group": "props",
+    "index": 0,
+    "name": "rug",
+    "F": -40,
+    "R": -319,
+    "x": 432,
+    "z": 650
+  },
+  {
+    "group": "props",
+    "index": 2,
+    "name": "bowl",
+    "F": 164,
+    "R": -306,
+    "x": 501,
+    "z": 458
+  },
+  {
+    "group": "locals",
+    "index": 0,
+    "name": "成长日记",
+    "F": 349,
+    "R": 46,
+    "x": 891,
+    "z": 377
+  },
+  {
+    "group": "portals",
+    "index": 0,
+    "name": "→plaza",
+    "F": -347,
+    "R": -238,
+    "x": 425,
+    "z": 968
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "recorder_full": {
+    "file": "cast/recorder_full.png",
+    "w": 1024,
+    "h": 1536,
+    "box": [
+      216,
+      9,
+      807,
+      1526
+    ],
+    "boxAr": 0.39
+  },
+  "recorder_bust": {
+    "file": "cast/recorder_bust.png",
+    "w": 1024,
+    "h": 1536,
+    "box": [
+      97,
+      1,
+      940,
+      1535
+    ],
+    "boxAr": 0.55
+  },
+  "qin_su": {
+    "file": "cast/qin_su.png",
+    "w": 1024,
+    "h": 1536,
+    "box": [
+      0,
+      0,
+      1023,
+      1535
+    ],
+    "boxAr": 0.667
+  },
+  "han_bai": {
+    "file": "cast/han_bai.png",
+    "w": 1024,
+    "h": 1536,
+    "box": [
+      18,
+      38,
+      1023,
+      1535
+    ],
+    "boxAr": 0.672
+  },
+  "zhou_lang": {
+    "file": "cast/zhou_lang.png",
+    "w": 1024,
+    "h": 1536,
+    "box": [
+      4,
+      14,
+      969,
+      1535
+    ],
+    "boxAr": 0.635
+  }
+}

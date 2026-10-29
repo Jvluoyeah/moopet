@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="day">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>长夜月 · 机械狗档案册</title>
+  <meta name="description" content="养成系机械狗 · 开放社群与竞技场（羊皮纸档案册）" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111211'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23f5f1e8' font-family='serif'%3E%E7%8A%AC%3C/text%3E%3C/svg%3E" />
+  <!-- 霞鹜文楷 Bright：cn-font-split 切好的 unicode-range 子集，浏览器只下命中的那几段。
+       用 /fonts/… 这种**根路径**：它在 public/ 下，Vite 不该（也解析不了）在构建期处理它，
+       写相对路径会报 "doesn't exist at build time"。部署时后端就是挂在根上的。
+       世界里的招牌/名牌是用 Canvas 画字的，所以 main.js 会先等字体就绪再建场景。 -->
+  <link rel="stylesheet" href="/fonts/lxgw-bright/font.css" />
+</head>
+<body>
+  <div id="app">
+    <div class="loading" id="boot">
+      <div class="spinner"></div>
+      <div class="small">正在翻开档案册…</div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

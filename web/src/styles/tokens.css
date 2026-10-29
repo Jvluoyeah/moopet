@@ -1,0 +1,120 @@
+/* ============================================================
+   羊皮纸设计系统 · 设计令牌
+   ------------------------------------------------------------
+   设计语言参考 adnovel.xin 开源版（MIT）并**内化重写**：
+   借鉴其"纸+墨+一点信号色"的配色思路与排版节奏（衬线大标题 + 紧字距 +
+   大写小字 kicker），但版式是我们的「狗狗档案册 / 冒险手札」——
+   不照搬其页面布局。
+
+   三层质感（全会叠加，这是"羊皮纸"的关键）：
+     1) 网格底纹  —— 40px 淡蓝细格，像稿纸
+     2) 纸张噪点  —— SVG feTurbulence 分形噪声，去掉纯色的塑料感
+     3) 纤维与做旧 —— 极淡的斜向条纹 + 四角渐暗
+   ============================================================ */
+:root {
+  /* ---- 纸与墨 ---- */
+  --paper: #f5f1e8;
+  --paper-deep: #e8e1d3;
+  --paper-edge: #d8cfbc;
+  --surface: #fffdf8;
+  --ink: #111211;
+  --ink-soft: #2b2a26;
+  --muted: #67645e;
+  --line: rgba(17, 18, 17, .16);
+  --line-strong: rgba(17, 18, 17, .34);
+
+  /* ---- 强调色 ---- */
+  --blue: #2447d8;          /* 墨水蓝：链接、当前项、可点 */
+  --blue-deep: #1a34a8;
+  --signal: #d5ff52;        /* 信号柠檬：高亮、命中、新消息 */
+  --danger: #b2261b;        /* 错误 / 危险 */
+
+  /* ---- 档案册语汇（我们自己的） ---- */
+  --seal: #a8332a;          /* 印章红 */
+  --wax: #8c3b2e;           /* 火漆 */
+  --leather: #6b4f36;       /* 皮面封面 */
+  --gold: #b8892f;          /* 烫金 */
+  --moss: #4a6b4f;          /* 苔绿：在线/健康 */
+  --amber: #b5791f;         /* 琥珀：警示/待办 */
+
+  /* ---- 等级/稀有度（图鉴与对战共用） ---- */
+  --tier-common: #6b6560;
+  --tier-rare: #2447d8;
+  --tier-epic: #7a3fa8;
+  --tier-legend: #b8892f;
+
+  /* ---- 排版 ---- */
+  /* 网页 UI 的字体**不动**：霞鹜文楷 Bright 只用在三维场景里的招牌/名牌上
+     （那些是 canvas 画的，见 src/lib/fonts.js 的 signFont）。
+     换掉 --font-serif 会把整个档案册的观感也带偏，那是另一件事。 */
+  --font-serif: ui-serif, Georgia, "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+               "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, "SFMono-Regular", Menlo, monospace;
+
+  --fs-display: clamp(38px, 6.4vw, 68px);
+  --fs-h1: clamp(26px, 3.4vw, 38px);
+  --fs-h2: 22px;
+  --fs-h3: 17px;
+  --fs-body: 15px;
+  --fs-sm: 13px;
+  --fs-xs: 11.5px;
+  --tracking-tight: -.055em;   /* 大标题收紧，参考站的排版节奏 */
+  --tracking-kicker: .16em;    /* 小字拉开 */
+
+  /* ---- 结构 ---- */
+  --radius: 2px;               /* 纸是直角感的，别用大圆角 */
+  --grid: 40px;
+  --page-max: 1180px;
+  --gap: 18px;
+
+  /* ---- 阴影：纸叠纸的感觉，不用现代 UI 的大投影 ---- */
+  --shadow-sheet: 0 1px 0 rgba(17, 18, 17, .05), 0 10px 30px -18px rgba(17, 18, 17, .45);
+  --shadow-lift: 0 2px 0 rgba(17, 18, 17, .07), 0 18px 40px -22px rgba(17, 18, 17, .5);
+  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, .6),
+                  inset 0 -1px 0 rgba(17, 18, 17, .05);
+
+  /* ---- 纹理（供 base.css 与组件复用） ---- */
+  --tex-grid:
+    linear-gradient(rgba(36, 71, 216, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 71, 216, .035) 1px, transparent 1px);
+  --tex-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+  --tex-fiber: repeating-linear-gradient(
+      92deg, rgba(107, 79, 54, .028) 0 1px, transparent 1px 7px);
+  --tex-vignette: radial-gradient(120% 90% at 50% 0%,
+      transparent 55%, rgba(107, 79, 54, .07) 100%);
+
+  /* ---- 动效 ---- */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur: .22s;
+}
+
+/* 主题：夜读模式（灯下看手札）——同一套结构，换纸与墨 */
+:root[data-theme="night"] {
+  --paper: #1b1a17;
+  --paper-deep: #141310;
+  --paper-edge: #2a2823;
+  --surface: #232019;
+  --ink: #efe9dc;
+  --ink-soft: #ded7c8;
+  --muted: #9c9486;
+  --line: rgba(239, 233, 220, .18);
+  --line-strong: rgba(239, 233, 220, .34);
+  --blue: #7f97ff;
+  --blue-deep: #6b83f0;
+  --signal: #d5ff52;
+  --seal: #d4614f;
+  --wax: #b8553f;
+  /* ⚠️ 夜读纸下这个值原来是 #3b2f22（深棕）—— 那是"皮面封面"的颜色，
+     而这个令牌实际上**主要当文字色**用（`.hand` 就是它），于是深底 + 深字，
+     题面在小程序/浏览器里几乎看不清（用户在真机上截图指出）。
+     夜读纸下所有令牌都调亮了，只有它漏掉了。现在换成暖浅棕，纸面上是墨、夜里是灯下的褐。 */
+  --leather: #c9a884;
+  --gold: #d8ab55;
+  --moss: #7fae86;
+  --shadow-sheet: 0 1px 0 rgba(0, 0, 0, .3), 0 12px 30px -18px rgba(0, 0, 0, .8);
+  --tex-grid:
+    linear-gradient(rgba(127, 151, 255, .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127, 151, 255, .05) 1px, transparent 1px);
+  --tex-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E");
+}

@@ -1,0 +1,8 @@
+# 答题连击结算服务（/dog/combo，W3 用，W1 先定义）
+uint32 combo_count
+string category
+---
+bool success
+int32 exp_gained
+uint32 new_combo
+string message

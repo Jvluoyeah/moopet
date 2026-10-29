@@ -1,0 +1,169 @@
+/* 演出动画（羊皮纸 / 木刻那一套）
+   ============================================================
+   风格约束：**硬位移 + 纸片翻转**，不用现代那一套（玻璃拟态、霓虹光晕、丝滑缓动）。
+   所以这里的 keyframes 大量用 `steps()` 与突然的方向反转 —— 像一叠纸被拨动，
+   而不是一块果冻在晃。
+
+   时长也克制（目标里定的）：交互反馈 < 200ms，完整演出 < 1.2s。
+   所有演出都必须**能跳过**：点一下直接到终态（见 tower.js 的 skipDraw）。
+
+   ⚠️ 动画只用 transform / opacity —— 这两个属性走合成层，不触发重排，
+      手机上也掉不了帧（移动端是既定验收项之一）。 */
+
+/* ---------------- 抽签：摇筒 ---------------- */
+@keyframes draw-shake {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  12%  { transform: translate(-5px, 1px) rotate(-4deg); }
+  24%  { transform: translate(5px, -1px) rotate(4deg); }
+  36%  { transform: translate(-4px, 2px) rotate(-3deg); }
+  48%  { transform: translate(4px, -2px) rotate(3deg); }
+  60%  { transform: translate(-3px, 1px) rotate(-2deg); }
+  72%  { transform: translate(3px, -1px) rotate(2deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+.draw-tube { animation: draw-shake .46s steps(8, end) 1; }
+
+/* ---------------- 抽签：签条升起 ---------------- */
+@keyframes draw-rise {
+  from { transform: translateY(46%) scale(.9); opacity: .3; }
+  to   { transform: translateY(-14%) scale(1); opacity: 1; }
+}
+.draw-slip { animation: draw-rise .3s var(--ease) both; }
+
+/* ---------------- 抽签：翻面 ---------------- */
+@keyframes draw-flip {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(180deg); }
+}
+.draw-card { transform-style: preserve-3d; perspective: 620px; }
+.draw-flip { animation: draw-flip .34s var(--ease) both; }
+.draw-face { backface-visibility: hidden; }
+.draw-back { transform: rotateY(180deg); }
+
+/* ---------------- 抽签：少见的金光（保底更强一档） ---------------- */
+@keyframes draw-burst {
+  0%   { transform: scale(.4); opacity: .85; }
+  70%  { transform: scale(1.5); opacity: .18; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.draw-burst {
+  animation: draw-burst .7s var(--ease) both;
+  /* 加色混合 + 硬边 —— 像盖上去的一层金箔，不是发光体 */
+  background: radial-gradient(circle, rgba(255, 226, 150, .95), rgba(255, 200, 90, 0) 62%);
+  mix-blend-mode: multiply;
+}
+/* 保底那一抽：整块牌子震一下（纸被按住又弹开的感觉） */
+@keyframes draw-thump {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(-3px, 2px); }
+  60% { transform: translate(3px, -2px); }
+}
+.draw-thump { animation: draw-thump .22s steps(4, end) 2; }
+
+/* ---------------- 盖章：按下去 ---------------- */
+
+/* ---------------- 签筒（用纸片画，不用 emoji） ----------------
+   ⚠️ 第一版这里放的是 `🎋` —— 违反风格铁律：全站是羊皮纸/墨线/木刻，
+      一个彩色 emoji 会立刻跳出来。改成用 div 画的纸筒：
+      筒身是纸 + 墨边 + 硬偏移投影，筒口露出几张签条的头。 */
+.tub {
+  position: relative; width: 88px; height: 104px; margin: 6px auto 0;
+}
+.tub-slips {
+  position: absolute; left: 0; right: 0; top: 0; height: 34px;
+  display: flex; justify-content: center; gap: 7px;
+}
+.tub-slips i {
+  display: block; width: 9px; background: var(--paper);
+  border: 1.5px solid var(--ink); border-bottom: none;
+  /* 签条长短不一：这是"筒里塞了一把签"的全部信息量 */
+  height: 26px;
+}
+.tub-slips i:nth-child(2) { height: 32px; transform: translateY(-3px); }
+.tub-slips i:nth-child(3) { height: 22px; }
+.tub-body {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 78px;
+  background: var(--paper); border: 2px solid var(--ink);
+  /* 硬偏移投影 + 筒口一道墨线：纸片剪下来贴上去的那种"土" */
+  box-shadow: 4px 4px 0 rgba(17, 18, 17, .34);
+  display: grid; place-items: center;
+  font-family: var(--font-serif); font-size: 30px; font-weight: 700;
+  color: var(--ink);
+}
+.tub-body::before {
+  content: ''; position: absolute; left: -2px; right: -2px; top: 7px;
+  border-top: 1.5px solid var(--ink); opacity: .55;
+}
+
+/* ---------------- 盖章：连续天数那一排格子 ---------------- */
+.stamp-cells { display: flex; gap: 6px; margin: 8px 0 2px; }
+.stamp-cell {
+  width: 26px; height: 26px; border: 1.5px solid var(--line-strong);
+  display: grid; place-items: center; font-size: 13px;
+  font-family: var(--font-serif); color: var(--muted);
+}
+/* 按过的格子：印章红 + 墨边，中间那个「印」字就是真的印上去了 */
+.stamp-cell.is-on {
+  border-color: var(--seal); color: var(--seal); font-weight: 700;
+  box-shadow: 1px 1px 0 rgba(168, 51, 42, .35);
+}
+/* 今天这一格还没按：虚线框在闪，提示"就差这一下" */
+@keyframes cell-wait {
+  0%, 100% { border-color: var(--line-strong); }
+  50%      { border-color: var(--seal); }
+}
+.stamp-cell.is-today { border-style: dashed; animation: cell-wait 1.6s ease-in-out infinite; }
+
+/* ---------------- 少见/保底：整页轻轻震一下 ---------------- */
+@keyframes page-thump {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, -1px); }
+}
+.page-thump { animation: page-thump .3s steps(4, end) 2; }
+@keyframes stamp-press {
+  0%   { transform: translateY(-46px) rotate(-14deg); opacity: 0; }
+  55%  { transform: translateY(0) rotate(-14deg); opacity: 1; }
+  70%  { transform: translateY(3px) rotate(-12deg); }
+  100% { transform: translateY(0) rotate(-12deg); opacity: 1; }
+}
+.stamp-mark { animation: stamp-press .34s steps(6, end) both; }
+
+/* 纸上留印：印泥晕开（用 clip-path 从中心张开，像墨渗进纤维） */
+@keyframes stamp-bleed {
+  from { clip-path: inset(46% 46% 46% 46%); opacity: .2; }
+  to   { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+.stamp-ink { animation: stamp-bleed .5s .2s var(--ease) both; }
+
+/* ---------------- 日记：逐行出现 ---------------- */
+@keyframes diary-in {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+.diary-row { animation: diary-in .26s var(--ease) both; }
+
+/* ---------------- 页面/状态切换 ---------------- */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+.rise-in { animation: rise-in var(--dur) var(--ease) both; }
+
+/* 进行中的转圈：沿用 base.css 的 spin，但给它一个纸片质感的壳 */
+.busy-paper {
+  display: inline-block; width: 12px; height: 12px; margin-right: 6px;
+  border: 2px solid var(--ink); border-top-color: transparent;
+  animation: spin .7s steps(8, end) infinite;
+}
+
+/* ⚠️ 用户开了"减少动态效果"就全关掉 —— 这是无障碍底线，不是可选项。
+   关掉之后所有演出都变成瞬时的，功能一点不受影响。 */
+@media (prefers-reduced-motion: reduce) {
+  .draw-tube, .draw-slip, .draw-flip, .draw-burst, .draw-thump,
+  .stamp-mark, .stamp-ink, .diary-row, .rise-in {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
