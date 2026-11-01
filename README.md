@@ -25,6 +25,7 @@ moopet_ws/    机械狗软件栈与仿真工具
 data/         题库
 shared/       场景配置
 blender/      场景模型源文件
+docs/         世界观、开发历程与玩法规范
 ```
 
 ## 启动 Web 应用
