@@ -37,8 +37,7 @@
 
 - `web/public/fonts/lxgw-bright/SOURCE.md` 记录 LXGW Bright 上游与 OFL-1.1；发布前应补齐并核对适用的完整字体许可和版权通知。
 - `web/public/models/CREDITS.md` 记录部分 Kenney Nature Kit 资源为 CC0；该声明不覆盖全部模型，也不是对所有模型的统一授权。
-- `web/public/` 中的角色、美术、场景、宣传页面资源，以及 `moopet_ws/fonts/`、`blender/` 和历史汇报中的图片/模板，应分别核实来源及再分发条件。
-- `web/README.md` 中提到 adnovel.xin 的 MIT 是该参考项目的来源说明，不是本仓库整体许可。
+- `web/public/` 中的角色、美术、场景资源应分别核实来源及再分发条件。
 - npm、Python 等依赖各自遵守原始许可；根非商业条款不替代依赖许可，分发时仍须保留其要求的通知。
 
 免费、非商业、同人创作、生成式制作或标明出处都不能替代第三方权利人的必要授权。授权无法核实的内容不得仅凭根 LICENSE 宣称可公开、可独立复用或可商用。

@@ -95,7 +95,7 @@ function dogTexture(breed, level, theme, form = 'sit', flip = false) {
 }
 
 /**
- * 动作帧贴图：`run` 的第 idx 帧（第二批出图，见 docs/出图提示词_萨摩耶.md）。
+ * 动作帧贴图：`run` 的第 idx 帧（第二批出图）。
  * 没出图（还没画 / 加载失败）就返回 null，调用方据此退回静态形态。
  * 和 dogTexture 走同一条路：先画到 canvas 再当 CanvasTexture。
  */

@@ -37,11 +37,6 @@ node_modules/
 *.log
 logs/
 
-# ROS2 / colcon output
-/moopet_ws/build/
-/moopet_ws/install/
-/moopet_ws/log/
-
 # Blender automatic backups (keep the .blend source)
 *.blend[0-9]
 

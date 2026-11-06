@@ -535,7 +535,7 @@ class TrainingGame {
       this._foeName = spec.name;
       const isBoss = Boolean(spec.boss);
       // 关卡里没有真实的品种形象，用玩家品种换个主题色当"机械对手"，
-      // 真形象到位后（见 docs/狗形象设定与出图清单.md）替换这一处即可
+      // 真形象到位后替换这一处即可
       const tex = dogTexture(this.myBreed, isBoss ? 30 : 8, isBoss ? 'night' : 'day');
       const body = this.actorFoe.children[0];
       body.material.map = tex;

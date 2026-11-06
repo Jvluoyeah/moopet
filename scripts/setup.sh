@@ -161,7 +161,7 @@ else
     warn "没有 node"
   fi
   warn "影响：前端构建、以及**服务端权威对战**（房间引擎用 node 子进程跑 JS 规则）。"
-  warn "      单机 / PVE / 剧情模式 / API 都照样能跑。"
+  warn "      单机 / PVE / API 都照样能跑。"
   case "$OS_ID" in
     ubuntu|debian)
       echo "     推荐（NodeSource 官方源，装 22.x）："

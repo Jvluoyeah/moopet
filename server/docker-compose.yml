@@ -12,7 +12,7 @@
 #
 # 云端 Ubuntu（PostgreSQL）：
 #     MOOPET_SECRET_KEY=$(openssl rand -hex 32) docker compose --profile cloud up -d --build
-#     再按 docs/UBUNTU_运行指南.md 在前面挂 Nginx + TLS
+#     再在前面挂 Nginx + TLS
 #
 # 注意：多进程（--workers > 1）时对战房间在内存里，必须配 Redis 才能跨进程；
 #       演示阶段固定单进程，见文档说明。
