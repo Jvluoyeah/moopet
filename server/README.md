@@ -12,10 +12,19 @@
 ### 本地（SQLite，推荐先这样跑）
 
 ```bash
-cd w6/server
-pip install -r requirements.txt
+# 从仓库根目录：建虚拟环境并装依赖（Ubuntu 22.04 起 PEP 668 不许往系统 Python 装）
+python3 -m venv .venv && . .venv/bin/activate     # Windows: .venv\Scripts\activate
+python -m pip install -r server/requirements.txt
+
+cd server
 python run_local.py            # → http://127.0.0.1:8080/docs
 ```
+
+Linux 上更省事：仓库根的 `bash scripts/setup.sh` + `bash scripts/start_web.sh`
+（见 `docs/UBUNTU_运行指南.md`）。
+
+`run_local.py` 默认只监听 `127.0.0.1`（`MOOPET_HOST=0.0.0.0` 才允许局域网访问）；
+它在启动前会检查依赖与端口，并对 Node 给出提示（服务端权威对战要 node 子进程）。
 
 **如果前端已经构建过（`../web/dist` 存在），服务端会把它一起托管** ——
 这样演示只要一个进程、一个地址：打开 `http://127.0.0.1:8080` 就是完整应用
@@ -24,15 +33,16 @@ python run_local.py            # → http://127.0.0.1:8080/docs
 要先构建前端：`cd ../web && npm run build`。
 没有 `dist` 也能跑，只是只提供 API（启动时会提示）。
 
-或者用 docker：
+或者用 docker（**构建上下文是仓库根**，所以要在 `server/` 目录下运行）：
 
 ```bash
-cd w6/server
+cd server
 docker compose up --build      # → http://localhost:8080
 ```
 
-> ⚠️ 本机未安装 Docker，`docker-compose.yml` 与 `docker/Dockerfile` 已写好但**未实际运行验证**；
-> 上云前请先在一台装了 Docker 的机器上过一遍。
+> ⚠️ 镜像已按"仓库根为构建上下文"重写（两段构建：前端产物 + 带 Node 的服务端），
+> 但当前开发环境没有 Docker，**仍未实际运行验证**；第一次跑请留意构建输出。
+> 旧命令（`context: ..` 只含 server/、镜像里没有前端和 Node）是跑不通的，已废弃。
 
 ### 云端 Ubuntu（PostgreSQL）
 
@@ -107,12 +117,16 @@ NPC 狗的位置由 `(dog_id, 时间片)` 哈希决定（`app/world.py`）：
 ## 四、测试
 
 ```bash
-cd w6/server
-python tests/run_all.py             # 全部（60 项）
-python smoke.py                     # 端到端冒烟（注册→领养→入社群→对战→排行）
-python tests/live_ws_check.py       # 真 socket 联机验证（需先起服务）
-python tests/single_url_check.py    # 单地址演示验证（需已构建前端）
+cd server
+export PATH=…; which node              # 装房间引擎/权威对战的用例需要 node
+python tests/run_all.py                # 全部（103 项；基线 101/103，见 AGENT.md 第 5 节）
+python smoke.py                        # 端到端冒烟（注册→领养→入社群→对战→排行）
+python tests/live_ws_check.py          # 真 socket 联机验证（需先起服务）
+python tests/single_url_check.py       # 单地址演示验证（需已构建前端）
 ```
+
+> Linux 上跑前设 `PYTHONIOENCODING=utf-8`：个别用例会打印 emoji，非 UTF-8 终端下会
+> `UnicodeEncodeError`，看起来像功能失败，其实是控制台编码问题。
 
 | 文件 | 覆盖 |
 |------|------|

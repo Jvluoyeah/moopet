@@ -4,6 +4,7 @@
 （否则会写出一份真实数据库文件、还打印一堆部署告警）。
 """
 import os
+import sys
 
 from fastapi import APIRouter, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -94,9 +95,24 @@ def create_app(settings=None, seed=True, warn=True):
 
     if warn:
         for w in settings.warnings():
-            print(f'[moopet-server] ⚠️  {w}')
+            _safe_print(f'[moopet-server] ⚠️  {w}')
 
     return app
+
+
+def _safe_print(text):
+    """打一行中文/emoji 的启动信息，**绝不因为它把服务带崩**。
+
+    Windows 控制台默认 GBK，打 ⚠️ 会直接 UnicodeEncodeError —— 这条告警本身是
+    "部署前请换密钥"这种提示，结果把服务启动搞挂了是本末倒置（test 里也踩过：
+    服务器默认把 stdout 重定向到文件时，编码不一定跟着 PYTHONUTF8 走）。
+    这里退化成 ASCII，保证任何终端都能起得来。
+    """
+    try:
+        print(text, flush=True)
+    except UnicodeEncodeError:
+        enc = getattr(sys.stdout, 'encoding', None) or 'ascii'
+        print(text.encode(enc, 'replace').decode(enc, 'replace'), flush=True)
 
 
 def _mount_gal_proxy(app):

@@ -1,0 +1,59 @@
+# 换行符按"谁用它"决定，避免在 Windows 上改过的文件到 Linux 里跑不起来。
+# 背景：本仓库长期在 Windows 上开发，`.sh` 曾被存成 CRLF，在 Ubuntu 上直接执行会报
+#   start_demo.sh: line 22: set: pipefail: invalid option name
+# （bash 把行尾的 \r 当成了参数的一部分）。文本属性统一在这里钉死，别再靠编辑器设置。
+
+# 默认：仓库里一律 LF，检出时按各人平台转换
+*                         text=auto
+
+# ---- Linux / macOS 直接执行：必须永远保持 LF ----
+*.sh                      text eol=lf
+*.bash                    text eol=lf
+*.py                      text eol=lf
+*.js                      text eol=lf
+*.mjs                     text eol=lf
+*.css                     text eol=lf
+*.html                    text eol=lf
+*.json                    text eol=lf
+*.yml                     text eol=lf
+*.yaml                    text eol=lf
+Dockerfile                text eol=lf
+*.txt                     text eol=lf
+
+# ROS2 / CMake / Python 打包描述（colcon 与 setuptools 在 Linux 上读）
+*.xml                     text eol=lf
+*.msg                     text eol=lf
+*.srv                     text eol=lf
+*.action                  text eol=lf
+*.cmake                   text eol=lf
+
+# ---- Windows 专用：必须保持 CRLF ----
+# start_web.ps1 另有硬性要求：UTF-8 **带 BOM**（PowerShell 5.1 无 BOM 时按 ANSI 读，中文乱码）
+*.bat                     text eol=crlf
+*.cmd                     text eol=crlf
+*.ps1                     text eol=crlf
+# 只给确实带 BOM 的那一个文件声明编码：其余 .ps1 是「无 BOM 的 UTF-8」，
+# 一律套 UTF-8-BOM 会让 git 在读取时失败（error: failed to encode ... from UTF-8-BOM）
+/start_web.ps1            text eol=crlf working-tree-encoding=UTF-8-BOM
+
+# ---- 二进制：不许做任何换行/编码转换 ----
+*.blend                   binary
+*.png                     binary
+*.jpg                     binary
+*.jpeg                    binary
+*.webp                    binary
+*.gif                     binary
+*.ico                     binary
+*.ttf                     binary
+*.otf                     binary
+*.woff                    binary
+*.woff2                   binary
+*.glb                     binary
+*.gltf                    binary
+*.mp3                     binary
+*.ogg                    binary
+*.wav                     binary
+*.mp4                     binary
+*.zip                     binary
+*.pptx                    binary
+*.db                      binary
