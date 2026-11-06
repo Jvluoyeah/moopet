@@ -3,7 +3,7 @@
    为什么是这个风格：羊皮纸 + 墨线 + 印章的语境下，写实画法容易显得廉价，
    而"木刻版画"式的实心剪影 + 墨线描边天然契合，且用简单形状就能做得体面。
 
-   分层结构（真实图片到位后按同名图层替换即可，见 docs/形象包规范.md）：
+   分层结构（真实图片到位后按同名图层替换即可）：
      layer-shadow / layer-tail / layer-body / layer-legs / layer-head
      layer-ears / layer-face / layer-marking / layer-collar
 

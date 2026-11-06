@@ -1,5 +1,5 @@
 {
-  "_comment": "开放世界的场景边界表：Python 服务端与 JS 前端共用这一份，避免两边各写一套尺寸后对不上。改这里要同时跑 server/tests 与 web/tests/world_net_test.mjs。",
+  "_comment": "开放世界的场景边界表：Python 服务端与 JS 前端共用这一份，避免两边各写一套尺寸后对不上。改这里要同时核对服务端与 web/tests/world_net_test.mjs。",
   "scenes": {
     "plaza": { "name": "长夜月广场", "w": 2200, "d": 1700, "spawn": [1100, 1200], "capacity": 64 },
     "park": { "name": "长夜月公园", "w": 2400, "d": 1900, "spawn": [1200, 1350], "capacity": 48 },

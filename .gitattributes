@@ -20,21 +20,14 @@
 Dockerfile                text eol=lf
 *.txt                     text eol=lf
 
-# ROS2 / CMake / Python 打包描述（colcon 与 setuptools 在 Linux 上读）
-*.xml                     text eol=lf
-*.msg                     text eol=lf
-*.srv                     text eol=lf
-*.action                  text eol=lf
-*.cmake                   text eol=lf
-
 # ---- Windows 专用：必须保持 CRLF ----
 # start_web.ps1 另有硬性要求：UTF-8 **带 BOM**（PowerShell 5.1 无 BOM 时按 ANSI 读，中文乱码）
 *.bat                     text eol=crlf
 *.cmd                     text eol=crlf
 *.ps1                     text eol=crlf
-# 只给确实带 BOM 的那一个文件声明编码：其余 .ps1 是「无 BOM 的 UTF-8」，
-# 一律套 UTF-8-BOM 会让 git 在读取时失败（error: failed to encode ... from UTF-8-BOM）
-/start_web.ps1            text eol=crlf working-tree-encoding=UTF-8-BOM
+# start_web.ps1 的 BOM 直接留在文件里；不要套 working-tree-encoding=UTF-8-BOM，
+# 本仓库历史 blob 已带 BOM，转换会报 "failed to encode ... from UTF-8-BOM"。
+/start_web.ps1            text eol=crlf
 
 # ---- 二进制：不许做任何换行/编码转换 ----
 *.blend                   binary

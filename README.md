@@ -1,32 +1,27 @@
 # 长夜月 · 养成系机械狗（Moopet）
 
-一个结合机械狗陪伴、成长养成与互动玩法的项目，包含 Web 应用、后端服务和 Python / ROS2 机械狗软件栈。
+一个结合机械狗陪伴、成长养成与互动玩法的全栈项目，包含 Web 应用与后端服务。
 
 ## 功能
 
 - 账号注册、机械狗领养与成长档案。
 - 开放世界、社群互动、竞技场对战与训练关卡。
 - 答题、双人问答、签到、抽签、日记与剧情模式。
-- 机械狗经验结算、行为决策、情感与火花机制，以及无硬件通信仿真。
 
 ## 技术栈
 
 - 前端：Vite、原生 JavaScript、Three.js。
 - 后端：FastAPI、SQLAlchemy、SQLite。
-- 机械狗：Python、ROS2 Humble。
 
 ## 目录
 
 ```text
-web/          Web 前端与游戏逻辑
+web/          Web 前端与游戏逻辑（含运行所需美术、模型、字体）
 server/       后端 API 与 WebSocket 服务
 gal/          剧情播放器与资源
-moopet_ws/    机械狗软件栈与仿真工具
 scripts/      Linux 一键脚本：setup.sh / start_web.sh / stop_web.sh / probe_runtime.py
 data/         题库
 shared/       场景配置
-blender/      场景模型源文件
-docs/         世界观、开发历程、玩法规范与 Ubuntu 运行指南
 ```
 
 ## 启动 Web 应用
@@ -44,7 +39,6 @@ bash scripts/stop_web.sh   # 停止
 打开 <http://127.0.0.1:8080/>，API 文档 <http://127.0.0.1:8080/docs>，
 剧情入口 <http://127.0.0.1:8080/gal/web/index.html>。
 局域网访问用 `bash scripts/start_web.sh --host=0.0.0.0`。
-详细的坑位、Docker、systemd/Nginx 部署见 **[docs/UBUNTU_运行指南.md](docs/UBUNTU_运行指南.md)**。
 
 **任意平台（手动分步，从仓库根目录执行）：**
 
@@ -55,7 +49,7 @@ cd web && npm ci && npm run build && cd ..
 cd server && python run_local.py
 ```
 
-依赖安装完成后，Windows 也可双击根目录的 `start_web.bat` 启动主应用和剧情服务。
+依赖安装完成后，Windows 也可双击根目录的 `start_web.bat` 启动主应用。
 
 ### 剧情模式
 
@@ -67,14 +61,6 @@ python -m http.server 18080 --bind 127.0.0.1 --directory gal
 
 通过 <http://127.0.0.1:8080/gal/web/index.html> 进入剧情（依赖主服务的 `/gal/*` 代理）。
 
-## 无硬件仿真
-
-无需安装 ROS2，从仓库根目录执行：
-
-```bash
-python moopet_ws/tools/link_lab/run_lab.py
-```
-
 ## 当前核验结果
 
 最近一次在 **Ubuntu 22.04.5 / Python 3.10.12** 上的实际结果：
@@ -83,12 +69,8 @@ python moopet_ws/tools/link_lab/run_lab.py
 | --- | --- |
 | `bash scripts/setup.sh`（含缺 `python3-venv` 的降级路径） | 通过 |
 | `bash scripts/start_web.sh` → 页面 / API / `/docs` / 剧情代理 | 全部 200，重复启动可识别，`stop_web.sh` 停干净 |
-| `server/tests/single_url_check.py` | 7/7 通过 |
-| `server/tests/run_all.py` | 101/103（与 Windows 基线一致；两项失败是已有的串门测试） |
 | `web/` `npm test` + `npm run build` | 通过（Node 24 验证；锁定 Node 18+） |
-| `moopet_ws/scripts/boundary_test.sh` | 通过（core / link / 测试台） |
 
-未验证：Docker 镜像构建、PostgreSQL、ROS2 节点联调、systemd/Nginx 部署、完整浏览器 E2E。
-详见 [docs/UBUNTU_运行指南.md](docs/UBUNTU_运行指南.md)。
+未验证：Docker 镜像构建、PostgreSQL、systemd/Nginx 部署、完整浏览器 E2E。
 
 [许可证](LICENSE) · [第三方声明](THIRD_PARTY_NOTICES.md)
