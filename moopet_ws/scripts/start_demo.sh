@@ -42,10 +42,22 @@ done
 
 if [ ! -f /opt/ros/humble/setup.bash ]; then
   echo "[错误] 未找到 ROS2 Humble：/opt/ros/humble/setup.bash"
-  echo "请先按 docs/部署文档.md 安装 ROS2 Humble"
+  echo "请先按 moopet_ws/docs/部署文档.md 安装 ROS2 Humble"
+  echo
+  echo "如果只是想看'感知 → 决策 → 成长'的效果、又不想装 ROS2，用无 ROS 入口："
+  echo "  python tools/link_lab/run_lab.py        # 无需 ROS，纯 Python"
+  echo
+  echo "目录名带空格/中文时，请确认脚本是 LF 换行（Windows 下拷贝过来的容易变成 CRLF，"
+  echo "会报 'set: pipefail: invalid option name'）。查看：file scripts/start_demo.sh"
   exit 1
 fi
 source /opt/ros/humble/setup.bash
+
+# 中文日志：Ubuntu 默认 UTF-8 没问题；但 ssh 进服务器/容器时 LANG 可能为空，
+# 那样 python 会按 ASCII 打日志，节点一遇中文就 UnicodeEncodeError 崩掉。
+if [ -z "${LANG:-}" ] || [ "${LANG}" = "C" ] || [ "${LANG}" = "POSIX" ]; then
+  export LANG=C.UTF-8
+fi
 
 mkdir -p "$LOG_DIR"
 
@@ -85,9 +97,20 @@ cleanup() {
   echo
   echo "==> 正在停止所有节点..."
   if [ -f "$PID_FILE" ]; then
-    while IFS= read -r p; do kill "$p" 2>/dev/null || true; done < "$PID_FILE"
+    local p
+    while IFS= read -r p; do
+      [ -n "$p" ] || continue
+      # `ros2 run` 会再拉一个子进程；先停进程组，再兜底停进程本身
+      kill -TERM -- "-$p" 2>/dev/null || kill -TERM "$p" 2>/dev/null || true
+    done < "$PID_FILE"
+    sleep 1
+    while IFS= read -r p; do
+      [ -n "$p" ] || continue
+      kill -KILL -- "-$p" 2>/dev/null || kill -KILL "$p" 2>/dev/null || true
+    done < "$PID_FILE"
   fi
-  pkill -f 'ros2 run' 2>/dev/null || true
+  # 只清本项目起的节点（别把同机别的 ROS 演示一起打掉）
+  pkill -f 'ros2 run moopet_' 2>/dev/null || true
   echo "==> 已清理，退出"
 }
 trap cleanup EXIT INT TERM

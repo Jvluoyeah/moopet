@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 # W1 冒烟测试：编译 + T/S/A 往返（单机自检；W3 起校验 16 项接口）
 set -euo pipefail
+
+if [ ! -f /opt/ros/humble/setup.bash ]; then
+  echo "[错误] 未找到 ROS2 Humble：/opt/ros/humble/setup.bash"
+  echo "请先按 moopet_ws/docs/部署文档.md 安装；不想装 ROS 的话，纯逻辑部分用："
+  echo "  bash scripts/boundary_test.sh      # 不需要 ROS，直接跑 core/link 的全部用例"
+  exit 1
+fi
+# shellcheck disable=SC1091
 source /opt/ros/humble/setup.bash
 
 WS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

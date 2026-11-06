@@ -6,7 +6,7 @@
 
 - 这是 Web、服务端、机械狗工作区和剧情导出资源组成的多子项目仓库，没有统一根构建命令。
 - 先明确本次修改影响哪一侧，再阅读入口、调用者、配置和已有测试；不要只依据历史汇报或文件头的完成度声明。
-- 当前代码和可复现结果优先于旧 README、W1–W6 汇报、排期和任务清单。保留历史材料，不把历史目标写成已经实现的功能。
+- 当前代码和可复现结果优先于旧 README、W1–W6 汇报、排期和任务清单；保留历史材料，不把历史目标写成已经实现的功能。Linux（尤其 Ubuntu 22.04）的安装、启动、部署与排错先看 `docs/UBUNTU_运行指南.md`，另有本页 §5.1 的「Linux 启动约定」。
 - 根 README 的“当前核验结果”是整理时的基线，不是永久保证；修改相关模块后补充本次真实结果和未验证范围。
 - 不擅自搬目录、批量改名、统一两套规则或删除素材。代码、协议、数据兼容性和授权范围发生变化时先说明影响；产品规则无法从代码/规范确定时询问维护者。
 
@@ -23,6 +23,8 @@
 | 训练与成长 | `web/src/game/levels.js`、`growth.js`、`web/src/lib/exp.js`；`server/app/api/training.py` |
 | Web 问询/同问、签到/抽签/日记 | `server/app/api/quiz.py`、`tower.py`、`server/app/ws/quiz_routes.py`；对应 `web/src/pages/quiz.js`、`duel.js`、`tower.js` |
 | 后端装配与数据库 | `server/app/factory.py`、`config.py`、`db.py`、`models.py`、`schemas.py`、`seeds.py` |
+| Linux 安装、启动与部署 | `scripts/setup.sh`、`start_web.sh`、`stop_web.sh`、`probe_runtime.py`、`server/run_local.py`、`server/docker/Dockerfile`、`docs/UBUNTU_运行指南.md` |
+| 启动/运行环境问题（端口、编码、Node） | `server/app/engine_host.py`（`find_node`）、`server/app/factory.py`（启动打印）、`scripts/probe_runtime.py` |
 | 剧情代理与存档 | `server/app/factory.py`、`server/static/gal-sync.js`、`server/app/api/gal.py`；`gal/web/config.json` |
 | 机械狗经验/答题/决策 | `moopet_ws/src/moopet_core/moopet_core/` 与相邻 `tests/` |
 | 通信、故障及大脑位置切换 | `moopet_ws/src/moopet_link/`、`moopet_deploy/`、`tools/link_lab/` |
@@ -93,12 +95,31 @@
 | 实时转发 | 服务运行后，在 `server/` 运行 `python tests/live_ws_check.py [服务地址]`；该脚本会写入数据 |
 | core / link / deploy | `moopet_ws/`：`bash scripts/boundary_test.sh` 与 `python tools/link_lab/run_lab.py`；额外运行受影响而未纳入集合的测试 |
 | ROS 接口与节点 | Ubuntu + ROS2 环境编译后，运行相关节点和 `scripts/smoke_test.sh`；有硬件变化再做实机验证 |
+| Linux 启动脚本（根 `scripts/`） | `bash scripts/setup.sh --skip-build`、`bash scripts/start_web.sh --no-browser`、`bash scripts/stop_web.sh`，再跑 `single_url_check.py`；`bash -n` 做语法检查 |
 
 - 无 Bash 的 Windows 环境可按 `scripts/boundary_test.sh` 列出的顺序，在各包目录使用 `python` 执行测试脚本；不要假定已有 `python3`。
+- Linux 上跑测试前确认 `PYTHONIOENCODING=utf-8`（或 `PYTHONUTF8=1`），否则部分用例打印 emoji 会 `UnicodeEncodeError`，被误记成功能失败；同一套 Ubuntu 22.04 上服务端基线同样是 `101/103`。
 - 浏览器 E2E 需要 Playwright / Chromium；各脚本启动方式和地址不完全一致，先阅读脚本，不能把一个 E2E 的端口假设套到全部。
 - 后端现有基线为 `101/103`，失败是 `test_community.py` 中两项串门测试；旧 W5 standalone 也失败。不要删除/弱化断言或无关改规则掩盖基线，若任务恰好修复这些问题才更新状态。
 - 使用临时数据库/独立演示账号；Windows 上先关引擎、SQLite 连接和子进程再清理临时文件。严禁在 `server/data/dev.db` 等现有用户数据上做破坏性验证。
-- 本次整理已实际验证的范围以根 README 为准；未运行的 Docker、PostgreSQL、ROS2、完整浏览器 E2E 不得写成通过。
+- 本次整理已实际验证的范围以根 README 与 `docs/UBUNTU_运行指南.md` 为准；未运行的 Docker、PostgreSQL、ROS2、完整浏览器 E2E 不得写成通过。
+
+## 5.1 Linux（Ubuntu）启动约定
+
+- 仓库里 `.sh` 必须保存在 **LF**（`.gitattributes` 已钉死）。CRLF 会让 `set -euo pipefail` 报
+  `pipefail: invalid option name`，在 Linux 上等于整个脚本不能用。Windows 上编辑后先确认换行再提交。
+- `start_web.ps1` 与之对应的是根 `scripts/start_web.sh`：**同样遵守"先剧情模式、再看主服务"**的顺序，
+  以及固定端口（8080 / 18080）、数据库选择、已有服务识别和已有 `dist` 的行为；改一侧要对照另一侧。
+- 后台服务用 `setsid` + `.runtime/*.pid` 管理；`run_local.py` 只是启动器，真正的监听进程是它派生的
+  `python -m uvicorn` 子进程，**停服务必须连进程树一起停**（`stop_web.sh` 已处理；端口兜底扫描只杀本项目进程）。
+- `run_local.py` 默认只监听 `127.0.0.1`；对外暴露必须显式 `MOOPET_HOST=0.0.0.0`，并同时换掉
+  `MOOPET_SECRET_KEY`、限定 `MOOPET_ALLOW_ORIGINS`。
+- Node 是**运行时**依赖（服务端权威对战的引擎子进程），不只是前端构建依赖；新增"起 node 子进程"的代码
+  统一用 `app.engine_host.find_node()`（支持 `MOOPET_NODE`），不要直接写 `"node"`。
+- 容器档（`server/docker/Dockerfile`）的构建上下文是**仓库根**：需要 `web/`（前端产物 + 引擎脚本与规则）。
+  改动目录结构时同步核对 Dockerfile 的 `COPY` 与 `server/docker-compose.yml` 的 `context`。
+- 涉及 Python 版本要求的改动，以 Ubuntu 22.04 自带的 3.10 为下限验证（不要引入 3.11+ 专属语法），
+  除非同时更新 README、`docs/UBUNTU_运行指南.md` 与 `server/run_local.py` 的版本提示。
 
 ## 6. 资源、发布与变更交付
 
@@ -110,4 +131,6 @@
 - 不提交 `.env`、真实凭据、SQLite/备份、虚拟环境、node_modules、dist、ROS 构建目录、调试截图或日志。`.gitignore` 不会移除已入 Git 的文件；发现历史凭据先通知维护者并轮换。
 - 不擅自删除用户的历史 PPT、个人文件或本地数据库；公开前核实成员姓名与其他个人信息可披露。
 - 修改 Windows 启动脚本时保留 `start_web.ps1` 的 UTF-8 BOM + CRLF 要求，并核对虚拟环境、固定端口、数据库选择、已有服务及已有 dist 的行为。
+- 修改 Linux 启动脚本（根 `scripts/`）时保留：脚本为 LF、幂等、失败信息可执行（告诉用户下一步命令），
+  且不把服务端默认监听改回 `0.0.0.0`。
 - PR 交付写清：修改目的、影响文件/API/消息/数据、验证命令与观察结果、已知失败及未验证边界；行为或启动契约变化同步更新文档。不得自动提交、推送、建远程仓库或迁移大素材，除非维护者明确要求。
