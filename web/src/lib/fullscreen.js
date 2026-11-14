@@ -81,7 +81,13 @@ export function attachFullscreen(container, { onResize, hotkey = 'f' } = {}) {
     e.preventDefault();
     toggleFullscreen(container);
   };
-  const onDblClick = () => toggleFullscreen(container);
+  /* 双击全屏是"藏起来的手势"：老人档要少手势、幼稚档要防误触。
+     两档都只保留显式按钮与 F 键；标准档维持双击。 */
+  const onDblClick = () => {
+    const mode = document.documentElement.getAttribute('data-ui-mode');
+    if (mode === 'elder' || mode === 'child') return;
+    toggleFullscreen(container);
+  };
   window.addEventListener('keydown', onKey);
   container.addEventListener('dblclick', onDblClick);
   window.addEventListener('resize', resizeSoon);

@@ -15,6 +15,7 @@
 import { h } from '../lib/dom.js';
 import { get } from '../lib/store.js';
 import { pageShell } from '../components/layout.js';
+import { textNode } from '../components/ui.js';
 import { onDispose } from '../lib/router.js';
 import { SideStage } from '../game/stage.js';
 import { createBattleHud } from '../game/hud.js';
@@ -62,8 +63,8 @@ export async function dojoPage() {
   pageEl.replaceChildren(
     h('header', { class: 'sheet-head' },
       h('div', null,
-        h('h1', null, '训练场'),
-        h('div', { class: 'small muted' }, '无压力练习 · 不倒计时 · 倒下自动复活 · 木桩不会还手')),
+        h('h1', null, textNode('训练场')),
+        h('div', { class: 'small muted' }, textNode('无压力练习 · 不倒计时 · 倒下自动复活 · 木桩不会还手'))),
       h('div', { class: 'row' },
         h('button', { class: 'btn btn-ghost btn-sm', id: 'dojo-fullscreen',
                       onclick: () => dojoRef?.fs?.toggle() }, '全屏'))),
@@ -131,9 +132,9 @@ class Dojo {
       h('div', { class: 'card flat' },
         h('div', { class: 'card-title' }, h('span', { class: 'kicker' }, '练习场')),
         h('ul', { class: 'small', style: { margin: 0, paddingLeft: '18px' } },
-          h('li', null, '木桩站着不动，你可以随便试招'),
-          h('li', null, '倒下会自动站起来，不会结束'),
-          h('li', null, '没有时间限制，练到会为止'))),
+          h('li', null, textNode('木桩站着不动，你可以随便试招')),
+          h('li', null, textNode('倒下会自动站起来，不会结束')),
+          h('li', null, textNode('没有时间限制，练到会为止')))),
       h('div', { class: 'card flat' },
         h('div', { class: 'card-title' }, h('span', { class: 'kicker' }, '操作')),
         // 键位说明必须跟着引擎走 —— 这里是六招制，写"1~4 放技能"就是错的
@@ -145,10 +146,10 @@ class Dojo {
           h('li', null, '气攒满 100 放 L 必杀'),
           h('li', null, '数字键 1~6 是同样的六招（不想记键位就用它）'))),
       h('div', { class: 'note-paper' },
-        h('div', { class: 'hand', style: { fontSize: '15px' } }, '小贴士'),
+        h('div', { class: 'hand', style: { fontSize: '15px' } }, textNode('小贴士')),
         h('div', { class: 'small' },
-          '气在训练场里会自动补满，想练必杀随时可以放。',
-          '被打破防的时候会有一下硬直，那是练防御的好时机。')));
+          textNode('气在训练场里会自动补满，想练必杀随时可以放。'),
+          textNode('被打破防的时候会有一下硬直，那是练防御的好时机。'))));
   }
 
   bindKeys() {

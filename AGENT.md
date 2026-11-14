@@ -16,7 +16,7 @@
 | --- | --- |
 | 页面、路由与页面状态 | `web/src/main.js`、`web/src/lib/router.js`、`store.js`、`web/src/pages/` |
 | API 调用、认证与会话 | `web/src/lib/api.js`、`web/src/lib/ws.js`；`server/app/api/auth.py`、`deps.py`、`security.py` |
-| UI 组件与主题 | `web/src/components/layout.js`、`ui.js`、`web/src/styles/`；复用现有样式变量与组件 |
+| UI 组件与主题 | `web/src/components/layout.js`、`ui.js`、`web/src/styles/`；复用现有样式变量与组件。界面三档见 `web/src/lib/uiMode.js`、`web/src/styles/modes.css`（只写本机 localStorage 与 `<html data-ui-mode/data-ui-scale/data-child-*>`）；老人/幼稚底部导航在 `layout.js` 的 `bottomBar`；家长密码在 `web/src/lib/parentGate.js`（本机门闩，不是安全边界）；幼稚点击音效在 `web/src/lib/childFx.js` |
 | 世界与场景 | `web/src/pages/world.js`、`web/src/world/`、`shared/world_scenes.json`、`server/app/ws/world_hub.py` |
 | 格斗模拟与联机 | `web/src/game/simAB.js`、`fx.js`、`rules.js`、`match.js`、`net.js`、`authority.js`（含预测与回滚） |
 | 服务端权威引擎 | `web/tools/engine_host.mjs`、`server/app/engine_host.py`、`authority.py`、`rooms.py`、`ws/authority_routes.py` |
@@ -74,7 +74,7 @@
 
 | 改动范围 | 建议检查（在对应目录运行） |
 | --- | --- |
-| 前端一般改动 | `web/`：`npm test`、`npm run build`；界面改动通过真实浏览器操作并观察控制台与网络 |
+| 前端一般改动 | `web/`：`npm test`、`npm run build`；界面改动通过真实浏览器操作并观察控制台与网络。界面模式专项：`npm run test:uimode`，并至少检查标准/老人/幼稚三档、320/412/1280 宽度、底部栏与家长锁 |
 | 格斗规则/预测/回滚 | `web/`：相关 `test:fx`、`test:rules`、`test:ab`、`test:repro`、`test:rollback`、`test:predict`、`test:netauth`；完成后默认测试链 |
 | 后端接口/持久化 | 启动 `server/run_local.py` 后实际访问受影响 HTTP/WS 路径；使用临时 SQLite，不碰 `server/data/dev.db` |
 | 静态托管/代理/启动 | 构建并启动真实服务后访问页面、`/docs`、`/api/health` 与 `/gal/*`；剧情路径另起上游并实测 |

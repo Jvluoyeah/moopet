@@ -13,7 +13,7 @@
 import { h, withBusy } from '../lib/dom.js';
 import { api, ApiError } from '../lib/api.js';
 import { get } from '../lib/store.js';
-import { sheetHead, note, loading, errorBox } from '../components/ui.js';
+import { sheetHead, note, loading, errorBox, textNode } from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
 
 /** 稀有一件给个说法，别只写"稀有" */
@@ -102,8 +102,8 @@ async function render(box, lastPrize = null) {
     box.replaceChildren(
       sheetHead('月塔端口', '盖章 · 摸签 · 册子上的日记'),
       h('div', { class: 'empty' },
-        h('span', { class: 'hand' }, '端口不认没有编号的人。'),
-        h('div', { class: 'small' }, '先去登记处领一只机械狗，册子上有了编号，端口才开。'),
+        h('span', { class: 'hand' }, textNode('端口不认没有编号的人。')),
+        h('div', { class: 'small' }, textNode('先去登记处领一只机械狗，册子上有了编号，端口才开。')),
         h('div', { class: 'row', style: { justifyContent: 'center', marginTop: '14px' } },
           h('a', { class: 'btn btn-seal', href: '#/adopt' }, '去领养'))));
     return;
@@ -229,7 +229,7 @@ async function render(box, lastPrize = null) {
             h('span', { class: 'badge' }, KIND_WORD[d.kind] || '别的事'),
             h('span', { style: { marginLeft: '8px' } }, d.text)),
           h('span', { class: 'tiny muted mono' }, d.at))))
-      : h('div', { class: 'small muted' }, '册子这一页还是空的。打过一局、通一关、串过门，这里就会多一行。'));
+      : h('div', { class: 'small muted' }, textNode('册子这一页还是空的。打过一局、通一关、串过门，这里就会多一行。')));
 
   box.replaceChildren(
     /* `.rise-in`：**页内**从"正在接上月塔…"换成内容的那一下原来也是硬切。

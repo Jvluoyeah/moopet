@@ -5,7 +5,7 @@ import { h, fmtTime } from '../lib/dom.js';
 import { api } from '../lib/api.js';
 import { get, breedOf } from '../lib/store.js';
 import { query } from '../lib/router.js';
-import { note, loading, errorBox, dogPortrait, statBars } from '../components/ui.js';
+import { note, loading, errorBox, dogPortrait, statBars, textNode } from '../components/ui.js';
 import { tierOf } from '../lib/breedArt.js';
 import { pageShell } from '../components/layout.js';
 /* ★ 成长口径的唯一真源：等级 → 四维、四维 → 战斗参数。
@@ -71,8 +71,8 @@ async function load(host, id) {
     if (!targetId) {
       host.replaceChildren(
         h('div', { class: 'empty' },
-          h('span', { class: 'hand' }, '这一页还是空的。'),
-          h('div', { class: 'small' }, '册子发下来了，编号那行还空着。'),
+          h('span', { class: 'hand' }, textNode('这一页还是空的。')),
+          h('div', { class: 'small' }, textNode('册子发下来了，编号那行还空着。')),
           h('div', { class: 'row', style: { justifyContent: 'center', marginTop: '14px' } },
             h('a', { class: 'btn btn-seal', href: '#/adopt' }, '去领养'))));
       return;
@@ -86,14 +86,14 @@ async function load(host, id) {
     host.replaceChildren(
       h('header', { class: 'sheet-head' },
         h('div', null,
-          h('p', { class: 'kicker' }, isMine ? '我的档案卡' : '社群档案卡'),
+          h('p', { class: 'kicker' }, textNode(isMine ? '我的档案卡' : '社群档案卡')),
           h('h1', null, d.name),
           h('div', { class: 'sub' },
             `档案编号 #${String(d.id).padStart(4, '0')} · 建档 ${fmtTime(d.created_at)}`)),
         h('div', { class: 'row' },
           h('span', { class: 'seal' }, tier.label),
-          isMine ? h('a', { class: 'btn btn-sm btn-ghost', href: '#/world' }, '去开放世界') : null,
-          h('a', { class: 'btn btn-sm btn-ghost', href: '#/leaderboard' }, '看排行'))),
+          isMine ? h('a', { class: 'btn btn-sm btn-ghost', href: '#/world' }, textNode('去开放世界')) : null,
+          h('a', { class: 'btn btn-sm btn-ghost', href: '#/leaderboard' }, textNode('看排行')))),
       h('div', { class: 'dossier' },
         h('div', { class: 'photo' },
           dogPortrait(breed, d.level),

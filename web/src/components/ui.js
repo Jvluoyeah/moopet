@@ -5,6 +5,61 @@ import { h, fromHTML } from '../lib/dom.js';
 import {tierOf} from '../lib/breedArt.js';
 import { breedImage } from '../lib/breedAssets.js';
 import { get } from '../lib/store.js';
+import { hasSimpleText, simpleText } from '../lib/uiMode.js';
+
+/** 可随界面模式切换的文本节点。
+ *  只有登记过幼稚模式说法的整句才包 <span>；切模式时 refreshCopy() 直接换字，
+ *  页面状态（题目、对局）不会被重置。 */
+export function textNode(text) {
+  if (!hasSimpleText(text)) return text;
+  return h('span', { 'data-copy-standard': text }, simpleText(get().uiMode, text));
+}
+
+/** 老人模式的语音输入按钮。
+ *  浏览器不支持语音识别时返回 null；元素本身在标准/幼稚模式下由 CSS 隐藏，
+ *  这样切到老人模式不用重跑页面也能出现。 */
+export function voiceButton(input, { lang = 'zh-CN', label = '语音输入' } = {}) {
+  const SR = globalThis.SpeechRecognition || globalThis.webkitSpeechRecognition;
+  if (!SR || !input) return null;
+  let rec = null;
+  const btn = h('button', {
+    class: 'btn btn-ghost btn-sm voice-btn', type: 'button',
+    title: label, 'aria-label': label,
+    onclick: () => {
+      if (rec) {
+        try { rec.stop(); } catch (e) { /* 已经停了 */ }
+        rec = null;
+        btn.classList.remove('is-listening');
+        return;
+      }
+      const r = new SR();
+      rec = r;
+      r.lang = lang;
+      r.interimResults = true;
+      r.continuous = false;
+      r.onresult = (e) => {
+        const text = Array.from(e.results)
+          .map((row) => row[0]?.transcript || '').join('').trim();
+        if (!text) return;
+        input.value = text;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      };
+      r.onend = r.onerror = () => {
+        if (rec === r) rec = null;
+        btn.classList.remove('is-listening');
+      };
+      try {
+        r.start();
+        btn.classList.add('is-listening');
+      } catch (e) {
+        rec = null;
+      }
+    },
+  },
+    h('span', { 'aria-hidden': 'true' }, '🎙'),
+    '语音');
+  return btn;
+}
 
 export function sheet(...children) {
   return h('section', { class: 'sheet fade-in' }, ...children);
@@ -13,13 +68,13 @@ export function sheet(...children) {
 export function sheetHead(title, sub, ...right) {
   return h('header', { class: 'sheet-head' },
     h('div', null,
-      h('h2', null, title),
-      sub ? h('div', { class: 'sub' }, sub) : null),
+      h('h2', null, textNode(title)),
+      sub ? h('div', { class: 'sub' }, textNode(sub)) : null),
     right.length ? h('div', { class: 'row' }, ...right) : null);
 }
 
 export function note(text, kind = '') {
-  return h('div', { class: `note ${kind}` }, text);
+  return h('div', { class: `note ${kind}` }, textNode(text));
 }
 
 export function loading(text = '读取中…') {
@@ -29,8 +84,8 @@ export function loading(text = '读取中…') {
 
 export function empty(title, hint, ...actions) {
   return h('div', { class: 'empty' },
-    h('span', { class: 'hand' }, title),
-    hint ? h('div', { class: 'small' }, hint) : null,
+    h('span', { class: 'hand' }, textNode(title)),
+    hint ? h('div', { class: 'small' }, textNode(hint)) : null,
     actions.length ? h('div', { class: 'row', style: { justifyContent: 'center', marginTop: '14px' } }, ...actions) : null);
 }
 
@@ -108,6 +163,46 @@ export function breedCard(breed, { picked = false, onPick } = {}) {
          那是给我们自己看的路径，不是给玩家看的信息，而且在手机的小卡片上
          特别扎眼。形态包本来就是"这只狗长什么样"，用中文说一句就够了。 */
       h('span', { class: 'tiny muted' }, '形象包')));
+}
+
+/** 关键操作的二次确认（退出、注销、踢设备）。
+ *  危险操作默认把焦点放在"取消"上，避免顺手回车把账号删了。
+ *  没有 DOM 时返回 false，不抛错。 */
+export function confirmDialog({
+  title = '确认', body = '', confirmText = '确定', cancelText = '取消',
+  danger = false, doc = globalThis.document,
+} = {}) {
+  if (!doc?.body) return Promise.resolve(false);
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (ok) => {
+      if (settled) return;
+      settled = true;
+      if (dialog.open) dialog.close();
+      dialog.remove();
+      resolve(ok);
+    };
+    const cancel = h('button', {
+      class: 'btn btn-ghost confirm-cancel', type: 'button',
+      onclick: () => finish(false),
+    }, cancelText);
+    const ok = h('button', {
+      class: `btn ${danger ? 'btn-danger' : 'btn-seal'} confirm-ok`, type: 'button',
+      onclick: () => finish(true),
+    }, confirmText);
+    const dialog = h('dialog', {
+      class: 'confirm-dialog', 'aria-labelledby': 'confirm-dialog-title',
+    },
+      h('h2', { id: 'confirm-dialog-title' }, title),
+      body ? h('p', { class: 'small muted' }, body) : null,
+      h('div', { class: 'row-tight confirm-actions' }, cancel, ok));
+    dialog.addEventListener('cancel', (e) => { e.preventDefault(); finish(false); });
+    dialog.addEventListener('close', () => finish(false));
+    doc.body.appendChild(dialog);
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+    (danger ? cancel : ok).focus();
+  });
 }
 
 /** 属性小徽章组 */

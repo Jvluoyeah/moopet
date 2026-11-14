@@ -2,7 +2,7 @@
 
 import { h, replaceChildren } from '../lib/dom.js';
 import { api } from '../lib/api.js';
-import { sheetHead, loading, errorBox, note } from '../components/ui.js';
+import { sheetHead, loading, errorBox, note, textNode } from '../components/ui.js';
 import { set as setStore, get } from '../lib/store.js';
 import { pageShell } from '../components/layout.js';
 
@@ -46,8 +46,8 @@ async function load(host, kind) {
     const meta = KINDS.find((k) => k.kind === kind);
     if (!data.rows.length) {
       host.replaceChildren(h('div', { class: 'empty' },
-        h('span', { class: 'hand' }, '榜单还是空的'),
-        h('div', { class: 'small' }, '去打一局、或者去广场串个门，这里就有名字了。')));
+        h('span', { class: 'hand' }, textNode('榜单还是空的')),
+        h('div', { class: 'small' }, textNode('去打一局、或者去广场串个门，这里就有名字了。'))));
       return;
     }
     const breeds = get().breeds;

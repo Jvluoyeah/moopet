@@ -12,12 +12,17 @@ import './styles/touch.css';
 import './styles/responsive.css';
 // 演出动画（抽签/盖章/日记）：放最末，只加 keyframes 与独立类名，不参与布局竞争
 import './styles/anim.css';
+// 界面模式（标准/老人/幼稚）：必须最后导入，才能压过上面的字号与触控尺寸
+import './styles/modes.css';
 
 import { h, mount } from './lib/dom.js';
 import { api, isLoggedIn, token } from './lib/api.js';
 import { get, set, applyTheme } from './lib/store.js';
+import { applyUiMode, applyUiScale, applyChildPrefs, refreshCopy } from './lib/uiMode.js';
+import { requireParent, isParentUnlocked } from './lib/parentGate.js';
+import { installChildFeedback } from './lib/childFx.js';
 import * as router from './lib/router.js';
-import { topbar } from './components/layout.js';
+import { topbar, catalogue, bottomBar } from './components/layout.js';
 import { preloadBreedArt } from './lib/breedAssets.js';
 import { ensureFonts } from './lib/fonts.js';
 
@@ -37,17 +42,30 @@ import { dojoPage } from './pages/dojo.js';
 
 const app = document.getElementById('app');
 applyTheme(get().theme);
+/* 模式在第一次渲染前落到 <html> 上：样式层只认 data-ui-mode，
+   晚一步会出现"先用标准字号画一遍，再跳成大字"的闪动。 */
+applyUiMode(get().uiMode);
+applyUiScale(get().uiScale);
+applyChildPrefs(get().childPrefs);
 
-/* 顶栏 + 路由出口。顶栏在切页时重绘（登录状态会变）。 */
+/* 顶栏 + 路由出口 + 底部快捷导航（老人/幼稚模式）。
+   顶栏和底部栏都在切页时重绘（登录状态、当前页、模式会变）。 */
 const shellEl = h('div', { class: 'site-frame' },
   h('div', { id: 'topbar-slot' }),
-  h('div', { id: 'route-slot' }));
+  h('div', { id: 'route-slot' }),
+  h('div', { id: 'bottom-bar-slot' }));
 
 function renderTopbar() {
   // 传当前路径：顶栏导航要把对应那一项标成选中态（八项都要能认出来）。
   // ⚠️ currentRoute() 在首次导航完成前是 null，别直接取 .path。
   const cur = router.currentRoute();
-  mount(document.getElementById('topbar-slot'), topbar((cur && cur.path) || '/'));
+  const path = (cur && cur.path) || '/';
+  mount(document.getElementById('topbar-slot'), topbar(path));
+  /* 底部栏只在大字两档的册页出现；对战/世界页有虚拟摇杆，不叠。
+     用 html[data-bottom-bar] 让样式层给正文留出高度。 */
+  const bar = bottomBar(path);
+  mount(document.getElementById('bottom-bar-slot'), bar);
+  document.documentElement.toggleAttribute('data-bottom-bar', Boolean(bar));
 }
 
 /* ---------------- 路由表 ---------------- */
@@ -60,7 +78,18 @@ router.define('/dojo', () => { renderTopbar(); return dojoPage(); });
 router.define('/training', () => { renderTopbar(); return trainingPage(); });
 router.define('/card', () => { renderTopbar(); return cardPage(); });
 // 账号设置（昵称/改密码/登录设备/注销）。**不在 OPEN 里** —— 必须登录才能进。
-router.define('/account', () => { renderTopbar(); return accountPage(); });
+// 幼稚模式下它还是家长区：直接改 hash 也要先过 4 位家长密码。
+router.define('/account', async () => {
+  if (get().uiMode === 'child' && !isParentUnlocked()) {
+    const ok = await requireParent('打开账号设置');
+    if (!ok) {
+      router.go('/', { replace: true });
+      return h('div');
+    }
+  }
+  renderTopbar();
+  return accountPage();
+});
 router.define('/leaderboard', () => { renderTopbar(); return leaderboardPage(); });
 // 月塔端口：盖章 / 摸签 / 册子上的日记。世界里那个端口进来也是这一页。
 router.define('/tower', () => { renderTopbar(); return towerPage(); });
@@ -82,6 +111,48 @@ document.addEventListener('theme:changed', renderTopbar);
 // 改完昵称要重画顶栏 —— account.js 会发这个事件。
 // 之前只监听 theme:changed，结果"改完昵称顶栏还显示旧名字"。
 document.addEventListener('account:changed', renderTopbar);
+// 切界面模式要重画顶栏和左侧目录：幼稚模式的导航文案在两边都出现。
+// 只换掉导航，不重跑当前页面 —— 否则正在答的题、正在打的局会被重置。
+document.addEventListener('ui-mode:changed', () => {
+  renderTopbar();
+  const cur = router.currentRoute();
+  const oldCatalogue = document.querySelector('.catalogue');
+  if (oldCatalogue) oldCatalogue.replaceWith(catalogue((cur && cur.path) || '/'));
+  /* 页面主体不重跑，只把登记过的叙述原地换掉。
+     这样正在答的题、正在打的局不会因为切一下模式就重来。 */
+  refreshCopy(get().uiMode);
+});
+// 字号档要重画顶栏/底部栏的按钮文案；幼稚反馈只改 <html> 属性，
+// 复选框自己已经更新，重画顶栏反而会把展开的面板关掉。
+document.addEventListener('ui-scale:changed', renderTopbar);
+
+/* 幼稚模式里的外链先过家长锁。
+   页面目前没有真正的外部链接，但彩蛋录像、以后加的来源链接都应走这里；
+   同源链接不拦，家长入口自己不受影响。 */
+document.addEventListener('click', async (e) => {
+  if (get().uiMode !== 'child') return;
+  const a = e.target instanceof Element ? e.target.closest('a[href]') : null;
+  if (!a) return;
+  let url;
+  try { url = new URL(a.href, location.href); } catch (err) { return; }
+  if (url.origin === location.origin) return;
+  e.preventDefault();
+  const ok = await requireParent('打开外部链接');
+  if (ok) window.open(url.href, '_blank', 'noopener,noreferrer');
+});
+
+/* 顶栏模式菜单是 <details>：点面板外面或按 Esc 就收起。
+   只在根上挂一次监听，避免每次重画顶栏都叠一个。 */
+document.addEventListener('click', (e) => {
+  const inside = e.target instanceof Element ? e.target.closest('.mode-menu') : null;
+  document.querySelectorAll('.mode-menu[open]').forEach((d) => {
+    if (d !== inside) d.open = false;
+  });
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  document.querySelectorAll('.mode-menu[open]').forEach((d) => { d.open = false; });
+});
 
 /* ---------------- 启动 ---------------- */
 async function boot() {
@@ -120,11 +191,15 @@ async function boot() {
 window.addEventListener('error', (e) => console.error('[window error]', e.message));
 window.addEventListener('unhandledrejection', (e) => console.error('[unhandled]', e.reason));
 
+installChildFeedback();
 boot();
 
 /* 给自动化测试/排障用的小把手（只读） */
 window.__moopet = {
   state: get,
+  uiMode: () => get().uiMode,
+  uiScale: () => get().uiScale,
+  childPrefs: () => get().childPrefs,
   api,
   version: '0.1.0',
   routes: () => document.getElementById('route-slot')?.firstChild?.className || null,

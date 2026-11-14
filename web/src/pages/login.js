@@ -4,9 +4,10 @@
 import { h, withBusy } from '../lib/dom.js';
 import { api, saveSession, ApiError } from '../lib/api.js';
 import { go } from '../lib/router.js';
-import { note } from '../components/ui.js';
+import { note, textNode, voiceButton } from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
-import { set } from '../lib/store.js';
+import { set, get } from '../lib/store.js';
+import { simpleText } from '../lib/uiMode.js';
 
 export function loginPage() {
   let mode = 'login';                 // login | register
@@ -21,12 +22,18 @@ export function loginPage() {
   const subEl = h('div', { class: 'sub' }, '欢迎回来，你的狗还在等你');
   const switchBtn = h('button', { class: 'btn btn-ghost btn-block btn-sm', id: 'mode-switch' });
 
+  /** 文案随登录/注册与界面模式切换；refreshCopy() 靠 data-copy-standard 找回来。 */
+  function setCopy(el, text) {
+    el.dataset.copyStandard = text;
+    el.textContent = simpleText(get().uiMode, text);
+  }
+
   function syncMode() {
     const isLogin = mode === 'login';
     titleEl.textContent = isLogin ? '登录' : '注册';
-    subEl.textContent = isLogin ? '欢迎回来，你的狗还在等你' : '注册后就能领养一只机械狗，并自动加入公开社群';
+    setCopy(subEl, isLogin ? '欢迎回来，你的狗还在等你' : '注册后就能领养一只机械狗，并自动加入公开社群');
     submit.textContent = isLogin ? '登录' : '注册并继续';
-    switchBtn.textContent = isLogin ? '还没有账号？去注册' : '已经有账号了？去登录';
+    setCopy(switchBtn, isLogin ? '还没有账号？去注册' : '已经有账号了？去登录');
     passInput.setAttribute('autocomplete', isLogin ? 'current-password' : 'new-password');
     msgSlot.replaceChildren();
   }
@@ -70,9 +77,9 @@ export function loginPage() {
     h('div', { class: 'grid-2', style: { alignItems: 'start' } },
       h('div', null,
         h('p', { class: 'kicker' }, 'MOOPET DOSSIER'),
-        h('h1', { class: 'display' }, '先报上名来'),
+        h('h1', { class: 'display' }, textNode('先报上名来')),
         h('p', { class: 'lede', style: { marginTop: '14px' } },
-          '注册一个账号，领养一只机械狗。它会记住你的陪伴，也会在开放世界里遇到别的狗。'),
+          textNode('注册一个账号，领养一只机械狗。它会记住你的陪伴，也会在开放世界里遇到别的狗。')),
         h('div', { class: 'stack-sm', style: { marginTop: '18px' } },
           note('养成数据存在你自己的狗身上，断网也能养；云端只负责账号、社群与对战。', 'good'),
           note('随便起个名字就能进，数据只存在这台机器上', ''))),
@@ -83,6 +90,7 @@ export function loginPage() {
           h('div', { class: 'field' },
             h('label', { for: 'username' }, '账号名'),
             userInput,
+            voiceButton(userInput, { label: '用语音说账号名' }),
             h('div', { class: 'field-hint' }, '2–32 位，可用中文、字母、数字、下划线')),
           h('div', { class: 'field' },
             h('label', { for: 'password' }, '密码'),
