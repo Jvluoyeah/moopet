@@ -80,6 +80,9 @@ python -m http.server 18080 --bind 127.0.0.1 --directory gal
 
 通过 <http://127.0.0.1:8080/gal/web/index.html> 进入剧情（依赖主服务的 `/gal/*` 代理）。
 
+剧情背景音乐使用 160 kbps MP3；PNG 保留原尺寸和像素，仅做无损压缩。
+更新剧情资源时需同步 `gal/assets/manifest.json` 的路径、大小与章节校验值，不能只替换文件。
+
 ## 开发与限制
 
 在 `web/` 目录运行现有测试和构建：

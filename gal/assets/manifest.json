@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "buildId": "2026-09-13T07:17:25.031Z-671ef8",
+  "buildId": "2026-11-14T04:53:27.502Z-assets160k",
   "engineVersion": "1.0.0",
   "title": "长夜月 · 机械狗档案册",
   "gameId": "1232571e-35b1-412e-8628-e9c35d7f97cd",
@@ -10,81 +10,81 @@
       "id": "开始",
       "sourceId": "8b370f48-c304-466c-b6c0-a6413359de18",
       "name": "开始",
-      "file": "chapters/a2b1e9cb1a77.json",
+      "file": "chapters/ec073c9caef9.json",
       "size": 38901,
-      "hash": "a2b1e9cb1a77be32751be11ab0863fa8"
+      "hash": "ec073c9caef939bb0f21bd889b174e9c"
     },
     {
       "id": "第一章",
       "sourceId": "346e1675-d6aa-4fd5-9b6d-6d2fe433632e",
       "name": "第一章",
-      "file": "chapters/dd82336b87de.json",
+      "file": "chapters/fbe917211eb2.json",
       "size": 107066,
-      "hash": "dd82336b87deede8ec66c72b893488eb"
+      "hash": "fbe917211eb2e725d814c038a992e239"
     },
     {
       "id": "第二章",
       "sourceId": "cfcf64b2-fa77-47d6-895f-fe94d02366e3",
       "name": "第二章",
-      "file": "chapters/5d23924fc04e.json",
+      "file": "chapters/0324336396c3.json",
       "size": 92257,
-      "hash": "5d23924fc04eda13cec1a231105d1f3c"
+      "hash": "0324336396c3683ea3f333c175437494"
     },
     {
       "id": "第三章",
       "sourceId": "c7da3497-c3fa-40d6-863a-796579aeb66e",
       "name": "第三章",
-      "file": "chapters/609749a0c21b.json",
+      "file": "chapters/34b13882205e.json",
       "size": 85563,
-      "hash": "609749a0c21bf393ba09bf3958b8afcc"
+      "hash": "34b13882205e5fbe32e49d2a6b029105"
     },
     {
       "id": "第四章",
       "sourceId": "2e7e90b2-6365-40c7-9fcd-a64da77a5123",
       "name": "第四章",
-      "file": "chapters/7a93f5b7be34.json",
+      "file": "chapters/712790744f7d.json",
       "size": 85284,
-      "hash": "7a93f5b7be343dc763ea233b2b002968"
+      "hash": "712790744f7daa94359cc04a136a8561"
     },
     {
       "id": "第五章",
       "sourceId": "d3919e9a-f300-4a2b-87ba-0d1dfd8defdf",
       "name": "第五章",
-      "file": "chapters/0b0a3463f52f.json",
+      "file": "chapters/196db6c516cb.json",
       "size": 109902,
-      "hash": "0b0a3463f52f00ddb50dbdb025c857b8"
+      "hash": "196db6c516cbee6244a168da8c23f87b"
     },
     {
       "id": "第六章",
       "sourceId": "b27be00c-d915-4f7a-ac6d-ca390257246d",
       "name": "第六章",
-      "file": "chapters/c72739597cc9.json",
+      "file": "chapters/47b3e5f32aef.json",
       "size": 99076,
-      "hash": "c72739597cc9f6d92271a5c9d109c258"
+      "hash": "47b3e5f32aef68632a8d24d7b9bbaa53"
     },
     {
       "id": "第七章",
       "sourceId": "64054adc-99f8-4811-a985-3c151337e89d",
       "name": "第七章",
-      "file": "chapters/862e1052607d.json",
+      "file": "chapters/8f5971e7f41e.json",
       "size": 98983,
-      "hash": "862e1052607d9e9187d86ed67d4f5a0f"
+      "hash": "8f5971e7f41e974cfca46971f3b8807f"
     },
     {
       "id": "第八章",
       "sourceId": "d042a421-27f5-4902-9557-9abc2745e2da",
       "name": "第八章",
-      "file": "chapters/244fe0b21072.json",
+      "file": "chapters/7d4197b0c7af.json",
       "size": 137167,
-      "hash": "244fe0b21072061eef1033dc04c63a5c"
+      "hash": "7d4197b0c7af805a24845235f73eca2c"
     },
     {
       "id": "尾声",
       "sourceId": "e1f7d71f-16ab-4593-8d89-36a60787730f",
       "name": "尾声",
-      "file": "chapters/3db16959f3bc.json",
+      "file": "chapters/d31c3bd1223a.json",
       "size": 6126,
-      "hash": "3db16959f3bc8e32ad5adf9c000041de"
+      "hash": "d31c3bd1223af4621234730a1f82be1e"
     }
   ],
   "meta": {
@@ -96,9 +96,9 @@
     "2d7bfa329f874193bb6dd29c65c9dd6a": {
       "type": "audio",
       "originalName": "room-registry.wav",
-      "file": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
-      "size": 26460044,
-      "mime": "audio/wav"
+      "file": "audio/76ddeecf80b74e28eb24da1ed1a512b6.mp3",
+      "size": 3001513,
+      "mime": "audio/mpeg"
     },
     "11bcdc68c94f9fb06d5f7daf1a33f9db": {
       "type": "audio",
@@ -111,7 +111,7 @@
       "type": "image",
       "originalName": "snow.png",
       "file": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
-      "size": 1606,
+      "size": 1456,
       "mime": "image/png"
     },
     "6371ebd9ec0699a73092b40d956698c2": {
@@ -124,23 +124,23 @@
     "5c5321089158edabb9de22ee165fc2c5": {
       "type": "audio",
       "originalName": "plaza-stonering.wav",
-      "file": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
-      "size": 30693644,
-      "mime": "audio/wav"
+      "file": "audio/28cbb8294844921c0faa5bb00994b593.mp3",
+      "size": 3481121,
+      "mime": "audio/mpeg"
     },
     "b32a566b65e351af27dc0eed1506bf3a": {
       "type": "audio",
       "originalName": "theme-longnight.wav",
-      "file": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
-      "size": 29635244,
-      "mime": "audio/wav"
+      "file": "audio/e0733c430fa259c22635835015eb96c0.mp3",
+      "size": 3361480,
+      "mime": "audio/mpeg"
     },
     "21d678e91ce900e87e0dfd826d291132": {
       "type": "audio",
       "originalName": "it-speaks.wav",
-      "file": "audio/21d678e91ce900e87e0dfd826d291132.wav",
-      "size": 32810444,
-      "mime": "audio/wav"
+      "file": "audio/ca189bf8014343c6c3e6d201df80fe61.mp3",
+      "size": 3721448,
+      "mime": "audio/mpeg"
     },
     "5d76501c12ff8e3cddaf76eaa7c5d175": {
       "type": "audio",
@@ -153,119 +153,119 @@
       "type": "image",
       "originalName": "长夜月广场-石环.png",
       "file": "images/d37b41a1ead817e53ccc19cda7be1225.png",
-      "size": 4543037,
+      "size": 4410703,
       "mime": "image/png"
     },
     "e7db5d9d60d780560341d5c8ffc5e4f8": {
       "type": "image",
       "originalName": "石环的局部.png",
       "file": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
-      "size": 5469841,
+      "size": 5361636,
       "mime": "image/png"
     },
     "84edd6f79917a27517e52ce22ed3fadb": {
       "type": "image",
       "originalName": "长夜月公园.png",
       "file": "images/84edd6f79917a27517e52ce22ed3fadb.png",
-      "size": 3366857,
+      "size": 3184748,
       "mime": "image/png"
     },
     "eed2030a48f05d3ea5527e85c70588a0": {
       "type": "image",
       "originalName": "月塔的窗.png",
       "file": "images/eed2030a48f05d3ea5527e85c70588a0.png",
-      "size": 3416427,
+      "size": 3227005,
       "mime": "image/png"
     },
     "1d47d58bff4c3827ea42b5996b66cfd0": {
       "type": "image",
       "originalName": "门缝底下那条光.png",
       "file": "images/1d47d58bff4c3827ea42b5996b66cfd0.png",
-      "size": 3082642,
+      "size": 2890658,
       "mime": "image/png"
     },
     "1a8d5f4e6f3bd146281cfcee48f87b42": {
       "type": "image",
       "originalName": "月光竞技场.png",
       "file": "images/1a8d5f4e6f3bd146281cfcee48f87b42.png",
-      "size": 2832823,
+      "size": 2624114,
       "mime": "image/png"
     },
     "f1743f8c2db9c4e6972bc50b2656180b": {
       "type": "image",
       "originalName": "登记处 -内（柜台）.png",
       "file": "images/f1743f8c2db9c4e6972bc50b2656180b.png",
-      "size": 2284699,
+      "size": 2088432,
       "mime": "image/png"
     },
     "5d9661b42a15e7cb07e561a619a7339a": {
       "type": "image",
       "originalName": "柜台的台面.png",
       "file": "images/5d9661b42a15e7cb07e561a619a7339a.png",
-      "size": 3882599,
+      "size": 3738353,
       "mime": "image/png"
     },
     "24b61cb51e21b2f23cea7acfb8c69579": {
       "type": "image",
       "originalName": "训练场.png",
       "file": "images/24b61cb51e21b2f23cea7acfb8c69579.png",
-      "size": 3375463,
+      "size": 3187625,
       "mime": "image/png"
     },
     "2503b43f836a6c5132364f4b4741257b": {
       "type": "image",
       "originalName": "户外雪地.png",
       "file": "images/2503b43f836a6c5132364f4b4741257b.png",
-      "size": 1971840,
+      "size": 1635081,
       "mime": "image/png"
     },
     "cf55bb020483267995419047752f4c5f": {
       "type": "image",
       "originalName": "八格位的图鉴架.png",
       "file": "images/cf55bb020483267995419047752f4c5f.png",
-      "size": 3913516,
+      "size": 3771881,
       "mime": "image/png"
     },
     "098653683e7782ec1090265b4e18ffe0": {
       "type": "image",
       "originalName": "八格位的图鉴架(有狗).png",
       "file": "images/098653683e7782ec1090265b4e18ffe0.png",
-      "size": 5444597,
+      "size": 3567986,
       "mime": "image/png"
     },
     "ab50f1bf4ff47e0c4d66d9c80857f240": {
       "type": "image",
       "originalName": "册子摊开的一页.png",
       "file": "images/ab50f1bf4ff47e0c4d66d9c80857f240.png",
-      "size": 3436326,
+      "size": 3280358,
       "mime": "image/png"
     },
     "d90e9c2b4e1fa4a0c3ca9130d45adc1a": {
       "type": "image",
       "originalName": "天台.png",
       "file": "images/d90e9c2b4e1fa4a0c3ca9130d45adc1a.png",
-      "size": 2130964,
+      "size": 1958055,
       "mime": "image/png"
     },
     "5f97c39312f6c35d6acc67b5c69ca365": {
       "type": "image",
       "originalName": "登记处-外（门）.png",
       "file": "images/5f97c39312f6c35d6acc67b5c69ca365.png",
-      "size": 3546086,
+      "size": 3375637,
       "mime": "image/png"
     },
     "f38b3d9f3b3f7ac45cf78686f3c5e9b0": {
       "type": "image",
       "originalName": "月塔-外.png",
       "file": "images/f38b3d9f3b3f7ac45cf78686f3c5e9b0.png",
-      "size": 2781620,
+      "size": 2583795,
       "mime": "image/png"
     },
     "ec5d0d142719d43a646895373fd620da": {
       "type": "image",
       "originalName": "月塔-一楼归档处.png",
       "file": "images/ec5d0d142719d43a646895373fd620da.png",
-      "size": 2740527,
+      "size": 2538860,
       "mime": "image/png"
     },
     "5dceed98516305f05e35693868c51aba": {
@@ -566,84 +566,84 @@
       "type": "data",
       "originalName": "正面.png",
       "file": "data/809efc47ca4a49a5e7f11c0d303f6abe.png",
-      "size": 132814,
+      "size": 132292,
       "mime": "image/png"
     },
     "7a4091597b513f8a3ef2658d6a9c5da3": {
       "type": "data",
       "originalName": "背对.png",
       "file": "data/7a4091597b513f8a3ef2658d6a9c5da3.png",
-      "size": 162643,
+      "size": 157223,
       "mime": "image/png"
     },
     "803ca0df6ce8e97461e717951cf41d0e": {
       "type": "data",
       "originalName": "侧头.png",
       "file": "data/803ca0df6ce8e97461e717951cf41d0e.png",
-      "size": 222227,
+      "size": 209144,
       "mime": "image/png"
     },
     "18a23418a158e4654b5332ac318a101f": {
       "type": "data",
       "originalName": "侧头·动.png",
       "file": "data/18a23418a158e4654b5332ac318a101f.png",
-      "size": 211215,
+      "size": 199964,
       "mime": "image/png"
     },
     "a691c24825f340aaa5f99b1f3c5cb6eb": {
       "type": "data",
       "originalName": "滚.png",
       "file": "data/a691c24825f340aaa5f99b1f3c5cb6eb.png",
-      "size": 134898,
+      "size": 127431,
       "mime": "image/png"
     },
     "d6e6d6ea97686bf39562c8c9df176720": {
       "type": "data",
       "originalName": "挥手.png",
       "file": "data/d6e6d6ea97686bf39562c8c9df176720.png",
-      "size": 158188,
+      "size": 141153,
       "mime": "image/png"
     },
     "56c3d4cc5e903e40b27b200ee3922e83": {
       "type": "data",
       "originalName": "技能.png",
       "file": "data/56c3d4cc5e903e40b27b200ee3922e83.png",
-      "size": 131582,
+      "size": 130468,
       "mime": "image/png"
     },
     "6aec377d67c29a8fb4374f64a18857af": {
       "type": "data",
       "originalName": "开心脸.png",
       "file": "data/6aec377d67c29a8fb4374f64a18857af.png",
-      "size": 182279,
+      "size": 175854,
       "mime": "image/png"
     },
     "503f25aabc99a80e6242f1bb32d5e811": {
       "type": "data",
       "originalName": "默认.png",
       "file": "data/503f25aabc99a80e6242f1bb32d5e811.png",
-      "size": 139208,
+      "size": 138584,
       "mime": "image/png"
     },
     "f23d314c4722a7f99f05506648eefdbc": {
       "type": "data",
       "originalName": "趴下.png",
       "file": "data/f23d314c4722a7f99f05506648eefdbc.png",
-      "size": 148612,
+      "size": 134378,
       "mime": "image/png"
     },
     "9a5b3a177318f92c74bafd77fa056e7e": {
       "type": "data",
       "originalName": "跑.png",
       "file": "data/9a5b3a177318f92c74bafd77fa056e7e.png",
-      "size": 108304,
+      "size": 107838,
       "mime": "image/png"
     },
     "fb56e87abc9846e0b48992186b316554": {
       "type": "data",
       "originalName": "跑·二.png",
       "file": "data/fb56e87abc9846e0b48992186b316554.png",
-      "size": 141738,
+      "size": 139097,
       "mime": "image/png"
     },
     "cd1f90e972326a0e4f1433bf4eaa7eef": {
@@ -657,28 +657,28 @@
       "type": "data",
       "originalName": "睡.png",
       "file": "data/adaeeca9a50f1a4c1c259504c09fbe9b.png",
-      "size": 70058,
+      "size": 68522,
       "mime": "image/png"
     },
     "fd3ca20cfaae3bc1dfe8a468372fb1e1": {
       "type": "data",
       "originalName": "睡着了.png",
       "file": "data/fd3ca20cfaae3bc1dfe8a468372fb1e1.png",
-      "size": 98362,
+      "size": 95981,
       "mime": "image/png"
     },
     "41b6f7a8c210eadf816e64531486e343": {
       "type": "data",
       "originalName": "跳.png",
       "file": "data/41b6f7a8c210eadf816e64531486e343.png",
-      "size": 130991,
+      "size": 129674,
       "mime": "image/png"
     },
     "5a4d5dd3b5c0aaba15d9a223173906d4": {
       "type": "data",
       "originalName": "歪头.png",
       "file": "data/5a4d5dd3b5c0aaba15d9a223173906d4.png",
-      "size": 180484,
+      "size": 172536,
       "mime": "image/png"
     },
     "71efe8de3a5495f0e139dc4db9574e94": {
@@ -692,294 +692,294 @@
       "type": "data",
       "originalName": "赢.png",
       "file": "data/c8a80cc032cbc9e26d2adf8d2e762b26.png",
-      "size": 157987,
+      "size": 155256,
       "mime": "image/png"
     },
     "a58606049c3cc62f2455de67d3e7de0f": {
       "type": "data",
       "originalName": "站着.png",
       "file": "data/a58606049c3cc62f2455de67d3e7de0f.png",
-      "size": 107009,
+      "size": 103336,
       "mime": "image/png"
     },
     "f852d618e555ed16dd037106daa1e3be": {
       "type": "data",
       "originalName": "站着·动.png",
       "file": "data/f852d618e555ed16dd037106daa1e3be.png",
-      "size": 186503,
+      "size": 180173,
       "mime": "image/png"
     },
     "caf5e4f1fc6e74edbef15838a3f7d63c": {
       "type": "data",
       "originalName": "正面.png",
       "file": "data/caf5e4f1fc6e74edbef15838a3f7d63c.png",
-      "size": 162306,
+      "size": 144693,
       "mime": "image/png"
     },
     "734362584f5de64293c9566780362fa4": {
       "type": "data",
       "originalName": "背对.png",
       "file": "data/734362584f5de64293c9566780362fa4.png",
-      "size": 178669,
+      "size": 171839,
       "mime": "image/png"
     },
     "b4b1f07838b26be5a568583153409417": {
       "type": "data",
       "originalName": "侧头.png",
       "file": "data/b4b1f07838b26be5a568583153409417.png",
-      "size": 219383,
+      "size": 203105,
       "mime": "image/png"
     },
     "8a4afc69a00816783f9de3cf13ca1349": {
       "type": "data",
       "originalName": "侧头·动.png",
       "file": "data/8a4afc69a00816783f9de3cf13ca1349.png",
-      "size": 211933,
+      "size": 192646,
       "mime": "image/png"
     },
     "59c99aed9da338812a44cdea31cbb6e0": {
       "type": "data",
       "originalName": "滚.png",
       "file": "data/59c99aed9da338812a44cdea31cbb6e0.png",
-      "size": 201091,
+      "size": 196276,
       "mime": "image/png"
     },
     "fa1627b98472b15347ad0ec8451a6059": {
       "type": "data",
       "originalName": "挥手.png",
       "file": "data/fa1627b98472b15347ad0ec8451a6059.png",
-      "size": 156194,
+      "size": 148118,
       "mime": "image/png"
     },
     "359ebefc4b4531a076c5946207725b34": {
       "type": "data",
       "originalName": "技能.png",
       "file": "data/359ebefc4b4531a076c5946207725b34.png",
-      "size": 179133,
+      "size": 172292,
       "mime": "image/png"
     },
     "f15e8e32e2ac82c42fa86929815ccdaa": {
       "type": "data",
       "originalName": "开心脸.png",
       "file": "data/f15e8e32e2ac82c42fa86929815ccdaa.png",
-      "size": 188456,
+      "size": 174096,
       "mime": "image/png"
     },
     "f61f9380a9028111b1868047d9ec576d": {
       "type": "data",
       "originalName": "咧嘴.png",
       "file": "data/f61f9380a9028111b1868047d9ec576d.png",
-      "size": 196574,
+      "size": 183460,
       "mime": "image/png"
     },
     "faa6034263ee214de778011423182ddd": {
       "type": "data",
       "originalName": "默认.png",
       "file": "data/faa6034263ee214de778011423182ddd.png",
-      "size": 137251,
+      "size": 134428,
       "mime": "image/png"
     },
     "ab308e75f88ee8784643edb0d4ddea60": {
       "type": "data",
       "originalName": "趴下.png",
       "file": "data/ab308e75f88ee8784643edb0d4ddea60.png",
-      "size": 133391,
+      "size": 127621,
       "mime": "image/png"
     },
     "1a35c2bd81ef3210c7f28435afb68c85": {
       "type": "data",
       "originalName": "跑.png",
       "file": "data/1a35c2bd81ef3210c7f28435afb68c85.png",
-      "size": 122311,
+      "size": 117067,
       "mime": "image/png"
     },
     "506b9f4a5c329a0c5ddae25b6cf0b515": {
       "type": "data",
       "originalName": "跑·二.png",
       "file": "data/506b9f4a5c329a0c5ddae25b6cf0b515.png",
-      "size": 162324,
+      "size": 154902,
       "mime": "image/png"
     },
     "7f71c5f6825638aef878043e209c1c85": {
       "type": "data",
       "originalName": "跑·三.png",
       "file": "data/7f71c5f6825638aef878043e209c1c85.png",
-      "size": 114462,
+      "size": 113107,
       "mime": "image/png"
     },
     "36310c132b5afb8104b3e2272b3ba270": {
       "type": "data",
       "originalName": "跑·四.png",
       "file": "data/36310c132b5afb8104b3e2272b3ba270.png",
-      "size": 179500,
+      "size": 174403,
       "mime": "image/png"
     },
     "e822c9c31fd9e44fe0c447e3fdeba3ed": {
       "type": "data",
       "originalName": "睡.png",
       "file": "data/e822c9c31fd9e44fe0c447e3fdeba3ed.png",
-      "size": 107861,
+      "size": 102885,
       "mime": "image/png"
     },
     "df30c08b7efb15373767d790845f1038": {
       "type": "data",
       "originalName": "睡着了.png",
       "file": "data/df30c08b7efb15373767d790845f1038.png",
-      "size": 202727,
+      "size": 185167,
       "mime": "image/png"
     },
     "ff1f0101dbd416f4aa26bcda8ba96bda": {
       "type": "data",
       "originalName": "跳.png",
       "file": "data/ff1f0101dbd416f4aa26bcda8ba96bda.png",
-      "size": 192802,
+      "size": 185469,
       "mime": "image/png"
     },
     "b169dd57dc142524f4167c0794588c47": {
       "type": "data",
       "originalName": "咬.png",
       "file": "data/b169dd57dc142524f4167c0794588c47.png",
-      "size": 198844,
+      "size": 197013,
       "mime": "image/png"
     },
     "f8ec50782bb167427d4c2d7897b65b74": {
       "type": "data",
       "originalName": "赢.png",
       "file": "data/f8ec50782bb167427d4c2d7897b65b74.png",
-      "size": 177728,
+      "size": 170277,
       "mime": "image/png"
     },
     "996d07736ed0a80496f3fbe74bac14ef": {
       "type": "data",
       "originalName": "站着.png",
       "file": "data/996d07736ed0a80496f3fbe74bac14ef.png",
-      "size": 176018,
+      "size": 168830,
       "mime": "image/png"
     },
     "a1f7e475d350ffe23971316da0494622": {
       "type": "data",
       "originalName": "站着·动.png",
       "file": "data/a1f7e475d350ffe23971316da0494622.png",
-      "size": 154528,
+      "size": 148018,
       "mime": "image/png"
     },
     "f685206eff3018279c4700d56f7413cc": {
       "type": "data",
       "originalName": "正面.png",
       "file": "data/f685206eff3018279c4700d56f7413cc.png",
-      "size": 149799,
+      "size": 143743,
       "mime": "image/png"
     },
     "9995501ff465e87cca3a281133c42103": {
       "type": "data",
       "originalName": "侧头.png",
       "file": "data/9995501ff465e87cca3a281133c42103.png",
-      "size": 154476,
+      "size": 140314,
       "mime": "image/png"
     },
     "c13ebe8f876683d2ff0126f457436c8f": {
       "type": "data",
       "originalName": "滚.png",
       "file": "data/c13ebe8f876683d2ff0126f457436c8f.png",
-      "size": 113703,
+      "size": 111166,
       "mime": "image/png"
     },
     "10d1eb3ae09e402e936506a98bff8711": {
       "type": "data",
       "originalName": "挥手.png",
       "file": "data/10d1eb3ae09e402e936506a98bff8711.png",
-      "size": 128772,
+      "size": 121351,
       "mime": "image/png"
     },
     "7674778f90753f004389084714a97506": {
       "type": "data",
       "originalName": "技能.png",
       "file": "data/7674778f90753f004389084714a97506.png",
-      "size": 124427,
+      "size": 117251,
       "mime": "image/png"
     },
     "a3e6d1b7607f9e4a697157f839afc4dc": {
       "type": "data",
       "originalName": "开心脸.png",
       "file": "data/a3e6d1b7607f9e4a697157f839afc4dc.png",
-      "size": 153853,
+      "size": 141842,
       "mime": "image/png"
     },
     "41be8a6afc71dcee7f8e546680e6780f": {
       "type": "data",
       "originalName": "咧嘴.png",
       "file": "data/41be8a6afc71dcee7f8e546680e6780f.png",
-      "size": 158061,
+      "size": 145741,
       "mime": "image/png"
     },
     "f7418d2658baf58292a07fd5a4539f35": {
       "type": "data",
       "originalName": "默认.png",
       "file": "data/f7418d2658baf58292a07fd5a4539f35.png",
-      "size": 107132,
+      "size": 103766,
       "mime": "image/png"
     },
     "3dbe9d4104090231284a56c220a32bc8": {
       "type": "data",
       "originalName": "趴下.png",
       "file": "data/3dbe9d4104090231284a56c220a32bc8.png",
-      "size": 119914,
+      "size": 111984,
       "mime": "image/png"
     },
     "cfdd452305c4934db0c4694d09f8d66d": {
       "type": "data",
       "originalName": "跑.png",
       "file": "data/cfdd452305c4934db0c4694d09f8d66d.png",
-      "size": 116036,
+      "size": 112859,
       "mime": "image/png"
     },
     "b8316f0bab34ec345af239ef695ad4ee": {
       "type": "data",
       "originalName": "跑·二.png",
       "file": "data/b8316f0bab34ec345af239ef695ad4ee.png",
-      "size": 115051,
+      "size": 112132,
       "mime": "image/png"
     },
     "0a63acd6e6bb2059a4cfbbc921e85d2b": {
       "type": "data",
       "originalName": "跑·三.png",
       "file": "data/0a63acd6e6bb2059a4cfbbc921e85d2b.png",
-      "size": 103753,
+      "size": 101605,
       "mime": "image/png"
     },
     "594ec6d3bb6c0e8f952d0be2aadff595": {
       "type": "data",
       "originalName": "跑·四.png",
       "file": "data/594ec6d3bb6c0e8f952d0be2aadff595.png",
-      "size": 150705,
+      "size": 143692,
       "mime": "image/png"
     },
     "3a2966f87676dc012e14a3453cd762ce": {
       "type": "data",
       "originalName": "睡.png",
       "file": "data/3a2966f87676dc012e14a3453cd762ce.png",
-      "size": 79940,
+      "size": 74633,
       "mime": "image/png"
     },
     "a900eb25453cea4e6cae4619776577b9": {
       "type": "data",
       "originalName": "睡着了.png",
       "file": "data/a900eb25453cea4e6cae4619776577b9.png",
-      "size": 141373,
+      "size": 128482,
       "mime": "image/png"
     },
     "bd33f9be154f60e2695f7f3a717f3c45": {
       "type": "data",
       "originalName": "跳.png",
       "file": "data/bd33f9be154f60e2695f7f3a717f3c45.png",
-      "size": 135583,
+      "size": 130052,
       "mime": "image/png"
     },
     "c160cd65e1f1b3e2a6f8cd5af3a2d9e6": {
       "type": "data",
       "originalName": "歪头.png",
       "file": "data/c160cd65e1f1b3e2a6f8cd5af3a2d9e6.png",
-      "size": 144395,
+      "size": 134536,
       "mime": "image/png"
     },
     "195f8dc2a887a45fda65398a50ea664a": {
@@ -993,21 +993,21 @@
       "type": "data",
       "originalName": "赢.png",
       "file": "data/4ca60e5af7e1aefbba5c782f352e6ece.png",
-      "size": 145880,
+      "size": 134386,
       "mime": "image/png"
     },
     "e301ecfd3eb4ef838d5704a0387c5bf4": {
       "type": "data",
       "originalName": "站着.png",
       "file": "data/e301ecfd3eb4ef838d5704a0387c5bf4.png",
-      "size": 129165,
+      "size": 123526,
       "mime": "image/png"
     },
     "e87a20afb258aafb77494520b3babde6": {
       "type": "data",
       "originalName": "正面.png",
       "file": "data/e87a20afb258aafb77494520b3babde6.png",
-      "size": 131057,
+      "size": 121350,
       "mime": "image/png"
     },
     "7bb76af03ebf90d5bec438e3a6d45b3f": {
@@ -1021,7 +1021,7 @@
       "type": "data",
       "originalName": "侧头.png",
       "file": "data/b8218044ec78237d3cc404c6f5ccaccd.png",
-      "size": 151170,
+      "size": 149475,
       "mime": "image/png"
     },
     "d7601332ced3d5b202f48751719a7a97": {
@@ -1042,7 +1042,7 @@
       "type": "data",
       "originalName": "挥手.png",
       "file": "data/110f93aceeef8bd4146fa71f2746d00f.png",
-      "size": 134738,
+      "size": 131660,
       "mime": "image/png"
     },
     "d3a623ecd5d97e44c8ebae27140b593c": {
@@ -1070,7 +1070,7 @@
       "type": "data",
       "originalName": "趴下.png",
       "file": "data/8f94d506465ebbf3e9a3461e51f242d1.png",
-      "size": 100378,
+      "size": 99841,
       "mime": "image/png"
     },
     "38315b671a92b9925cfce55c1f4b3095": {
@@ -1112,7 +1112,7 @@
       "type": "data",
       "originalName": "睡脸.png",
       "file": "data/ab605517243988b725fef969bf9555d7.png",
-      "size": 169030,
+      "size": 168044,
       "mime": "image/png"
     },
     "99f32f761aa0406305a0588daba9acde": {
@@ -1168,7 +1168,7 @@
       "type": "data",
       "originalName": "正面.png",
       "file": "data/415bf12a0d1ef3c78a8e4c2f99984175.png",
-      "size": 125525,
+      "size": 119974,
       "mime": "image/png"
     },
     "2b7c327ec3e3cf50945cae3d14722d4f": {
@@ -1203,7 +1203,7 @@
       "type": "data",
       "originalName": "挥手.png",
       "file": "data/0c2705a79560d6d25c124b9f5993ee25.png",
-      "size": 154415,
+      "size": 149650,
       "mime": "image/png"
     },
     "7483dbcd5ec9965cd978c43439794231": {
@@ -1231,7 +1231,7 @@
       "type": "data",
       "originalName": "趴下.png",
       "file": "data/d89cff46dada321ca4cdbfcf76dbf1e8.png",
-      "size": 143787,
+      "size": 141426,
       "mime": "image/png"
     },
     "29d9216cfe31951cf77ba71bda293926": {
@@ -1266,7 +1266,7 @@
       "type": "data",
       "originalName": "受伤.png",
       "file": "data/7a0fd23cb8f77ee46c9dfa691a4ed1fd.png",
-      "size": 151403,
+      "size": 150527,
       "mime": "image/png"
     },
     "e0d5e7891c589d5a049366247f6863cd": {
@@ -1294,7 +1294,7 @@
       "type": "data",
       "originalName": "歪头.png",
       "file": "data/30ee3bb56d9bdc7ccfeb57ca7c1f2949.png",
-      "size": 191324,
+      "size": 186871,
       "mime": "image/png"
     },
     "64c9988c2d779c567f36a2cb3390ffb6": {
@@ -1315,7 +1315,7 @@
       "type": "data",
       "originalName": "赢.png",
       "file": "data/f36a2179ee1c6463d5b35dae066ef960.png",
-      "size": 130243,
+      "size": 129054,
       "mime": "image/png"
     },
     "216e8e737caacb175b48bc2dbc23ea31": {
@@ -1329,14 +1329,14 @@
       "type": "data",
       "originalName": "站着·动.png",
       "file": "data/7881bc2abbabf6a169e01386e8064333.png",
-      "size": 148994,
+      "size": 143943,
       "mime": "image/png"
     },
     "d27b96ebe430f21dd6369138261905a0": {
       "type": "data",
       "originalName": "正面.png",
       "file": "data/d27b96ebe430f21dd6369138261905a0.png",
-      "size": 156704,
+      "size": 149835,
       "mime": "image/png"
     },
     "393346e5a0ecf74a63dbee8dcb320ee0": {
@@ -1350,49 +1350,49 @@
       "type": "data",
       "originalName": "侧头.png",
       "file": "data/70632ac4a243f33b23f2f3fabaca0ece.png",
-      "size": 184338,
+      "size": 178041,
       "mime": "image/png"
     },
     "d199adb7b68e19eb1b61ae476bba12f1": {
       "type": "data",
       "originalName": "滚.png",
       "file": "data/d199adb7b68e19eb1b61ae476bba12f1.png",
-      "size": 141599,
+      "size": 135870,
       "mime": "image/png"
     },
     "4ff35da8c8efd0884327dd538c4a1512": {
       "type": "data",
       "originalName": "挥手.png",
       "file": "data/4ff35da8c8efd0884327dd538c4a1512.png",
-      "size": 179123,
+      "size": 166376,
       "mime": "image/png"
     },
     "7def529ad8c3001045f972b21f1b47ba": {
       "type": "data",
       "originalName": "技能.png",
       "file": "data/7def529ad8c3001045f972b21f1b47ba.png",
-      "size": 141118,
+      "size": 140587,
       "mime": "image/png"
     },
     "401bb3ad82d26b2bf0881579ff08244a": {
       "type": "data",
       "originalName": "技能·二.png",
       "file": "data/401bb3ad82d26b2bf0881579ff08244a.png",
-      "size": 122779,
+      "size": 120373,
       "mime": "image/png"
     },
     "aeada957fc6d7935ef5440bb9d184e0d": {
       "type": "data",
       "originalName": "开心脸.png",
       "file": "data/aeada957fc6d7935ef5440bb9d184e0d.png",
-      "size": 226402,
+      "size": 221438,
       "mime": "image/png"
     },
     "05d997389b06b903f69493a6dbe4dfe6": {
       "type": "data",
       "originalName": "咧嘴.png",
       "file": "data/05d997389b06b903f69493a6dbe4dfe6.png",
-      "size": 144743,
+      "size": 139942,
       "mime": "image/png"
     },
     "2dc617a0ceb7ae0a8c4ef99390f95137": {
@@ -1406,7 +1406,7 @@
       "type": "data",
       "originalName": "趴下.png",
       "file": "data/8bf178ba27d2ae76431d7208bc862671.png",
-      "size": 159566,
+      "size": 146583,
       "mime": "image/png"
     },
     "0f1e8494faab33b10dbf0bed106d6ba2": {
@@ -1434,14 +1434,14 @@
       "type": "data",
       "originalName": "睡.png",
       "file": "data/c01467dea33f5985af4557e67033ad24.png",
-      "size": 87302,
+      "size": 85827,
       "mime": "image/png"
     },
     "010f0138a246d4c32d79a5ce4a7978f8": {
       "type": "data",
       "originalName": "睡着了.png",
       "file": "data/010f0138a246d4c32d79a5ce4a7978f8.png",
-      "size": 139132,
+      "size": 136192,
       "mime": "image/png"
     },
     "7cfa8850ef650d7a43be16f2d994eb8b": {
@@ -1455,7 +1455,7 @@
       "type": "data",
       "originalName": "歪头.png",
       "file": "data/5ffd7a4f5371708a106536c6d4755d88.png",
-      "size": 150782,
+      "size": 145600,
       "mime": "image/png"
     },
     "a02aa8a4f9df227b5846f1cb2478daf0": {
@@ -1469,7 +1469,7 @@
       "type": "data",
       "originalName": "赢.png",
       "file": "data/ff2f4c06d23cc44db770e987ed86b215.png",
-      "size": 163630,
+      "size": 157010,
       "mime": "image/png"
     },
     "7c001b1aab3ade353acfd656bf5d9b50": {
@@ -1490,35 +1490,35 @@
       "type": "data",
       "originalName": "正面.png",
       "file": "data/04ffcf4fdf7da4be36ab98b515ecad90.png",
-      "size": 169261,
+      "size": 152890,
       "mime": "image/png"
     },
     "290a22512430ebb3b423aff1525a0f88": {
       "type": "data",
       "originalName": "登记处的女人.png",
       "file": "data/290a22512430ebb3b423aff1525a0f88.png",
-      "size": 1637890,
+      "size": 1193240,
       "mime": "image/png"
     },
     "04a7bb6ab91b6c7ca55e3386f92d9ae3": {
       "type": "data",
       "originalName": "对手记录员.png",
       "file": "data/04a7bb6ab91b6c7ca55e3386f92d9ae3.png",
-      "size": 1724544,
+      "size": 1326650,
       "mime": "image/png"
     },
     "2e1b5456472da9d9cec4091c8e7457fa": {
       "type": "data",
       "originalName": "记录员形象.png",
       "file": "data/2e1b5456472da9d9cec4091c8e7457fa.png",
-      "size": 1709880,
+      "size": 1191030,
       "mime": "image/png"
     },
     "dbaaa16e87bf5727f6de4828f95d6a09": {
       "type": "data",
       "originalName": "老记录员.png",
       "file": "data/dbaaa16e87bf5727f6de4828f95d6a09.png",
-      "size": 1838629,
+      "size": 1412325,
       "mime": "image/png"
     }
   },
@@ -1563,20 +1563,20 @@
     ]
   },
   "pathToHash": {
-    "bgm/room-registry.wav": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
-    "2d7bfa329f874193bb6dd29c65c9dd6a": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
+    "bgm/room-registry.wav": "audio/76ddeecf80b74e28eb24da1ed1a512b6.mp3",
+    "2d7bfa329f874193bb6dd29c65c9dd6a": "audio/76ddeecf80b74e28eb24da1ed1a512b6.mp3",
     "se/开门.mp3": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
     "11bcdc68c94f9fb06d5f7daf1a33f9db": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
     "particles/snow.png": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
     "b160e0e6295e8cc3dccfe83a1ece7e57": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
     "video/release1.mp4": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
     "6371ebd9ec0699a73092b40d956698c2": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
-    "bgm/plaza-stonering.wav": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
-    "5c5321089158edabb9de22ee165fc2c5": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
-    "bgm/theme-longnight.wav": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
-    "b32a566b65e351af27dc0eed1506bf3a": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
-    "bgm/it-speaks.wav": "audio/21d678e91ce900e87e0dfd826d291132.wav",
-    "21d678e91ce900e87e0dfd826d291132": "audio/21d678e91ce900e87e0dfd826d291132.wav",
+    "bgm/plaza-stonering.wav": "audio/28cbb8294844921c0faa5bb00994b593.mp3",
+    "5c5321089158edabb9de22ee165fc2c5": "audio/28cbb8294844921c0faa5bb00994b593.mp3",
+    "bgm/theme-longnight.wav": "audio/e0733c430fa259c22635835015eb96c0.mp3",
+    "b32a566b65e351af27dc0eed1506bf3a": "audio/e0733c430fa259c22635835015eb96c0.mp3",
+    "bgm/it-speaks.wav": "audio/ca189bf8014343c6c3e6d201df80fe61.mp3",
+    "21d678e91ce900e87e0dfd826d291132": "audio/ca189bf8014343c6c3e6d201df80fe61.mp3",
     "se/火车.mp3": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
     "5d76501c12ff8e3cddaf76eaa7c5d175": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
     "backgrounds/长夜月广场-石环.png": "images/d37b41a1ead817e53ccc19cda7be1225.png",
@@ -1971,13 +1971,13 @@
     "portraits/记录员形象.png": "data/2e1b5456472da9d9cec4091c8e7457fa.png",
     "dbaaa16e87bf5727f6de4828f95d6a09": "data/dbaaa16e87bf5727f6de4828f95d6a09.png",
     "portraits/老记录员.png": "data/dbaaa16e87bf5727f6de4828f95d6a09.png",
-    "room-registry.wav": "audio/2d7bfa329f874193bb6dd29c65c9dd6a.wav",
+    "room-registry.wav": "audio/76ddeecf80b74e28eb24da1ed1a512b6.mp3",
     "开门.mp3": "audio/11bcdc68c94f9fb06d5f7daf1a33f9db.mp3",
     "snow.png": "images/b160e0e6295e8cc3dccfe83a1ece7e57.png",
     "release1.mp4": "data/6371ebd9ec0699a73092b40d956698c2.mp4",
-    "plaza-stonering.wav": "audio/5c5321089158edabb9de22ee165fc2c5.wav",
-    "theme-longnight.wav": "audio/b32a566b65e351af27dc0eed1506bf3a.wav",
-    "it-speaks.wav": "audio/21d678e91ce900e87e0dfd826d291132.wav",
+    "plaza-stonering.wav": "audio/28cbb8294844921c0faa5bb00994b593.mp3",
+    "theme-longnight.wav": "audio/e0733c430fa259c22635835015eb96c0.mp3",
+    "it-speaks.wav": "audio/ca189bf8014343c6c3e6d201df80fe61.mp3",
     "火车.mp3": "audio/5d76501c12ff8e3cddaf76eaa7c5d175.mp3",
     "长夜月广场-石环.png": "images/d37b41a1ead817e53ccc19cda7be1225.png",
     "石环的局部.png": "images/e7db5d9d60d780560341d5c8ffc5e4f8.png",
