@@ -14,10 +14,10 @@
 */
 
 import { h, withBusy } from '../lib/dom.js';
-import { api, ApiError, token as apiToken } from '../lib/api.js';
+import { api, ApiError, token as apiToken, logout } from '../lib/api.js';
 import { go } from '../lib/router.js';
 import { get, set } from '../lib/store.js';
-import { sheetHead, note, errorBox } from '../components/ui.js';
+import { sheetHead, note, errorBox, confirmDialog, voiceButton } from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
 
 /** 把时间戳说成"多久以前"。用户不需要看到 ISO 字符串。 */
@@ -69,6 +69,19 @@ export function accountPage() {
 
   const delPwd = h('input', { class: 'input', id: 'delete-password', type: 'password' });
   const delBtn = h('button', { class: 'btn btn-danger', id: 'delete-account' }, '注销账号');
+  const signOut = h('button', { class: 'btn btn-ghost', id: 'account-logout' }, '退出登录');
+
+  signOut.addEventListener('click', () => withBusy(signOut, async () => {
+    const ok = await confirmDialog({
+      title: '退出登录',
+      body: '退出以后，要重新输入账号和密码才能看到你的狗。',
+      confirmText: '退出登录',
+    });
+    if (!ok) return;
+    try { await api.logout(); } catch (e) { /* 网络不通也要让本地退出 */ }
+    logout();
+    go('/login');
+  }));
 
   // ---------------- 昵称 ----------------
   saveName.addEventListener('click', () => withBusy(saveName, async () => {
@@ -119,7 +132,14 @@ export function accountPage() {
         // 踢一台设备：成功后重新拉列表（那一台就从列表里消失了）
         onclick: async (ev) => {
           const btn = ev.currentTarget;
+          if (btn.disabled) return;
           btn.disabled = true;
+          const ok = await confirmDialog({
+            title: '退出这台设备',
+            body: '这台设备要重新登录才能继续用。',
+            confirmText: '退出这台',
+          });
+          if (!ok) { btn.disabled = false; return; }
           try {
             await api.revokeSession(s.id);
             renderSessions(await api.sessions());
@@ -132,6 +152,12 @@ export function accountPage() {
   }
 
   kickOthers.addEventListener('click', () => withBusy(kickOthers, async () => {
+    const ok = await confirmDialog({
+      title: '退出其他设备',
+      body: '其他设备上登着的这个账号会全部退出，只留这一台。',
+      confirmText: '退出其他设备',
+    });
+    if (!ok) return;
     try {
       const r = await api.revokeOtherSessions();
       msg.replaceChildren(note(`已退出其他设备（${r.revoked} 台）。`, 'good'));
@@ -147,6 +173,13 @@ export function accountPage() {
       msg.replaceChildren(note('注销要再输一次密码。', 'warn'));
       return;
     }
+    const ok = await confirmDialog({
+      title: '注销账号',
+      body: '账号名下的狗和档案会一起删掉，找不回来。确定要注销吗？',
+      confirmText: '确定注销',
+      danger: true,
+    });
+    if (!ok) return;
     try {
       await api.deleteAccount(delPwd.value);
       // 账号没了，本地凭证也清掉，然后回登录页
@@ -169,7 +202,9 @@ export function accountPage() {
       h('div', { class: 'card-title' }, h('span', { class: 'kicker' }, '昵称')),
       h('div', { class: 'small muted', style: { marginBottom: '8px' } },
         `登录名是「${st.account?.username || ''}」，它不能改。昵称会显示在顶栏和广场上。`),
-      nicknameInput, h('div', { style: { height: '8px' } }), saveName),
+      nicknameInput,
+      voiceButton(nicknameInput, { label: '用语音说昵称' }),
+      h('div', { style: { height: '8px' } }), saveName),
 
     h('div', { class: 'card' },
       h('div', { class: 'card-title' }, h('span', { class: 'kicker' }, '改密码')),
@@ -185,6 +220,12 @@ export function accountPage() {
       h('div', { class: 'small muted', style: { marginBottom: '6px' } },
         '同一个账号可以在几台设备上同时登录。这里列的是还登着的。'),
       devList, kickOthers),
+
+    h('div', { class: 'card' },
+      h('div', { class: 'card-title' }, h('span', { class: 'kicker' }, '这一台设备')),
+      h('div', { class: 'small muted', style: { marginBottom: '8px' } },
+        '退出以后，要重新输入账号和密码才能看到你的狗。'),
+      signOut),
 
     h('div', { class: 'card' },
       h('div', { class: 'card-title' }, h('span', { class: 'kicker' }, '注销账号')),

@@ -17,7 +17,7 @@
 import { h, withBusy } from '../lib/dom.js';
 import { api, ApiError } from '../lib/api.js';
 import { get, set } from '../lib/store.js';
-import { sheetHead, note, loading, errorBox } from '../components/ui.js';
+import { sheetHead, note, loading, errorBox, textNode } from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
 /* ★ 本地结算：答对的经验走和竞技场/训练关同一条链（applyExp → set → 上报镜像） */
 import { applyExp } from '../lib/exp.js';
@@ -153,7 +153,7 @@ function askCard(box, ask) {
       h('span', { class: 'tiny muted mono' },
         `今天的问询还剩 ${ask.left} 次`)),
     h('div', { class: 'hand', style: { fontSize: '20px', margin: '10px 0 4px' } }, q.q),
-    isLast ? h('div', { class: 'tiny muted' }, '这是今天最后一次。') : null,
+    isLast ? h('div', { class: 'tiny muted' }, textNode('这是今天最后一次。')) : null,
     options,
     // 倒计时条：细线走到底，**提示按钮**才解锁。不写秒数 —— 写出来就成了催促，
     // 而提示本来是"帮人想起来"的东西。
@@ -169,9 +169,9 @@ function askCard(box, ask) {
  *  一个人问询是 40 秒档（想清楚最重要），同问是 9 秒档（一回合只有 12 秒）。 */
 function modeSwitch() {
   return h('div', { class: 'mode-row', id: 'quiz-modes' },
-    h('a', { class: 'mode-tab is-current', href: '#/quiz', id: 'mode-solo' }, '一个人问询'),
-    h('a', { class: 'mode-tab', href: '#/duel', id: 'mode-duel' }, '同问 · 抢答'),
-    h('span', { class: 'tiny muted' }, '同问：同一道题，两个人同时答，看谁快'));
+    h('a', { class: 'mode-tab is-current', href: '#/quiz', id: 'mode-solo' }, textNode('一个人问询')),
+    h('a', { class: 'mode-tab', href: '#/duel', id: 'mode-duel' }, textNode('同问 · 抢答')),
+    h('span', { class: 'tiny muted' }, textNode('同问：同一道题，两个人同时答，看谁快')));
 }
 
 /** 难度基准：月塔拿哪一档来问。
@@ -202,10 +202,10 @@ function baselineStrip(bases, box) {
   });
   return h('div', { class: 'card base-card', id: 'quiz-base-card' },
     h('div', { class: 'between' },
-      h('span', { class: 'kicker' }, '月塔拿哪一档来问'),
+      h('span', { class: 'kicker' }, textNode('月塔拿哪一档来问')),
       h('span', { class: 'tiny muted', id: 'quiz-base-now' },
         `现在是「${cur.label || ''}」· ${cur.count || 0} 题 · ${cur.stars || ''}`)),
-    h('div', { class: 'small muted' }, '按自己的底子定一档，月塔就不拿超纲的题来问了。'),
+    h('div', { class: 'small muted' }, textNode('按自己的底子定一档，月塔就不拿超纲的题来问了。')),
     row,
     cur.who ? h('div', { class: 'tiny muted', id: 'quiz-base-who' }, cur.who) : null);
 }
@@ -216,8 +216,8 @@ async function render(box) {
     box.replaceChildren(
       sheetHead('月塔问询', '它问一句，你答一句'),
       h('div', { class: 'empty' },
-        h('span', { class: 'hand' }, '月塔只问有编号的人。'),
-        h('div', { class: 'small' }, '先去登记处领一只机械狗。'),
+        h('span', { class: 'hand' }, textNode('月塔只问有编号的人。')),
+        h('div', { class: 'small' }, textNode('先去登记处领一只机械狗。')),
         h('div', { class: 'row', style: { justifyContent: 'center', marginTop: '14px' } },
           h('a', { class: 'btn btn-seal', href: '#/adopt' }, '去领养'))));
     return;
@@ -243,11 +243,11 @@ async function render(box) {
   if (!ask.question) {
     box.replaceChildren(h('div', { class: 'rise-in' }, head, modes, strip,
       h('div', { class: 'card' },
-        h('div', { class: 'hand' }, '今天的问询用完了。'),
+        h('div', { class: 'hand' }, textNode('今天的问询用完了。')),
         h('div', { class: 'small muted', style: { marginTop: '6px' } },
-          '月塔明天还会问。答对的经验已经记在它身上了。'),
+          textNode('月塔明天还会问。答对的经验已经记在它身上了。')),
         h('div', { class: 'row-tight', style: { marginTop: '12px' } },
-          h('a', { class: 'btn btn-seal btn-sm', href: '#/duel' }, '去同问抢答')))));
+          h('a', { class: 'btn btn-seal btn-sm', href: '#/duel' }, textNode('去同问抢答'))))));
     return;
   }
   box.replaceChildren(h('div', { class: 'rise-in' }, head, modes, strip,

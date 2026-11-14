@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="day">
+<html lang="zh-CN" data-theme="day" data-ui-mode="standard" data-ui-scale="normal" data-child-sound="on" data-child-motion="on">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>长夜月 · 机械狗档案册</title>
   <meta name="description" content="养成系机械狗 · 开放社群与竞技场（羊皮纸档案册）" />
+  <!-- 先把本机选过的模式、字号档和幼稚模式反馈落到 <html> 上，
+       避免大字/音效在启动时先按默认值闪一下。
+       主逻辑在 src/lib/uiMode.js；这里只用同一批 key，非法值不会命中任何样式。 -->
+  <script>
+    try {
+      var root = document.documentElement;
+      var savedMode = localStorage.getItem('moopet.uiMode');
+      if (savedMode) root.setAttribute('data-ui-mode', savedMode);
+      var savedScale = localStorage.getItem('moopet.uiScale');
+      if (savedScale) root.setAttribute('data-ui-scale', savedScale);
+      var prefs = JSON.parse(localStorage.getItem('moopet.uiPrefs') || 'null') || {};
+      root.setAttribute('data-child-sound', prefs.sound === false ? 'off' : 'on');
+      root.setAttribute('data-child-motion', prefs.motion === false ? 'off' : 'on');
+    } catch (e) { /* 存储不可用：按默认值启动 */ }
+  </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111211'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='%23f5f1e8' font-family='serif'%3E%E7%8A%AC%3C/text%3E%3C/svg%3E" />
   <!-- 霞鹜文楷 Bright：cn-font-split 切好的 unicode-range 子集，浏览器只下命中的那几段。
        用 /fonts/… 这种**根路径**：它在 public/ 下，Vite 不该（也解析不了）在构建期处理它，

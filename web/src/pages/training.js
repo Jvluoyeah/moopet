@@ -18,7 +18,7 @@ import { api, ApiError } from '../lib/api.js';
 import { get, set, breedOf } from '../lib/store.js';
 // ★ 本地结算：服务端只返回"本关应得经验"，等级由本地算（见 src/lib/exp.js）
 import { applyExp } from '../lib/exp.js';
-import { sheetHead, note, errorBox, loading } from '../components/ui.js';
+import { sheetHead, note, errorBox, loading, textNode } from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
 import { onDispose } from '../lib/router.js';
 import { portraitSVG } from '../lib/breedArt.js';
@@ -62,8 +62,8 @@ export async function trainingPage() {
     pageEl.replaceChildren(
       sheetHead('训练记录', '档案册 · 关卡'),
       h('div', { class: 'empty' },
-        h('span', { class: 'hand' }, '训练场的门锁着。册子上还没有编号。'),
-        h('div', { class: 'small' }, '登录并领养一只机械狗，档案册才会开始记页。'),
+        h('span', { class: 'hand' }, textNode('训练场的门锁着。册子上还没有编号。')),
+        h('div', { class: 'small' }, textNode('登录并领养一只机械狗，档案册才会开始记页。')),
         h('div', { class: 'row', style: { justifyContent: 'center', marginTop: '14px' } },
           h('a', { class: 'btn btn-seal', href: '#/adopt' }, '去领养'))));
     return shell;
@@ -205,10 +205,10 @@ class TrainingGame {
     this.mapHost.replaceChildren(
       h('div', { class: 'card' },
         h('div', { class: 'card-title' },
-          h('span', { class: 'kicker' }, '训练记录'),
+          h('span', { class: 'kicker' }, textNode('训练记录')),
           h('span', { class: 'tiny muted' }, `已通 ${cleared}/${LEVELS.length} 关`)),
         h('div', { class: 'small muted', style: { marginBottom: '10px' } },
-          '每通一关，档案册就多一页。首通给大奖，重复通关给少量经验。'),
+          textNode('每通一关，档案册就多一页。首通给大奖，重复通关给少量经验。')),
         body));
 
     this.side.replaceChildren(this.helpCard());

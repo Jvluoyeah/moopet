@@ -4,18 +4,65 @@ import { h, withBusy } from '../lib/dom.js';
 import { api, ApiError } from '../lib/api.js';
 import { go } from '../lib/router.js';
 import { get, set, breedOf } from '../lib/store.js';
-import { sheetHead, note, errorBox, breedCard, dogPortrait, statBars } from '../components/ui.js';
+import {
+  sheetHead, note, errorBox, breedCard, dogPortrait, statBars, textNode, voiceButton,
+} from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
+
+/* 没填完就离开（误触返回/切页）时，把名字、口头禅和品种留在本机。
+   七天不用就丢掉，避免下次进来被一份很旧的草稿挡住。 */
+const DRAFT_KEY = 'moopet.adoptDraft';
+const DRAFT_TTL = 7 * 24 * 3600 * 1000;
+
+function readDraft() {
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if (!d || typeof d !== 'object') return null;
+    if (Date.now() - Number(d.at || 0) > DRAFT_TTL) {
+      localStorage.removeItem(DRAFT_KEY);
+      return null;
+    }
+    return d;
+  } catch (e) {
+    return null;
+  }
+}
+
+function writeDraft(draft) {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...draft, at: Date.now() }));
+  } catch (e) { /* 存不下就只在本次页面里保留 */ }
+}
+
+function clearDraft() {
+  try { localStorage.removeItem(DRAFT_KEY); } catch (e) { /* 无所谓 */ }
+}
 
 export function adoptPage() {
   const st = get();
-  let picked = st.breeds[0]?.code || null;
+  const draft = readDraft();
+  const draftBreed = draft?.breed && st.breeds.some((b) => b.code === draft.breed)
+    ? draft.breed : null;
+  let picked = draftBreed || st.breeds[0]?.code || null;
   const grid = h('div', { class: 'grid-auto', id: 'breed-grid' });
   const detail = h('div', { class: 'card tint', id: 'breed-detail' });
   const nameInput = h('input', { class: 'input', id: 'dog-name', maxlength: '24',
                                  placeholder: '比如：雪团、阿牧、短腿' });
   const mottoInput = h('input', { class: 'input', id: 'dog-motto', maxlength: '64',
                                   placeholder: '比如：我们回家。（可留空）' });
+  if (draft?.name) nameInput.value = draft.name;
+  if (draft?.motto) mottoInput.value = draft.motto;
+  let draftTimer = 0;
+  const saveDraft = () => writeDraft({
+    name: nameInput.value.trim(),
+    motto: mottoInput.value.trim(),
+    breed: picked,
+  });
+  const scheduleDraft = () => {
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(saveDraft, 250);
+  };
+  [nameInput, mottoInput].forEach((el) => el.addEventListener('input', scheduleDraft));
   const msg = h('div');
   const submit = h('button', { class: 'btn btn-seal btn-block', id: 'adopt-submit' },
                    '领养它，并加入「长夜月广场」');
@@ -57,7 +104,12 @@ export function adoptPage() {
   function renderGrid() {
     grid.replaceChildren(...st.breeds.map((b) => breedCard(b, {
       picked: b.code === picked,
-      onPick: (breed) => { picked = breed.code; renderGrid(); renderDetail(); },
+      onPick: (breed) => {
+        picked = breed.code;
+        saveDraft();
+        renderGrid();
+        renderDetail();
+      },
     })));
   }
 
@@ -81,6 +133,8 @@ export function adoptPage() {
     if (!name) { msg.replaceChildren(note('先给狗起个名字。', 'warn')); return; }
     try {
       const card = await api.adopt(name, picked, mottoInput.value.trim());
+      clearTimeout(draftTimer);
+      clearDraft();
       const dogs = await api.myDogs();
       set({ dog: dogs[0] || card.dog, card });
       go('/');
@@ -113,16 +167,21 @@ export function adoptPage() {
           h('div', { class: 'field' },
             h('label', { for: 'dog-name' }, '名字'),
             nameInput,
-            h('div', { class: 'field-hint' }, '名字要短。你以后要喊它一辈子。（1–24 个字）')),
+            voiceButton(nameInput, { label: '用语音说名字' }),
+            h('div', { class: 'field-hint' }, textNode('名字要短。你以后要喊它一辈子。（1–24 个字）'))),
           h('div', { class: 'field' },
             h('label', { for: 'dog-motto' }, '口头禅'),
             mottoInput,
+            voiceButton(mottoInput, { label: '用语音说口头禅' }),
             h('div', { class: 'field-hint' },
-              '写一句你以后打算天天跟它说的话。不用长，一句就行。')),
+              textNode('写一句你以后打算天天跟它说的话。不用长，一句就行。'))),
+          draft && (draft.name || draft.motto)
+            ? note('上次没写完的名字和口头禅，已经放回卡纸上了。', 'good')
+            : null,
           msg,
           submit,
           h('div', { class: 'field-hint' },
-            '一个账号最多领养 3 只。领养后可在「狗狗档案」里翻到完整的那一页。')))));
+            textNode('一个账号最多领养 3 只。领养后可在「狗狗档案」里翻到完整的那一页。'))))));
 
   if (!st.breeds.length) {
     pageEl.replaceChildren(sheetHead('领养一只机械狗', '正在翻开图鉴……'),

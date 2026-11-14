@@ -1,0 +1,646 @@
+/* ============================================================
+   界面多模式适配：标准 / 老人 / 幼稚
+   ------------------------------------------------------------
+   只由 <html data-ui-mode="…"> 驱动，不动页面结构：
+     standard  这里没有规则，维持原来的档案册
+     elder     大字、深墨、更大的落指目标；去掉纸纹/做旧/动画
+     child     圆角、亮色、大按钮；目录文案由 lib/uiMode.js 换成简单说法
+
+   导入顺序在 responsive.css / anim.css 之后（见 main.js）：
+   模式是用户明确选的显示偏好，应该压过"窄屏缩小一档"这类默认规则，
+   而不是反过来被它们压掉。窄屏下仍保留横向滚动等布局规则，
+   这里只改字号、间距和触控尺寸。
+   ============================================================ */
+
+/* ---------------- 顶栏模式菜单（三档共用） ---------------- */
+.mode-menu { position: relative; flex: none; }
+.mode-menu > summary { list-style: none; cursor: pointer; user-select: none; }
+.mode-menu > summary::-webkit-details-marker { display: none; }
+.mode-menu-btn { gap: 5px; min-height: 36px; }
+.mode-menu-caret { font-size: 10px; line-height: 1; opacity: .65; }
+
+.mode-menu-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 40;
+  display: grid;
+  gap: 3px;
+  width: min(272px, calc(100vw - 24px));
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow-lift);
+}
+.mode-option {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.mode-option:hover { border-color: var(--line); background: color-mix(in srgb, var(--blue) 8%, transparent); }
+.mode-option.is-current {
+  border-color: var(--ink);
+  background: color-mix(in srgb, var(--blue) 10%, var(--surface));
+}
+.mode-option strong { font-size: var(--fs-sm); }
+.mode-option-desc { font-size: var(--fs-xs); color: var(--muted); line-height: 1.5; }
+.mode-option:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+
+/* ============================================================
+   老人模式
+   ============================================================ */
+:root[data-ui-mode="elder"] {
+  --fs-display: clamp(44px, 6vw, 66px);
+  --fs-h1: clamp(34px, 4vw, 46px);
+  --fs-h2: 30px;
+  --fs-h3: 22px;
+  --fs-body: 20px;
+  --fs-sm: 17px;
+  --fs-xs: 15px;
+  --gap: 24px;
+  --dur: .01s;
+
+  /* 正文与线条加深一档：白天纸上是更实的墨 */
+  --muted: #45413a;
+  --line: rgba(17, 18, 17, .3);
+  --line-strong: rgba(17, 18, 17, .55);
+}
+
+/* 夜读纸：同样的"更深一档"要反过来做，不能套用白天的墨色 */
+:root[data-theme="night"][data-ui-mode="elder"] {
+  --muted: #c9c0af;
+  --line: rgba(239, 233, 220, .3);
+  --line-strong: rgba(239, 233, 220, .55);
+}
+
+/* 老人模式的第二档字号：只在"默认大字"之上再抬一档，布局一起放大。 */
+:root[data-ui-mode="elder"][data-ui-scale="large"] {
+  --fs-display: clamp(48px, 6.6vw, 74px);
+  --fs-h1: clamp(38px, 4.6vw, 54px);
+  --fs-h2: 34px;
+  --fs-h3: 26px;
+  --fs-body: 24px;
+  --fs-sm: 20px;
+  --fs-xs: 17px;
+  --gap: 26px;
+}
+
+/* 纸纹、噪点和四角做旧会吃掉对比度：老人模式下整层关掉 */
+:root[data-ui-mode="elder"] body {
+  background-image: none;
+  line-height: 1.75;
+  letter-spacing: .015em;
+}
+/* 系统平滑滚动也算动效：老人模式回退成即时跳转 */
+:root[data-ui-mode="elder"] { scroll-behavior: auto; }
+:root[data-ui-mode="elder"] body::before,
+:root[data-ui-mode="elder"] body::after,
+:root[data-ui-mode="elder"] .sheet::before,
+:root[data-ui-mode="elder"] .note-paper::before { display: none; }
+
+/* 正文与标题 */
+:root[data-ui-mode="elder"] .lede {
+  max-width: 70ch;
+  font-size: 21px;
+  line-height: 1.8;
+}
+:root[data-ui-mode="elder"] .small { font-size: var(--fs-sm); }
+/* 便签里几处历史遗留的行内 15/16px 小标题；只抬这两档，
+   不要盖掉题面这类本来就更大的行内字号。 */
+:root[data-ui-mode="elder"] .hand[style*="font-size: 15px"],
+:root[data-ui-mode="elder"] .hand[style*="font-size: 16px"] {
+  font-size: var(--fs-sm) !important;
+}
+:root[data-ui-mode="elder"] .tiny,
+:root[data-ui-mode="elder"] .tab-idx,
+:root[data-ui-mode="elder"] .tab-hint,
+:root[data-ui-mode="elder"] .field > label,
+:root[data-ui-mode="elder"] .field-hint,
+:root[data-ui-mode="elder"] .field-error,
+:root[data-ui-mode="elder"] .stat-name,
+:root[data-ui-mode="elder"] .stat-val,
+:root[data-ui-mode="elder"] .badge { font-size: var(--fs-xs); }
+
+/* 落指目标：桌面/手机同一套下限（44px 是 Apple/Google 的下限，这里再抬一档） */
+:root[data-ui-mode="elder"] .btn {
+  min-height: 56px;
+  padding: 0 22px;
+  font-size: var(--fs-sm);
+}
+:root[data-ui-mode="elder"] .btn-sm {
+  min-height: 48px;
+  padding: 0 16px;
+  font-size: var(--fs-xs);
+}
+:root[data-ui-mode="elder"] .input,
+:root[data-ui-mode="elder"] .select,
+:root[data-ui-mode="elder"] .textarea {
+  min-height: 58px;
+  padding: 14px 15px;
+  font-size: var(--fs-sm);
+}
+:root[data-ui-mode="elder"] .tab { min-height: 56px; padding-top: 14px; padding-bottom: 14px; }
+:root[data-ui-mode="elder"] .tab-hint { display: none; }
+:root[data-ui-mode="elder"] .mode-menu-btn { min-height: 48px; padding: 0 14px; }
+:root[data-ui-mode="elder"] .mode-menu-panel { width: min(340px, calc(100vw - 24px)); }
+:root[data-ui-mode="elder"] .mode-option { padding: 14px 12px; }
+:root[data-ui-mode="elder"] .mode-option strong { font-size: var(--fs-sm); }
+:root[data-ui-mode="elder"] .mode-option-desc { font-size: var(--fs-xs); }
+:root[data-ui-mode="elder"] .parent-entry { min-height: 48px; font-size: var(--fs-sm); }
+
+:root[data-ui-mode="elder"] .topbar { min-height: 84px; gap: 18px; }
+:root[data-ui-mode="elder"] .brand-mark { width: 42px; height: 42px; font-size: 20px; }
+:root[data-ui-mode="elder"] :focus-visible { outline-width: 3px; outline-offset: 3px; }
+
+/* 纸页与表单：内边距一起放大，不然字大了会挤成一坨 */
+:root[data-ui-mode="elder"] .sheet { padding: 32px 30px 36px; }
+:root[data-ui-mode="elder"] .card,
+:root[data-ui-mode="elder"] .note,
+:root[data-ui-mode="elder"] .note-paper { padding: 20px; }
+/* 便签的荧光黄底在深墨字下仍然偏浅；换成纯纸面，读起来最稳 */
+:root[data-ui-mode="elder"] .note-paper { background: var(--surface); }
+:root[data-ui-mode="elder"] .stat { grid-template-columns: 68px 1fr 44px; }
+:root[data-ui-mode="elder"] .dossier dl { grid-template-columns: 116px 1fr; }
+:root[data-ui-mode="elder"] .quiz-opt { padding: 16px; }
+:root[data-ui-mode="elder"] .quiz-key { width: 32px; height: 32px; font-size: 15px; }
+:root[data-ui-mode="elder"] .lv-node { padding: 18px 16px 19px 14px; }
+:root[data-ui-mode="elder"] .lv-index { width: 56px; height: 56px; font-size: 16px; }
+:root[data-ui-mode="elder"] .mode-tab,
+:root[data-ui-mode="elder"] .base-chip,
+:root[data-ui-mode="elder"] .npc-card { min-height: 54px; }
+:root[data-ui-mode="elder"] .bh-timer { height: auto; min-height: 52px; padding: 2px 10px; }
+:root[data-ui-mode="elder"] .voice-btn { min-height: 50px; font-size: var(--fs-sm); }
+
+/* 老人模式关掉非必要动画与悬浮位移；状态变化（进度条、颜色）照常可见 */
+:root[data-ui-mode="elder"] *,
+:root[data-ui-mode="elder"] *::before,
+:root[data-ui-mode="elder"] *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+  scroll-behavior: auto !important;
+}
+:root[data-ui-mode="elder"] .btn:hover,
+:root[data-ui-mode="elder"] .breed-card:hover,
+:root[data-ui-mode="elder"] .quiz-opt:hover:not(:disabled),
+:root[data-ui-mode="elder"] .lv-node:hover,
+:root[data-ui-mode="elder"] .base-chip:hover,
+:root[data-ui-mode="elder"] .npc-card:hover,
+:root[data-ui-mode="elder"] .bh-skill:hover { transform: none; }
+/* 半透明纸面/毛玻璃在低视力下会吃掉笔画：换成实的纸色 */
+:root[data-ui-mode="elder"] .topbar {
+  background: var(--paper);
+  backdrop-filter: none;
+}
+:root[data-ui-mode="elder"] .world-hud .badge,
+:root[data-ui-mode="elder"] .w3-stam,
+:root[data-ui-mode="elder"] .w3-toast,
+:root[data-ui-mode="elder"] .confirm-dialog::backdrop { backdrop-filter: none; }
+:root[data-ui-mode="elder"] .world-hud .badge,
+:root[data-ui-mode="elder"] .w3-stam,
+:root[data-ui-mode="elder"] .w3-toast { background: var(--surface); }
+:root[data-ui-mode="elder"] .card { background-image: none; }
+:root[data-ui-mode="elder"] .note,
+:root[data-ui-mode="elder"] .note.warn,
+:root[data-ui-mode="elder"] .note.bad,
+:root[data-ui-mode="elder"] .note.good { background: var(--surface); }
+
+/* ---- 特大字：再抬一档 ---- */
+:root[data-ui-mode="elder"][data-ui-scale="large"] .lede { font-size: 26px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .btn {
+  min-height: 64px; padding: 0 26px; font-size: 20px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .btn-sm {
+  min-height: 54px; font-size: var(--fs-sm);
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .input,
+:root[data-ui-mode="elder"][data-ui-scale="large"] .select,
+:root[data-ui-mode="elder"][data-ui-scale="large"] .textarea {
+  min-height: 66px; font-size: 20px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .tab { min-height: 64px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .sheet { padding: 36px 34px 40px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .card,
+:root[data-ui-mode="elder"][data-ui-scale="large"] .note,
+:root[data-ui-mode="elder"][data-ui-scale="large"] .note-paper { padding: 22px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .stat {
+  grid-template-columns: 78px 1fr 50px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .dossier dl {
+  grid-template-columns: 126px 1fr;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .topbar { min-height: 92px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .brand-mark {
+  width: 46px; height: 46px; font-size: 22px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .mode-menu-panel {
+  width: min(380px, calc(100vw - 24px));
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .mode-option { padding: 16px 14px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .quiz-opt { padding: 20px; }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .lv-node {
+  padding: 20px 18px 21px 16px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .lv-index {
+  width: 62px; height: 62px; font-size: 18px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .voice-btn { min-height: 58px; }
+
+/* ============================================================
+   幼稚模式
+   ============================================================ */
+:root[data-ui-mode="child"] {
+  --fs-body: 17px;
+  --fs-sm: 15px;
+  --fs-xs: 13px;
+  --fs-h1: clamp(30px, 4vw, 44px);
+  --fs-h2: 26px;
+  --fs-h3: 20px;
+  --gap: 20px;
+  --blue: #1f63d6;
+  --blue-deep: #164aa5;
+  --signal: #ffe066;
+  --seal: #dd5a45;
+}
+/* 夜读纸下保持亮色：白天的深蓝放到深底上会糊成一片 */
+:root[data-theme="night"][data-ui-mode="child"] {
+  --blue: #a9baff;
+  --blue-deep: #c2d0ff;
+  --signal: #e6ff7a;
+  --seal: #ff9a84;
+}
+/* 夜读纸 + 幼稚模式的蓝底是浅蓝：按钮和当前页签上的白字会发灰。
+   这两处改成深墨字，仍是同一套"蓝底深字"。 */
+:root[data-theme="night"][data-ui-mode="child"] .btn-blue,
+:root[data-theme="night"][data-ui-mode="child"] .tab.is-current { color: #141827; }
+
+:root[data-ui-mode="child"] body { line-height: 1.7; }
+
+/* 圆角：纸页、卡片、按钮、输入框、战斗/世界外框都统一到"图画书"的软边 */
+:root[data-ui-mode="child"] .sheet,
+:root[data-ui-mode="child"] .card,
+:root[data-ui-mode="child"] .note-paper,
+:root[data-ui-mode="child"] .breed-card,
+:root[data-ui-mode="child"] .note,
+:root[data-ui-mode="child"] .dossier .photo,
+:root[data-ui-mode="child"] .world-frame,
+:root[data-ui-mode="child"] .world3d,
+:root[data-ui-mode="child"] .world3d-bar,
+:root[data-ui-mode="child"] .battle-stage,
+:root[data-ui-mode="child"] .quiz-opt,
+:root[data-ui-mode="child"] .hint-slip,
+:root[data-ui-mode="child"] .lv-node,
+:root[data-ui-mode="child"] .duel-side,
+:root[data-ui-mode="child"] .npc-card,
+:root[data-ui-mode="child"] .base-chip,
+:root[data-ui-mode="child"] .mode-tab,
+:root[data-ui-mode="child"] .mode-menu-panel,
+:root[data-ui-mode="child"] .mode-option {
+  border-radius: 16px;
+}
+:root[data-ui-mode="child"] .sheet { padding: 28px 26px 32px; }
+:root[data-ui-mode="child"] .sheet::before { display: none; }
+:root[data-ui-mode="child"] .tabs { border-radius: 16px; overflow: hidden; }
+
+:root[data-ui-mode="child"] .btn {
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: 999px;
+  box-shadow: 0 3px 0 var(--line-strong);
+}
+:root[data-ui-mode="child"] .btn-sm {
+  min-height: 42px;
+  padding: 0 14px;
+}
+:root[data-ui-mode="child"] .btn:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+:root[data-ui-mode="child"] .input,
+:root[data-ui-mode="child"] .select,
+:root[data-ui-mode="child"] .textarea {
+  min-height: 48px;
+  border-radius: 12px;
+}
+:root[data-ui-mode="child"] .badge { border-radius: 999px; }
+:root[data-ui-mode="child"] .brand-mark { border-radius: 10px; }
+:root[data-ui-mode="child"] .tab { min-height: 46px; }
+:root[data-ui-mode="child"] .tab-hint { display: none; }
+:root[data-ui-mode="child"] .topbar .tab { border-radius: 999px; }
+:root[data-ui-mode="child"] .tab.is-current {
+  background: var(--blue);
+  color: #fff;
+}
+:root[data-ui-mode="child"] .tab.is-current .tab-idx { color: var(--signal); }
+:root[data-ui-mode="child"] .note-paper {
+  background: color-mix(in srgb, var(--signal) 36%, var(--surface));
+}
+:root[data-ui-mode="child"] .mode-menu-btn { min-height: 42px; border-radius: 999px; }
+:root[data-ui-mode="child"] .mode-option { border-radius: 10px; }
+:root[data-ui-mode="child"] .quiz-key { border-radius: 50%; }
+:root[data-ui-mode="child"] .tp-btn { border-radius: 14px; }
+:root[data-ui-mode="child"] .bh-skill,
+:root[data-ui-mode="child"] .bh-portrait { border-radius: 50%; }
+
+/* 幼稚模式下"按下"有回弹感；系统要求减少动态时自动失效 */
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-ui-mode="child"] .btn:hover { transform: translateY(-1px); }
+}
+
+/* ---------------- 大字两档：导航固定单独一行 ----------------
+   老人/幼稚档的字比标准档大，1280 宽时顶栏一行已经装不下：
+   页签会被挤成"首/页"一字一行。这里不压缩字号，也不让文字折行 ——
+   把导航整体挪到第二行，放不下就横向滚动（和手机同一套做法）。 */
+:root[data-ui-mode="elder"] .topbar,
+:root[data-ui-mode="child"] .topbar { flex-wrap: wrap; row-gap: 4px; }
+:root[data-ui-mode="elder"] .topbar .spacer,
+:root[data-ui-mode="child"] .topbar .spacer { display: none; }
+:root[data-ui-mode="elder"] #top-nav,
+:root[data-ui-mode="child"] #top-nav {
+  order: 3;
+  flex: 1 1 100%;
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  justify-content: flex-start;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+:root[data-ui-mode="elder"] #top-nav::-webkit-scrollbar,
+:root[data-ui-mode="child"] #top-nav::-webkit-scrollbar { display: none; }
+:root[data-ui-mode="elder"] #top-nav .tab,
+:root[data-ui-mode="child"] #top-nav .tab {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  /* 窄屏的响应式规则会把顶栏页签压到 14px；大字两档不再跟着缩 */
+  font-size: var(--fs-sm);
+}
+:root[data-ui-mode="elder"] .topbar .row-tight:last-child,
+:root[data-ui-mode="child"] .topbar .row-tight:last-child { order: 2; margin-left: auto; }
+
+/* ---------------- 顶栏在平板/窄屏：给新增的模式菜单让位 ----------------
+   1280 宽时标准档刚好装得下；再窄就先把导航单独放一行，
+   而不是让页签被模式菜单挤到屏幕外（手机命中测试吃过这个亏）。 */
+@media (max-width: 1100px) {
+  .topbar { flex-wrap: wrap; row-gap: 4px; }
+  .topbar .spacer { display: none; }
+  #top-nav {
+    order: 3;
+    flex: 1 1 100%;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #top-nav::-webkit-scrollbar { display: none; }
+  #top-nav .tab { flex: 0 0 auto; }
+  .topbar .row-tight:last-child { order: 2; margin-left: auto; }
+}
+
+/* 窄屏页头：响应式会把标题压到 20/22px，大字两档保留一档更大的标题 */
+@media (max-width: 820px) {
+  :root[data-ui-mode="elder"] .sheet-head h1 { font-size: 28px; }
+  :root[data-ui-mode="elder"][data-ui-scale="large"] .sheet-head h1 { font-size: 32px; }
+  :root[data-ui-mode="child"] .sheet-head h1 { font-size: 24px; }
+}
+
+/* 触屏（含横过来的手机/平板）：模式按钮也要 44px 的落指高度 */
+@media (pointer: coarse) {
+  :root[data-ui-mode] .mode-menu-btn { min-height: 44px; }
+}
+
+/* 手机：模式菜单收起时只显示当前模式的两个字。
+   展开面板要对齐到屏幕左边 —— 按钮在手机上靠左，沿用桌面的 right:0
+   会让整块面板从屏幕左边伸出去，左边的说明文字点不到。 */
+@media (max-width: 560px) {
+  /* 这条必须比上面基础样式的 min-height:36px 更靠后：
+     手机上模式按钮也是要点的，不能低于 44px 的落指下限。 */
+  :root[data-ui-mode] .mode-menu-btn { min-height: 44px; padding: 0 10px; }
+  /* :root[data-ui-mode] 与上面两档的 `…[data-ui-mode="elder"]` 同权重，
+     写在后面才能把老人/幼稚模式的加宽面板拉回屏幕内。 */
+  :root[data-ui-mode] .mode-menu-panel {
+    left: -60px;
+    right: auto;
+    width: min(272px, calc(100vw - 24px));
+  }
+  /* 手机屏幕窄，大字号需要的是行高和按钮高度，不是左右各 30px 的内边距 */
+  :root[data-ui-mode="elder"] .sheet,
+  :root[data-ui-mode="child"] .sheet { padding: 22px 18px 26px; }
+}
+
+/* ============================================================
+   底部固定导航（老人 / 幼稚）
+   ------------------------------------------------------------
+   只在大字两档的"册页"出现；对战/世界页有虚拟摇杆，不叠（见 bottomNavFor）。
+   正文按 data-bottom-bar 让出高度，避免最后一行被遮住。 */
+.bottom-bar { display: none; }
+html[data-bottom-bar] body {
+  padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+:root[data-ui-mode="elder"] .bottom-bar,
+:root[data-ui-mode="child"] .bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding: 8px max(12px, calc((100vw - var(--page-max)) / 2))
+           calc(8px + env(safe-area-inset-bottom, 0px));
+  background: var(--surface);
+  border-top: 2px solid var(--ink);
+  box-shadow: 0 -10px 28px -22px var(--ink);
+}
+.bottom-item {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: var(--fs-sm);
+  font-weight: 750;
+  text-decoration: none;
+  text-align: center;
+}
+.bottom-item:hover { background: color-mix(in srgb, var(--blue) 8%, var(--surface)); }
+.bottom-item:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.bottom-icon { font-size: 19px; line-height: 1; }
+/* 大字档的标签比标准档长（"回去""还原字号"），横排时在 320px 上会把字挤成
+   一行一个字，整条导航被撑高。改成图标在上、文字在下，每个标签都有整格宽度。 */
+.bottom-bar.is-elder .bottom-item { flex-direction: column; gap: 2px; }
+.bottom-item > span:last-child { white-space: nowrap; }
+.bottom-bar.is-child .bottom-item {
+  flex-direction: column;
+  gap: 2px;
+  min-height: 62px;
+  padding: 6px 4px;
+  border-radius: 16px;
+  font-size: 16px;
+}
+.bottom-bar.is-child .bottom-icon { font-size: 21px; }
+.bottom-bar.is-child .bottom-item.is-current {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+}
+:root[data-theme="night"] .bottom-bar.is-child .bottom-item.is-current {
+  color: #141827;
+}
+.bottom-bar.is-elder .bottom-item { font-size: var(--fs-sm); }
+:root[data-ui-mode="elder"][data-ui-scale="large"] .bottom-item {
+  min-height: 66px;
+  font-size: 20px;
+}
+:root[data-ui-mode="elder"][data-ui-scale="large"] .bottom-icon { font-size: 24px; }
+
+/* ---------------- 家长入口与模式设置 ---------------- */
+.parent-entry { gap: 6px; white-space: nowrap; }
+.parent-entry-short { display: none; }
+.mode-option-extra { margin-top: 4px; border-top: 1px dashed var(--line); }
+.mode-prefs {
+  display: grid;
+  gap: 2px;
+  margin-top: 4px;
+  padding: 10px 12px 8px;
+  border-top: 1px dashed var(--line);
+}
+.mode-prefs-title {
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.mode-pref {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+.mode-pref input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--blue);
+  flex: none;
+}
+:root[data-ui-mode="elder"] .mode-pref { min-height: 48px; }
+:root[data-ui-mode="elder"] .mode-pref input { width: 22px; height: 22px; }
+
+/* ---------------- 二次确认 / 家长锁对话框 ---------------- */
+.confirm-dialog {
+  width: min(420px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  padding: 22px;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-lift);
+}
+.confirm-dialog::backdrop { background: rgba(17, 18, 17, .5); }
+.confirm-dialog h2 { margin-bottom: 8px; }
+.confirm-dialog p { margin: 0 0 4px; }
+.confirm-actions { justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.parent-gate { width: min(380px, calc(100vw - 32px)); }
+.parent-gate-form { display: grid; gap: 12px; margin-top: 12px; }
+.parent-gate-fields { display: grid; gap: 6px; }
+.parent-gate-fields label {
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  font-weight: 750;
+}
+.parent-gate-actions { justify-content: flex-end; gap: 10px; }
+:root[data-ui-mode="elder"] .confirm-dialog { padding: 28px; }
+:root[data-ui-mode="elder"] .confirm-dialog h2 { font-size: var(--fs-h2); }
+:root[data-ui-mode="elder"] .parent-gate-fields label,
+:root[data-ui-mode="elder"] .confirm-dialog p { font-size: var(--fs-sm); }
+:root[data-ui-mode="child"] .confirm-dialog {
+  border-radius: 18px;
+  border-color: var(--blue);
+}
+
+/* ---------------- 老人语音输入 ---------------- */
+.voice-btn { display: none; margin-top: 6px; }
+:root[data-ui-mode="elder"] .voice-btn { display: inline-flex; }
+.voice-btn.is-listening {
+  background: var(--seal);
+  border-color: var(--seal);
+  color: #fff;
+}
+
+/* ---------------- 幼稚模式：今天先做一件事 ---------------- */
+.child-task { display: none; }
+:root[data-ui-mode="child"] .child-task {
+  display: block;
+  border: 2px solid var(--blue);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--signal) 26%, var(--surface));
+  padding: 20px;
+}
+.child-task .card-title { margin-bottom: 6px; }
+.child-task .btn { min-height: 58px; font-size: 19px; margin-top: 12px; }
+.child-task .small { font-size: 16px; }
+
+.child-stars { display: none; }
+:root[data-ui-mode="child"] .child-stars {
+  display: block;
+  border-radius: 18px;
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+}
+.child-star-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 6px 0 10px;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--line-strong);
+}
+.child-star-row .is-on { color: var(--gold); }
+.child-stars .btn { margin-top: 12px; }
+
+/* 幼稚模式关掉按钮动画（点击音效由 JS 偏好控制，不在这里） */
+:root[data-ui-mode="child"][data-child-motion="off"] *,
+:root[data-ui-mode="child"][data-child-motion="off"] *::before,
+:root[data-ui-mode="child"][data-child-motion="off"] *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+}
+:root[data-ui-mode="child"][data-child-motion="off"] .btn:hover,
+:root[data-ui-mode="child"][data-child-motion="off"] .btn:active,
+:root[data-ui-mode="child"][data-child-motion="off"] .bottom-item:active {
+  transform: none;
+}
+:root[data-ui-mode="child"][data-child-motion="on"] .bottom-item:active {
+  transform: translateY(2px);
+}
+
+/* 手机：家长入口缩成两个字；底部栏保持四个主入口 */
+@media (max-width: 560px) {
+  .parent-entry-long { display: none; }
+  .parent-entry-short { display: inline; }
+  .bottom-bar { gap: 6px; padding-left: 8px; padding-right: 8px; }
+  .bottom-bar.is-child .bottom-item { font-size: 15px; }
+  .bottom-item { padding-left: 4px; padding-right: 4px; }
+}

@@ -21,7 +21,7 @@
 import { h } from '../lib/dom.js';
 import { api, ApiError, token } from '../lib/api.js';
 import { get, set } from '../lib/store.js';
-import { sheetHead, note, loading, errorBox } from '../components/ui.js';
+import { sheetHead, note, loading, errorBox, textNode } from '../components/ui.js';
 import { pageShell } from '../components/layout.js';
 /* ★ 经验走和问询/竞技场同一条链（applyExp → 本地结算 → 上报镜像） */
 import { applyExp } from '../lib/exp.js';
@@ -43,8 +43,8 @@ export async function duelPage() {
     box.replaceChildren(
       sheetHead('同问', '同一道题，两个人同时答'),
       h('div', { class: 'empty' },
-        h('span', { class: 'hand' }, '月塔只把问话递给有编号的人。'),
-        h('div', { class: 'small' }, '先去登记处领一只机械狗。'),
+        h('span', { class: 'hand' }, textNode('月塔只把问话递给有编号的人。')),
+        h('div', { class: 'small' }, textNode('先去登记处领一只机械狗。')),
         h('div', { class: 'row', style: { justifyContent: 'center', marginTop: '14px' } },
           h('a', { class: 'btn btn-seal', href: '#/adopt' }, '去领养'))));
     return shell;
@@ -220,7 +220,7 @@ export async function duelPage() {
     h('div', { class: 'duel-board' },
       sideCard(S.you, true),
       h('div', { class: 'duel-vs' },
-        h('div', { class: 'duel-vs-word' }, '同问'),
+        h('div', { class: 'duel-vs-word' }, textNode('同问')),
         S.room ? h('div', { class: 'duel-room tiny mono', id: 'duel-room-code' }, S.room) : null),
       sideCard(S.foe, false)),
     h('div', { class: 'small mono muted', id: 'duel-status' }, statusLine()),
@@ -501,9 +501,9 @@ export async function duelPage() {
       h('div', { class: 'card stack', id: 'duel-lobby' },
         h('div', { class: 'between' },
           h('div', null,
-            h('div', { class: 'hand', style: { fontSize: '18px' } }, '同一道题，两个人同时答'),
+            h('div', { class: 'hand', style: { fontSize: '18px' } }, textNode('同一道题，两个人同时答')),
             h('div', { class: 'small muted' },
-              '谁先答对，这一回合就记在谁头上。答错这一回合就锁住了 —— 不能乱点。')),
+              textNode('谁先答对，这一回合就记在谁头上。答错这一回合就锁住了 —— 不能乱点。'))),
           h('div', { class: 'tiny muted mono' },
             S.left == null ? '' : `今天还能开 ${S.left} / ${S.limit} 局 · 一局 ${data.size} 回合`)),
         h('div', { class: 'note' },
@@ -513,21 +513,21 @@ export async function duelPage() {
             ' 智力越高解锁得越早 —— 抢先手就早在这几秒。')),
         invites,
         h('div', { class: 'divider' }),
-        h('div', { class: 'kicker' }, '找一只模拟体对一局'),
-        h('div', { class: 'small muted' }, '它不用等人，你一进去它就开答。脑子越好使的，答得又快又准。'),
+        h('div', { class: 'kicker' }, textNode('找一只模拟体对一局')),
+        h('div', { class: 'small muted' }, textNode('它不用等人，你一进去它就开答。脑子越好使的，答得又快又准。')),
         npcRow,
         h('div', { class: 'divider' }),
-        h('div', { class: 'kicker' }, '找一只狗，把这间房留给它'),
+        h('div', { class: 'kicker' }, textNode('找一只狗，把这间房留给它')),
         h('div', { class: 'small muted' },
-          '点一下就是开一间留给它的房 —— 它那边会看到"等你进来"，不用念房间码。'),
+          textNode('点一下就是开一间留给它的房 —— 它那边会看到"等你进来"，不用念房间码。')),
         friendRow || h('div', { class: 'small muted', id: 'duel-friends-none' },
-          '名册上还没有别的狗。先把房间码念给对面也一样能打。'),
+          textNode('名册上还没有别的狗。先把房间码念给对面也一样能打。')),
         h('div', { class: 'divider' }),
-        h('div', { class: 'kicker' }, '等好友进来'),
+        h('div', { class: 'kicker' }, textNode('等好友进来')),
         h('div', { class: 'row-tight' },
           h('button', { class: 'btn btn-seal', id: 'duel-open-btn',
             onclick: () => open('friend', null) }, '开一间房'),
-          h('span', { class: 'small muted' }, '开好之后把这串码念给对面，它在自己的册子上输进去。')),
+          h('span', { class: 'small muted' }, textNode('开好之后把这串码念给对面，它在自己的册子上输进去。'))),
         h('div', { class: 'row-tight' },
           joinInput,
           h('button', { class: 'btn', id: 'duel-join-btn', onclick: doJoin }, '进这间房')),
@@ -537,7 +537,7 @@ export async function duelPage() {
 
   const recordCard = (rec) => h('div', { class: 'card', id: 'duel-record' },
     h('div', { class: 'between' },
-      h('span', { class: 'kicker' }, '同问战绩'),
+      h('span', { class: 'kicker' }, textNode('同问战绩')),
       h('span', { class: 'tiny mono muted' },
         `${rec.wins} 胜 · ${rec.losses} 负 · ${rec.draws} 平`)),
     (rec.recent || []).length
@@ -548,7 +548,7 @@ export async function duelPage() {
               `${(r.foe || {}).name || '对面'}${(r.foe || {}).is_npc ? '（模拟体）' : ''}`),
             h('span', { class: 'mono muted' }, `${r.mine} : ${r.theirs}　${r.baseline_label || ''}`))))
       : h('div', { class: 'small muted', style: { marginTop: '6px' } },
-          '还没对过局。第一次会记在这里。'));
+          textNode('还没对过局。第一次会记在这里。')));
 
   await renderLobby();
   return shell;
