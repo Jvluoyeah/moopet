@@ -1,20 +1,16 @@
 # 长夜月 · 养成系机械狗（Moopet）
 
-一个结合机械狗陪伴、成长养成与互动玩法的全栈项目，包含 Web 应用与后端服务。
+Moopet 是一个在浏览器里养机械狗的项目。领养后可以训练、答题、对战，也可以进入世界场景或游玩剧情。前端和后端都在这个仓库中。
 
 ## 功能
 
 - 账号注册、机械狗领养与成长档案。
 - 开放世界、社群互动、竞技场对战与训练关卡。
 - 答题、双人问答、签到、抽签、日记与剧情模式。
-- 界面多模式：标准 / 老人模式 / 幼稚模式，只影响本机显示。
-  - 老人模式：默认 20px 正文、可再切特大字；高对比、按钮与输入框 ≥56px；
-    关掉纸纹、毛玻璃、悬浮位移与装饰动画；固定底部「返回 / 回首页 / 字更大」；
-    表单语音输入（浏览器支持时）与领养草稿自动保存；退出/注销等操作二次确认；
-    老人/幼稚档停用双击全屏与页头连点彩蛋。
-  - 幼稚模式：圆角亮色、固定底部四个主入口、首页「今天先做一件事」与星星收集；
-    点击音效和按钮动画可分别关闭；家长入口需要 4 位本机密码，
-    离开幼稚模式、进账号设置、退出登录和外链都会先过家长锁。
+- 标准、老人和幼稚三种界面模式，设置只保存在当前浏览器。
+  - 老人模式提供大字、高对比、底部导航和领养草稿保存；浏览器支持时可用语音输入。
+  - 幼稚模式提供简化入口、星星收集，以及可关闭的音效和动画。
+  - 幼稚模式的家长锁使用本机四位密码，限制离开模式、账号设置等操作。它只用于防误触，不是账号安全保护。
 
 ## 技术栈
 
@@ -34,24 +30,39 @@ shared/       场景配置
 
 ## 启动 Web 应用
 
-需要 Python 3.9+（Ubuntu 22.04 自带 3.10 即可）、Node.js 18+（按 22 验证）和支持 WebGL 的浏览器。
+需要 Python 3.9+、Node.js 18+ 和支持 WebGL 的浏览器。Node.js 也用于后端对战引擎，构建前端后仍需保留。
 
-**Linux / Ubuntu 22.04（一键）：**
+**Linux / Ubuntu 22.04：**
 
 ```bash
-bash scripts/setup.sh      # 建虚拟环境、装依赖、构建前端（幂等，可重复跑）
-bash scripts/start_web.sh  # 起主服务 + 剧情模式，然后打开浏览器
-bash scripts/stop_web.sh   # 停止
+bash scripts/setup.sh      # 创建虚拟环境、安装依赖并构建前端
+bash scripts/start_web.sh  # 启动主应用和剧情服务，打开浏览器
+bash scripts/stop_web.sh   # 停止服务
 ```
 
 打开 <http://127.0.0.1:8080/>，API 文档 <http://127.0.0.1:8080/docs>，
 剧情入口 <http://127.0.0.1:8080/gal/web/index.html>。
 局域网访问用 `bash scripts/start_web.sh --host=0.0.0.0`。
 
-**任意平台（手动分步，从仓库根目录执行）：**
+**手动启动（从仓库根目录执行）：**
+
+先创建并激活虚拟环境。Linux / macOS：
 
 ```bash
-python3 -m venv .venv && . .venv/bin/activate   # Windows: .venv\Scripts\activate
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Windows PowerShell：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+然后安装依赖、构建前端并启动：
+
+```bash
 python -m pip install -r server/requirements.txt
 cd web && npm ci && npm run build && cd ..
 cd server && python run_local.py
@@ -61,7 +72,7 @@ cd server && python run_local.py
 
 ### 剧情模式
 
-`start_web.sh` / `start_web.bat` 会自动带上。手动启动时，另开终端，从仓库根目录执行：
+启动脚本会同时启动剧情服务。手动启动时，另开终端，从仓库根目录执行：
 
 ```bash
 python -m http.server 18080 --bind 127.0.0.1 --directory gal
@@ -69,24 +80,19 @@ python -m http.server 18080 --bind 127.0.0.1 --directory gal
 
 通过 <http://127.0.0.1:8080/gal/web/index.html> 进入剧情（依赖主服务的 `/gal/*` 代理）。
 
-## 当前核验结果
+## 开发与限制
 
-最近一次在 **Ubuntu 22.04.5 / Python 3.10.12** 上的实际结果：
+在 `web/` 目录运行现有测试和构建：
 
-| 检查 | 结果 |
-| --- | --- |
-| `bash scripts/setup.sh`（含缺 `python3-venv` 的降级路径） | 通过 |
-| `bash scripts/start_web.sh` → 页面 / API / `/docs` / 剧情代理 | 全部 200，重复启动可识别，`stop_web.sh` 停干净 |
-| `web/` `npm test` + `npm run build` | 通过（Node 24 验证；锁定 Node 18+） |
+```bash
+npm test
+npm run build
+```
 
-未验证：Docker 镜像构建、PostgreSQL、systemd/Nginx 部署、完整浏览器 E2E。
+这些检查不覆盖完整浏览器操作。修改页面后还需实际操作相关功能；剧情播放与存档同步也需单独检查。
+Docker、PostgreSQL、systemd/Nginx 部署和移动端真机仍需验证，不作为已验证的部署方式。
 
-界面模式（标准 / 老人 / 幼稚）改动在 Windows / Node 24 下实际跑过 `web/` 的
-`npm test` 与 `npm run build`，并用真实 Chromium 验证了三档切换与刷新保持、
-老人字号两档、固定底部导航在 320 / 412 / 1280px 不溢出、
-领养草稿恢复、语音按钮出现、退出/注销二次确认，以及幼稚模式家长密码的
-首次设置、错误/正确校验和离开/进设置/取消后的路由行为。
-家长锁只存在本机 localStorage/sessionStorage，是防误触门闩，不是账号安全边界；
-需要 Playwright 的全量浏览器 E2E 与移动端真机未跑。
+参与修改前请阅读 [AGENT.md](AGENT.md)，其中列出了代码入口、验证方式，以及文档和提交说明的写法。
+README 只保留使用说明和已知限制；每次改动的验证记录放在对应 PR 或提交说明中。
 
 [许可证](LICENSE) · [第三方声明](THIRD_PARTY_NOTICES.md)
