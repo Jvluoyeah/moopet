@@ -34,12 +34,12 @@ def _load_shared():
     """读共用的场景表。读不到就用内置兜底，保证服务端不会因为少一个文件起不来。"""
     fallback = {
         'scenes': {
-            'plaza': {'name': '长夜月广场', 'w': 2200, 'd': 1700,
-                      'spawn': [1100, 1200], 'capacity': 64},
-            'park': {'name': '长夜月公园', 'w': 2400, 'd': 1900,
-                     'spawn': [1200, 1350], 'capacity': 48},
-            'kennel': {'name': '我的狗窝', 'w': 1500, 'd': 1150,
-                       'spawn': [750, 700], 'capacity': 8},
+            'plaza': {'name': '长夜月广场', 'w': 4300, 'd': 2900,
+                      'spawn': [1400, 1380], 'capacity': 64},
+            'park': {'name': '长夜月公园', 'w': 4000, 'd': 3100,
+                     'spawn': [1600, 2070], 'capacity': 48},
+            'kennel': {'name': '我的狗窝', 'w': 2900, 'd': 2000,
+                       'spawn': [920, 1200], 'capacity': 8},
             'arena': {'name': '月光竞技场', 'w': 2200, 'd': 1700,
                       'spawn': [1100, 1200], 'capacity': 32},
         },

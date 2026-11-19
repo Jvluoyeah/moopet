@@ -102,7 +102,8 @@ export class World {
          补光    一点点暖色，模拟远处灯火的反射
        注意：窗光/门洞/灯罩这些**光源本身**不受这些影响 —— 它们在
        models.js 里走 GLOW_MATERIALS（MeshBasicMaterial，不吃光照）。 */
-    this.three.add(new THREE.AmbientLight(0x3b4f77, 0.55));
+    this.ambient = new THREE.AmbientLight(0x3b4f77, 0.55);
+    this.three.add(this.ambient);
     this.three.add(new THREE.HemisphereLight(0x5a76b0, 0x1a2133, 0.45));
 
     const sun = new THREE.DirectionalLight(0xa8c4ff, 0.85);   // 月光
@@ -126,6 +127,7 @@ export class World {
     const fill = new THREE.DirectionalLight(0xffd9a0, 0.18);  // 远处灯火的暖反弹
     fill.position.set(1200, 700, -900);
     this.three.add(fill);
+    this.fill = fill;
 
     this.sceneRoot = new THREE.Group();
     this.three.add(this.sceneRoot);
@@ -150,6 +152,11 @@ export class World {
   setScene(code, at = null) {
     this.sceneCode = code;
     this.scene = sceneOf(code);
+    const lighting = this.scene.lighting;
+    this.ambient.color.set(lighting?.ambientColor ?? 0x3b4f77);
+    this.ambient.intensity = lighting?.ambientIntensity ?? 0.55;
+    this.sun.intensity = lighting?.moonIntensity ?? 0.85;
+    this.fill.intensity = lighting?.fillIntensity ?? 0.18;
 
     // 清掉旧场景
     while (this.sceneRoot.children.length) {
@@ -410,6 +417,7 @@ export class World {
   }
 
   update(dt) {
+    this.built?.advance?.(this._elapsed);
     /* 广告牌：让标了 userData.billboard 的面片**永远面向相机**。
        ⚠️ 这个标记在 build.js 里被写上（传送路牌的牌面），但全项目一直
        **没有任何地方读它** —— 写了个寂寞，牌子其实是死的。这里补上消费端。 */
@@ -498,7 +506,8 @@ export class World {
     // 同步演员
     const a = this.localActor;
     if (a) {
-      a.group.position.set(this.player.x, this._hopY(), this.player.z);
+      const { x, z } = this.player;
+      a.group.position.set(x, this._hopY() + (this.built.groundHeight?.(x, z) ?? 0), z);
       a.setFacing(this.player.facing);
       a.tick(1 / 60);
       a.pose(this.player.status === 'idle' ? 'idle' :
@@ -577,7 +586,7 @@ export class World {
       n.x += (dx / d) * step;
       n.z += (dz / d) * step;
       if (Math.abs(dx) > 2) n.facing = dx >= 0 ? 1 : -1;
-      n.actor.group.position.set(n.x, 0, n.z);
+      n.actor.group.position.set(n.x, this.built.groundHeight?.(n.x, n.z) ?? 0, n.z);
       n.actor.setFacing(n.facing);
       n.actor.pose('walk', this._elapsed + n.phase);
     }
@@ -597,7 +606,7 @@ export class World {
       if (rec.hopT > 0) rec.hopT = Math.max(0, rec.hopT - 1 / 60);
       if (rec.bubbleT > 0) rec.bubbleT = Math.max(0, rec.bubbleT - 1 / 60);
       const hop = rec.hopT > 0 ? Math.sin((1 - rec.hopT / HOP_TIME) * Math.PI) * 46 : 0;
-      rec.actor.group.position.set(r.x, hop, r.z);
+      rec.actor.group.position.set(r.x, hop + (this.built.groundHeight?.(r.x, r.z) ?? 0), r.z);
       rec.actor.setFacing(r.facing ?? 1);
       rec.last = r;                       // 记一份最后位置，_updateNearby 要用
       rec.actor.tick(1 / 60);
@@ -713,7 +722,9 @@ function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
 function disposeTree(root) {
   root.traverse?.((o) => {
+    if (o.isInstancedMesh) o.dispose();
     if (o.geometry) o.geometry.dispose?.();
+    o.userData.ownedTexture?.dispose();
     const m = o.material;
     if (Array.isArray(m)) m.forEach((x) => x.dispose?.());
     else m?.dispose?.();

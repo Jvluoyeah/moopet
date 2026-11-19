@@ -4,9 +4,9 @@ import PLAZA from './plaza.js';
 import OTHERS from './others.js';
 
 export const SCENE_LIST = [
-  { code: 'plaza', name: '长夜月广场', desc: '大家默认落脚的地方，最热闹' },
-  { code: 'park', name: '长夜月公园', desc: '遛弯专用，草地开阔' },
-  { code: 'kennel', name: '我的狗窝', desc: '自己的地盘，可以摆装扮、翻日记' },
+  { code: 'plaza', name: '长夜月广场', desc: '月塔、长街夜市和望月亭' },
+  { code: 'park', name: '长夜月公园', desc: '绕睡莲池散步，也可以去银杏林和观星草坪' },
+  { code: 'kennel', name: '我的狗窝', desc: '在起居室休息，翻档案或去庭院玩' },
   { code: 'arena', name: '月光竞技场', desc: '对战入口，也通向训练关卡' },
 ];
 

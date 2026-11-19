@@ -15,7 +15,11 @@
 
 import * as THREE from 'three';
 import { TARGET_HEIGHT, makeModelPropNode, pickModelName } from './models.js';
-import { instanceSceneImport, hasSceneImport } from './models.js';
+import { instanceSceneImport, hasSceneImport, instanceVertexColorModel } from './models.js';
+import { makePlazaPaving } from './plazaArt.js';
+import { kennelGroundTexture, makeExpansionProp } from './expansionArt.js';
+import { makeNoticeBoard } from './noticeBoard.js';
+import { addParkAmbience, addParkModels, parkGroundTexture } from './parkArt.js';
 import { signFont } from '../lib/fonts.js';
 import { DOOR, PROP, GROUND_MARGIN } from './scale.js';
 
@@ -296,7 +300,7 @@ function windowUnit(w, h, shutter) {
 }
 
 /** 哪一面墙朝外就画哪一面：门在正面（+Z），窗在正面与两侧 */
-function facadeDetail(b) {
+function facadeDetail(b, hasStorefront) {
   const grp = new THREE.Group();
   const zFront = b.d / 2 + 2;
 
@@ -307,6 +311,7 @@ function facadeDetail(b) {
   const step2 = paperBox(Math.min(180, b.w * 0.34), 26, 52, PAPER.stone);
   step2.position.set(0, 26, b.d / 2 + 26);
   grp.add(step2);
+  if (hasStorefront) return grp;
 
   const doorW = Math.min(150, b.w * 0.24);
   const doorH = Math.min(DOOR, b.h * 0.62);
@@ -346,7 +351,7 @@ function facadeDetail(b) {
   return grp;
 }
 
-function makeBuilding(b) {
+function makeBuilding(b, scene) {
   const grp = new THREE.Group();
   grp.position.set(b.x, 0, b.z);
 
@@ -354,7 +359,9 @@ function makeBuilding(b) {
   const plinth = paperBox(b.w + 40, 34, b.d + 40, PAPER.stone);
   grp.add(plinth);
 
-  const body = paperBox(b.w, b.h - 34, b.d, b.color, { texture: b.wall || 'plaster' });
+  const storefront = instanceVertexColorModel(scene.sceneryKit, 'Storefront', b.shutter);
+  const body = storefront || paperBox(b.w, b.h - 34, b.d, b.color, { texture: b.wall || 'plaster' });
+  if (storefront) body.scale.set(b.w, b.h - 34, b.d);
   body.position.y = 34;
   grp.add(body);
 
@@ -363,7 +370,20 @@ function makeBuilding(b) {
   eave.position.y = b.h;
   grp.add(eave);
 
-  if (b.roof !== false) {
+  const kitRoof = b.roof !== false && b.roofStyle && scene.roofKit
+    ? instanceSceneImport(scene.roofKit, b.roofStyle)
+    : null;
+  if (kitRoof?.isMesh) {
+    const height = b.roofH || Math.min(260, b.w * 0.34);
+    const color = new THREE.Color(b.roof).multiplyScalar(1.55);
+    kitRoof.material = new THREE.MeshLambertMaterial({ color, map: kitRoof.material.map });
+    // GLB 的底面原点居中，宽、深、高各为 1，由现有楼体数据缩放。
+    kitRoof.scale.set(b.w + 90, height, b.d + 90);
+    kitRoof.position.y = b.h + 17;
+    kitRoof.castShadow = true;
+    kitRoof.receiveShadow = true;
+    grp.add(kitRoof);
+  } else if (b.roof !== false) {
     // 四坡屋顶：四棱锥压扁，比平顶有"屋子"感。
     // 斜俯视是从上往下看，屋顶占了房子一半的像素——
     // 所以屋顶必须有瓦纹、有屋脊、有个烟囱，不然就是一块纯色大平面。
@@ -405,13 +425,15 @@ function makeBuilding(b) {
     grp.add(parapet);
   }
 
-  grp.add(facadeDetail(b));
+  grp.add(facadeDetail(b, Boolean(storefront)));
 
   // 腰线：楼身下三分之一处一条深色横向木带。
   // 纯色盒子最大的问题就是"一整面墙"，加一条腰线立刻分出层。
-  const belt = paperBox(b.w + 16, 26, b.d + 16, b.eave || 0x8a6a45, { shared: 'belt' });
-  belt.position.y = b.h * 0.42;
-  grp.add(belt);
+  if (!storefront) {
+    const belt = paperBox(b.w + 16, 26, b.d + 16, b.eave || 0x8a6a45, { shared: 'belt' });
+    belt.position.y = b.h * 0.42;
+    grp.add(belt);
+  }
 
   /* ⚠️ 这里原来是"挑出来的挂招牌"：一根 14×14×150 的横杆挑出墙外，
      下面挂一块竖着的招牌。用户说它像"莫名其妙的横木"，直接去掉。
@@ -433,7 +455,8 @@ function makeBuilding(b) {
   }
   if (b.sign) {
     const { tex, aspect } = signTexture(b.sign.text, b.sign.color, b.sign.vertical);
-    const hgt = b.sign.vertical ? Math.min(b.h * 0.56, 420) : 104;
+    const hgt = b.sign.vertical ? Math.min(b.h * 0.56, 420)
+      : kitRoof?.isMesh ? Math.min(76, b.h * 0.23) : 104;
     const wid = hgt * aspect;
     const plane = new THREE.Mesh(
       new THREE.PlaneGeometry(wid, hgt),
@@ -441,6 +464,12 @@ function makeBuilding(b) {
     if (b.sign.vertical) {
       plane.position.set(-b.w / 2 - 26, b.h * 0.5, b.d / 2 - 40);
       plane.rotation.y = -0.35;
+    } else if (kitRoof?.isMesh) {
+      const baseY = b.h - hgt - 8;
+      const plaque = paperBox(wid + 14, hgt + 12, 16, PAPER.woodDark, { edges: false });
+      plaque.position.set(0, baseY - 6, b.d / 2 + 7);
+      grp.add(plaque);
+      plane.position.set(0, baseY + hgt / 2, b.d / 2 + 16);
     } else {
       plane.position.set(0, b.h + 60, b.d / 2 + 20);
     }
@@ -591,6 +620,7 @@ function makeHedge(p) {
 function makeLamp(p) {
   const grp = new THREE.Group();
   grp.position.set(p.x, 0, p.z);
+  grp.scale.setScalar(p.modelScale ?? 1);
   const L = PROP.lamp;
   const base = new THREE.Mesh(new THREE.CylinderGeometry(34, 46, 60, 8), lambert(0x6b4f36, 'lampBase'));
   base.position.y = 30;
@@ -625,7 +655,8 @@ function makeLamp(p) {
         四个场景里所有路灯都自动有灯效，不用逐个补。
      renderOrder 用负值：必须画在**角色之下**（见 makeLightPool 的说明）。 */
   const pool = new THREE.Mesh(new THREE.PlaneGeometry((p.pool || 300) * 2, (p.pool || 300) * 2),
-    new THREE.MeshBasicMaterial({ map: lightPoolTexture(), transparent: true,
+    new THREE.MeshBasicMaterial({ map: lightPoolTexture(), color: p.poolTint ?? 0xffffff,
+                                  opacity: p.poolOpacity ?? 1, transparent: true,
                                   blending: THREE.AdditiveBlending, depthWrite: false }));
   pool.rotation.x = -Math.PI / 2;
   pool.position.y = 5;
@@ -657,7 +688,14 @@ function makePond(p) {
   rim.scale.copy(water.scale);
   rim.castShadow = true;
   grp.add(rim);
+  if (p.solid) grp.userData.collider = pondCollider(p);
   return grp;
+}
+
+function pondCollider(p) {
+  // 挡住池水主体，给外围岸石保留可走的浅边。
+  const w = p.w * 0.81, d = p.d * 0.78;
+  return { x: p.x - w / 2, z: p.z - d / 2, w, d };
 }
 
 /** 喷泉：广场的视觉中心，比空一块地强多了 */
@@ -867,6 +905,7 @@ function makeLightPool(p) {
   const r = p.r || 620;
   const disc = new THREE.Mesh(new THREE.PlaneGeometry(r * 2, r * 2),
     new THREE.MeshBasicMaterial({ map: lightPoolTexture(), transparent: true,
+                                  color: p.tint ?? 0xffffff, opacity: p.opacity ?? 1,
                                   blending: THREE.AdditiveBlending,
                                   depthWrite: false }));
   disc.rotation.x = -Math.PI / 2;
@@ -931,6 +970,17 @@ function makeDeskSet(p) {
     const leg = paperBox(12, 70, 12, 0x6b4f36, { shared: 'benchLeg' });
     leg.position.set(dx, 0, chairZ);
     grp.add(leg);
+  }
+  if (p.openBook) {
+    const cover = paperBox(123, 10, 80, 0x63463c);
+    cover.position.set(0, th + 20, 0);
+    grp.add(cover);
+    for (const side of [-1, 1]) {
+      const page = paperBox(57, 6, 72, side < 0 ? 0xe6d1ab : 0xf3dfb9);
+      page.position.set(side * 29, th + 29, 0);
+      page.rotation.z = side * 0.075;
+      grp.add(page);
+    }
   }
   return grp;
 }
@@ -1155,9 +1205,9 @@ function makeBed(p) {
 function makeBowl(p) {
   const grp = new THREE.Group();
   grp.position.set(p.x, 0, p.z);
-  const r = PROP.bowl;
+  const r = p.r || PROP.bowl;
   const bowl = new THREE.Mesh(new THREE.CylinderGeometry(r, r * 0.72, r * 0.7, 14),
-    new THREE.MeshLambertMaterial({ color: PAPER.seal }));
+    new THREE.MeshLambertMaterial({ color: p.color ?? PAPER.seal }));
   bowl.position.y = r * 0.35;
   bowl.castShadow = true;
   grp.add(bowl);
@@ -1184,12 +1234,17 @@ function makeShelf(p) {
 function makeRug(p) {
   const grp = new THREE.Group();
   grp.position.set(p.x, 0, p.z);
-  const rug = new THREE.Mesh(new THREE.PlaneGeometry(p.w || 480, p.d || 380),
-    new THREE.MeshLambertMaterial({ color: 0xd8c19a }));
-  rug.rotation.x = -Math.PI / 2;
-  rug.position.y = 5;
-  rug.receiveShadow = true;
-  grp.add(rug);
+  const w = p.w || 480, d = p.d || 380;
+  const layers = [[w, d, p.color || 0xd8c19a]];
+  if (p.color) layers.push([w - 20, d - 20, 0xd2b58a], [w - 32, d - 32, p.color]);
+  for (const [index, [width, depth, color]] of layers.entries()) {
+    const rug = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), new THREE.MeshLambertMaterial({ color }));
+    rug.rotation.x = -Math.PI / 2;
+    rug.position.y = 3 + index * 0.6;
+    rug.userData.surfaceEffect = true;
+    rug.receiveShadow = true;
+    grp.add(rug);
+  }
   return grp;
 }
 
@@ -1220,38 +1275,44 @@ function makeModelProp(p, index) {
   return makeModelPropNode(p, index);
 }
 
-/* ---------------- 地块：可交互物 / 传送点 ---------------- */
-function makeBoard(local) {
-  const grp = new THREE.Group();
-  grp.position.set(local.x, 0, local.z);
-  grp.rotation.y = local.rot || 0;
-  // 公告板别做太大：它离相机近，做大了就是一块白板压在画面中间
-  // ⚠️ 两条腿必须分开写坐标。原来 post 用 `position.y = 85`、post2 用
-  // `position.set(0, 85, 0)` —— 两根**完全重合**，等于两个一样的盒子占同一块
-  // 空间：每个面都在 z-fighting，而且画面上只看得到一条腿。
-  // 面板宽 240，腿放在 ±100（腿宽 24，正好落在面板边缘内侧）。
-  const post = paperBox(24, 170, 24, PAPER.woodDark, { shared: 'benchLeg' });
-  /* ⚠️ 腿的 y 必须是 **0**，不是 85。
-     paperBox 的 group 原点在**底面**（内部 mesh.position.y = h/2），
-     写 85 会让整条腿浮在离地 85 的地方 —— 实测世界 y[85,255]，
-     用户截图里的"公告板浮空"就是这个。 */
-  post.position.set(-100, 0, 0);
-  grp.add(post);
-  const post2 = paperBox(24, 170, 24, PAPER.woodDark, { shared: 'benchLeg' });
-  post2.position.set(100, 0, 0);
-  grp.add(post2);
-  // 面板要**压在腿顶上**：腿高 170，所以面板底 = 170（不是 250）
-  const panel = paperBox(240, 170, 26, 0xf6f0e2, { shared: 'boardPanel' });
-  panel.position.y = 170;
-  grp.add(panel);
-  const { tex, aspect } = signTexture(local.label.slice(0, 4), '#111211');
-  const plane = new THREE.Mesh(new THREE.PlaneGeometry(170, 170 / aspect * 0.62),
-    new THREE.MeshBasicMaterial({ map: tex, transparent: true }));
-  plane.position.set(0, 255, 15);   // 面板中心 = 170 + 170/2
-  grp.add(plane);
-  return grp;
+function makeSceneryProp(p, url) {
+  if (!url) return null;
+  if (p.kind === 'moontower') {
+    const tower = instanceVertexColorModel(url, 'MoonObservatory');
+    if (!tower) return null;
+    tower.position.set(p.x, 0, p.z);
+    tower.scale.set(p.w, p.h, p.d);
+    return tower;
+  }
+  if (p.kind === 'fountain') {
+    const fountain = instanceVertexColorModel(url, 'MoonFountain');
+    if (!fountain) return null;
+    const r = p.r || 300;
+    fountain.position.set(p.x, 0, p.z);
+    fountain.scale.set(2 * r, 600, 2 * r);
+    fountain.userData.collider = { x: p.x - r, z: p.z - r, w: 2 * r, d: 2 * r };
+    return fountain;
+  }
+  if (p.kind === 'pond') {
+    const pond = instanceVertexColorModel(url, 'LilyPond');
+    if (!pond) return null;
+    pond.position.set(p.x, 0, p.z);
+    pond.scale.set(p.w, 245, p.d);
+    if (p.solid) pond.userData.collider = pondCollider(p);
+    return pond;
+  }
+  if (p.kind === 'flowers') {
+    const flowers = instanceVertexColorModel(url, 'Wildflowers');
+    if (!flowers) return makeModelProp({ ...p, kind: 'flower' }, p.seed || 0);
+    flowers.position.set(p.x, 0, p.z);
+    flowers.rotation.y = p.rot || 0;
+    flowers.scale.set(p.w, p.h, p.d);
+    return flowers;
+  }
+  return null;
 }
 
+/* ---------------- 地块：可交互物 / 传送点 ---------------- */
 /** 传送点：**只有地上的一圈蓝环**（功能触发区的可视部分）。
  *  ⚠️ 路牌已拆出去，见下面 makePortalSign 的说明 —— portals 现在纯粹是功能。 */
 function makePortal(portal) {
@@ -1459,16 +1520,22 @@ export function buildScene(scene) {
   const margin = scene.groundMargin === undefined ? GROUND_MARGIN : scene.groundMargin;
   const gw = scene.size.w + margin * 2;
   const gd = scene.size.d + margin * 2;
-  const tex = groundTexture(scene.ground);
-  const tile = scene.ground.tile || 210;
-  tex.repeat.set(gw / (tile * 2), gd / (tile * 2));
+  const sceneGround = scene.parkLayout ? parkGroundTexture : scene.kennelLayout ? kennelGroundTexture : null;
+  const tex = sceneGround ? sceneGround(scene, gw, gd, margin) : groundTexture(scene.ground);
+  if (!sceneGround) {
+    const tile = scene.ground.tile || 210;
+    tex.repeat.set(gw / (tile * 2), gd / (tile * 2));
+  }
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(gw, gd),
     new THREE.MeshLambertMaterial({ map: tex }));
   floor.rotation.x = -Math.PI / 2;
   floor.position.set(cx, 0, cz);
   floor.receiveShadow = true;
+  if (sceneGround) floor.userData.ownedTexture = tex;
   root.add(floor);
+  const paving = scene.moonCompass ? makePlazaPaving(scene) : null;
+  if (paving) root.add(paving);
 
   // 场地边界：一圈矮石缘，明确"玩到这儿为止"
   const kerbColor = scene.ground.border ? scene.ground.border : PAPER.kerb;
@@ -1495,7 +1562,7 @@ export function buildScene(scene) {
   if (scene.backdrop) root.add(makeBackdrop(scene.backdrop));
 
   for (const b of scene.blocks || []) {
-    const g = makeBuilding(b);
+    const g = makeBuilding(b, scene);
     if (b.y) g.position.y += b.y;      // 抬升；不写就是贴地（默认 0）
     root.add(g);
     colliders.push(g.userData.collider);
@@ -1569,7 +1636,9 @@ export function buildScene(scene) {
 
   for (const [i, p] of (scene.props || []).entries()) {
     // 优先用真实模型；没有就退回手搓几何
-    let node = MODEL_KINDS.has(p.kind) ? makeModelProp(p, i) : null;
+    const sceneryKit = p.kind === 'flowers' ? scene.flowerKit || scene.sceneryKit : scene.sceneryKit;
+    let node = p.kind === 'kitProp' ? makeExpansionProp(p, scene.extensionKit)
+      : makeSceneryProp(p, sceneryKit) || (MODEL_KINDS.has(p.kind) ? makeModelProp(p, i) : null);
     if (!node) {
       const fn = PROP_BUILDERS[p.kind];
       node = fn ? fn(p) : null;
@@ -1596,7 +1665,9 @@ export function buildScene(scene) {
        所以悬空物的碰撞体直接丢掉。180 的来历：狗显示高 135
        （DOG 100 × DOG_SCALE 1.35），底面抬到 180 以上狗一定过得去。 */
     const airborne = (p.y || 0) >= 180;
-    if (!airborne && node && node.userData.collider) {
+    if (!airborne && node?.userData.colliders) {
+      colliders.push(...node.userData.colliders);
+    } else if (!airborne && node?.userData.collider) {
       colliders.push(node.userData.collider);
     } else if (!airborne && SOLID_PROPS.has(p.kind)) {
       const [dw, dd] = SOLID_DEFAULT[p.kind] || [200, 200];
@@ -1606,7 +1677,7 @@ export function buildScene(scene) {
   }
   for (const l of scene.locals || []) {
     if (l.kind === 'board') {
-      const b = makeBoard(l);
+      const b = makeNoticeBoard(l);
       if (l.y) b.position.y += l.y;
       root.add(b);
     } else if (PROP_BUILDERS[l.kind]) {
@@ -1617,6 +1688,7 @@ export function buildScene(scene) {
       const node = PROP_BUILDERS[l.kind](l);
       if (l.y) node.position.y += l.y;
       root.add(node);
+      if (l.solid && l.w && l.d) colliders.push({ x: l.x - l.w / 2, z: l.z - l.d / 2, w: l.w, d: l.d });
     }
     interactables.push(l);
   }
@@ -1627,16 +1699,22 @@ export function buildScene(scene) {
     portals.push(pt);
   }
 
+  let advance, groundHeight;
+  if (scene.parkLayout) {
+    groundHeight = addParkModels(root, scene, colliders);
+    advance = addParkAmbience(root, scene.parkLayout, root.getObjectByName('LilyPond') !== undefined);
+  }
+
   // 阴影开关统一在这里收口，省得每个零件都写一遍
   root.traverse((o) => {
     if (!o.isMesh) return;
-    if (o === floor) { o.castShadow = false; o.receiveShadow = true; return; }
-    if (o.material && o.material.isMeshBasicMaterial) { o.castShadow = false; return; }
+    if (o === floor || o === paving) { o.castShadow = false; o.receiveShadow = true; return; }
+    if (o.userData.surfaceEffect || o.material?.isMeshBasicMaterial) { o.castShadow = false; return; }
     o.castShadow = true;
     o.receiveShadow = true;
   });
 
-  return { root, colliders, interactables, portals };
+  return { root, colliders, interactables, portals, advance, groundHeight };
 }
 
 export { INK, PAPER, signTexture };

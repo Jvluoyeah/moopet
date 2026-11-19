@@ -10,6 +10,10 @@
 
 export function footprint(kind, o) {
   switch (kind) {
+    case 'kitProp': {
+      const c = Math.abs(Math.cos(o.rot || 0)), s = Math.abs(Math.sin(o.rot || 0));
+      return { hw: (c * o.w + s * o.d) / 2, hd: (s * o.w + c * o.d) / 2 };
+    }
     case 'block': {
       // 占地 = 台基（楼身 +40）。**不含门前的台阶**：台阶只有 26 高，狗能站上去，
       // 算进去会把店面门口变成一堵无形的墙（出生点正对中街那栋时尤其明显）。
@@ -27,6 +31,7 @@ export function footprint(kind, o) {
     case 'moontower': return { hw: (o.w || 520) / 2, hd: (o.d || 520) / 2 };
     case 'stall': return { hw: (o.w || 240) / 2, hd: (o.d || 200) / 2 };
     case 'lamp': return { hw: 26, hd: 26 };
+    case 'bowl': { const r = o.r || 44; return { hw: r, hd: r }; }
     case 'bench': return { hw: (o.w || 200) / 2, hd: (o.d || 90) / 2 };
     case 'hedge': return { hw: (o.w || 300) / 2, hd: (o.d || 90) / 2 };
     case 'planter': return { hw: (o.w || 140) / 2, hd: (o.d || 140) / 2 };
@@ -34,12 +39,12 @@ export function footprint(kind, o) {
     case 'portal': return { hw: 130, hd: 130 };   // 传送圈（牌子已拆成独立道具）
     // 传送路牌（独立道具）：只有杆子占地，牌子是悬在 260 高的 billboard
     case 'portalsign': return { hw: 20, hd: 20 };
-    // local 里装的不都是 NPC：成长日记 / 成就墙 / 公园告示是**挂墙薄板**，
-    // 它们本来就该贴着墙面装、也该允许长椅摆在旁边。一律按 90×90 的 NPC
-    // 算，会把"贴在墙上的板子"和"墙边正常摆放"全报成穿模。
+    // 交互物按实际构件计算占地，NPC 留出走动余量。
     case 'local': {
       const k = o.kind;
-      if (k === 'board') return { hw: (o.w || 180) / 2, hd: 22 };
+      if (k === 'viewpoint') return { hw: 0, hd: 0 };
+      if (k === 'board') return footprint('board', o);
+      if (k === 'deskset' && o.solid) return footprint('deskset', o);
       if (k === 'shelf' || k === 'bed') return { hw: (o.w || 200) / 2, hd: (o.d || 200) / 2 };
       return { hw: 90, hd: 90 };       // NPC / 可交互物（含走动余量）
     }
@@ -74,8 +79,12 @@ export function footprint(kind, o) {
     case 'bush': return { hw: 90, hd: 90 };
     case 'stump': return { hw: 70, hd: 70 };
     case 'grass': return { hw: 120, hd: 120 };    // 草皮是一小块贴地补丁
-    // 挂墙板（成长日记 / 成就墙 / 告示）：薄板，贴着墙面装，深度只算板厚。
-    case 'board': return { hw: (o.w || 180) / 2, hd: 22 };
+    case 'board': {
+      const scale = o.modelScale ?? 1;
+      if (o.boardStyle === 'diary') return { hw: 107 * scale, hd: 46 * scale };
+      if (o.boardStyle === 'shelf') return { hw: 82 * scale, hd: 25 * scale };
+      return { hw: 137 * scale, hd: 61 * scale };
+    }
     case 'npc': return { hw: 70, hd: 70 };
     case 'pond': return { hw: (o.w || 380) / 2, hd: (o.d || 260) / 2 };
     default: return { hw: (o.w || 200) / 2, hd: (o.d || 200) / 2 };
@@ -103,7 +112,7 @@ export function overlapCheck(scene) {
                      'lightpool', 'courtline', 'ceilinglamp'].includes(p.kind);
     // 地面贴花：画在地上的东西（竞技场舞台圈、草皮、小径）。楼本来就坐在地上，
     // 贴花"压在"楼下面不算穿模，所以贴花**和谁都配不成穿模**，单独一档。
-    const decal = ['stage', 'grass', 'path', 'decal', 'flowers',
+    const decal = ['stage', 'grass', 'path', 'decal', 'flowers', 'rug',
                    'portalsign',
                    // 光斑、白线是贴地装饰；吊灯整个在头顶（吊杆 1200 以上），
                    // 从俯视看它和白线落在同一个 x/z 上是**正常**的，不该报穿模。
@@ -114,7 +123,8 @@ export function overlapCheck(scene) {
     add('portal', `传送→${p.to}`, p.x, p.z, footprint('portal', p), true);
   }
   for (const l of scene.locals || []) {
-    add('local', l.label || l.id || '可交互', l.x, l.z, footprint('local', l), true);
+    const mountedBoard = l.kind === 'board' && l.boardStyle === 'shelf' && l.y > 0;
+    add('local', l.label || l.id || '可交互', l.x, l.z, footprint('local', l), true, l.kind === 'viewpoint' || mountedBoard);
   }
 
   const pad = 6;   // 贴边不算撞，留一点余量

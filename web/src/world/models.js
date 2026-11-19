@@ -110,11 +110,28 @@ export async function preloadModels(extraUrls = []) {
  *
  * @returns {THREE.Object3D|null}
  */
-export function instanceSceneImport(url) {
-  const src = cache.get(url);
-  if (!src) return null;
-  const obj = src.clone(true);
-  return obj;
+export function instanceSceneImport(url, objectName) {
+  const scene = cache.get(url);
+  const source = objectName ? scene?.getObjectByName(objectName) : scene;
+  return source?.clone(true) ?? null;
+}
+
+/** 将带顶点色的场景组件接入世界现有的 Lambert 光照。 */
+export function instanceVertexColorModel(url, name, accent) {
+  const model = url && instanceSceneImport(url, name);
+  if (!model) return null;
+  model.traverse((mesh) => {
+    if (!mesh.isMesh) return;
+    const source = mesh.material;
+    const options = { vertexColors: true };
+    if (source.name === 'Plaza_Accents' && accent != null) {
+      options.color = new THREE.Color(accent).lerp(new THREE.Color(0xf3d4a2), 0.52);
+    }
+    mesh.material = ['Plaza_WindowLight', 'Plaza_Water'].includes(source.name)
+      ? new THREE.MeshBasicMaterial(options)
+      : new THREE.MeshLambertMaterial(options);
+  });
+  return model;
 }
 
 /** 某个场景声明了外部场景却没有载入成功时，给个能看的报错。 */
