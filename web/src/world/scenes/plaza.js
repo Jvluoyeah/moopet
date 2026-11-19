@@ -36,14 +36,15 @@
    */
 
 import { placer } from './place.js';
+import { EXPANSION_KIT, FLOWER_KIT, kitProp } from './expansion.js';
 
 export const PLAZA = {
   code: 'plaza',
   name: '长夜月广场',
-  desc: '月轮居中时，记录员们在此落脚。灯比人多。',
+  desc: '绕过月塔就是长街夜市，沿南边的花庭走到望月亭。',
   sky: '#141d33',          // 深夜蓝（世界永远是晚上）
 
-  size: { w: 2800, d: 2150 },
+  size: { w: 4300, d: 2900 },
   spawn: { x: 1400, z: 1380 },
   /* 相机 pitch=0.95（54°）/ dist=1700 是**刻意设计**，别动 pitch：
      e2e_world.py 有一条验收「相机有斜俯角（45~60°，看不到地平线）」——
@@ -55,16 +56,24 @@ export const PLAZA = {
      一排被切断的屋檐。pitch 动不了，唯一的杠杆是 **dist**：1700 → 2500 后
      占高回到 37~47%，顶% 由 -30~+10 变成 +8~+33，整排屋顶都进画面。 */
   camera: { dist: 3300, yaw: -0.18, pitch: 0.95 },
+  roofKit: 'models/landmark/plaza-roofs.glb',
+  sceneryKit: 'models/landmark/plaza-architecture.glb',
+  extensionKit: EXPANSION_KIT,
+  flowerKit: FLOWER_KIT,
+  moonCompass: true,
+  districts: {
+    market: { x: 2730, z: 586, w: 1215, d: 924 },
+    pavilion: { x: 3530, z: 2110, r: 378 },
+    garden: { x: 2627, z: 2390, r: 347 },
+  },
+  lighting: { ambientColor: 0x9aacc2, ambientIntensity: 0.63, moonIntensity: 0.93, fillIntensity: 0.25 },
 
-  /* 地面：**石砖**（错缝铺法），不再是棋盘格。
-     棋盘格的问题是"一格一色"太整、太像纸面，铺在夜里尤其假；
-     石砖有砖缝和每块的微差，才像"这个广场是铺过的"。
-     砖色偏暖灰（夜里被月光一压不会发蓝），缝色深一号。 */
+  // 场地外围延续广场的错缝石砖，中心额外绘制月塔罗盘镶嵌。
   ground: {
     kind: 'brick',
-    colors: ['#ddd5c6', '#a99e8c'],      // a=砖面 b=砖缝
+    colors: ['#829096', '#5d6d75'],      // 场地外围的石砖延续广场的冷灰色
     tile: 300,
-    border: '#c9bb9c',
+    border: '#9ea9a7',
   },
 };
 
@@ -92,6 +101,7 @@ function box(x, z, w, d, h, opts = {}) {
     color: opts.color || '#f0eade',
     roof: opts.roof === false ? false : (opts.roof || '#8c3b2e'),
     roofH: opts.roofH,
+    roofStyle: opts.roofStyle,
     eave: opts.eave,
     shutter: opts.shutter || null,
     sign: opts.sign || null,
@@ -106,6 +116,12 @@ function box(x, z, w, d, h, opts = {}) {
 
 /** 道具 / 可交互物：直接用世界坐标 */
 const prop = (x, z, o) => ({ ...o, x, z });
+const streetLamp = { kind: 'lamp', pool: 265, poolTint: 0xffc98b, poolOpacity: 0.58 };
+const laneLamp = { ...streetLamp, modelScale: 0.66, pool: 395, poolOpacity: 0.54 };
+const trailSign = (x, z, label) => prop(x, z, { kind: 'portalsign', label, h: 74, color: '#765840' });
+const stall = (x, z, asset, rot = 0) => kitProp(x, z, asset, 293, 224, 285,
+  { rot, solid: [[0, 0, 0.9, 0.71]] });
+const columnsAndRails = [[-0.386, 0, 0.19, 0.90], [0.386, 0, 0.19, 0.90]];
 
 // —— 主街：z=760 一横排（楼身 z 570–950），楼前沿离出生点 250，正对着玩家
 //    每栋的 x 范围写在注释里；相邻两栋至少留 60 的缝，招牌才不会叠在一起
@@ -121,33 +137,33 @@ PLAZA.blocks = [
 
   // —— 北排 3 栋（正面朝南，正对中间的活动区）——
   box(714, 360, 400, 380, 460, {                       // x  360– 760
-    color: '#f3ead9', roof: '#8c3b2e', roofH: 150, awning: '#a8332a',
+    color: '#f3ead9', roof: '#b76248', roofH: 150, roofStyle: 'Gable', awning: '#a8332a',
     shutter: 0x8c3b2e, sign: { text: '汪记小馆', color: '#a8332a' },
   }),
   box(1400, 360, 400, 380, 430, {                      // x  900–1300，正对出生点
-    color: '#efe6d2', roof: '#6b4f36', roofH: 170, shutter: 0x2447d8,
+    color: '#efe6d2', roof: '#9f7651', roofH: 170, roofStyle: 'Gambrel', shutter: 0x2447d8,
     sign: { text: '狗窝旅店', color: '#2447d8', vertical: true },
   }),
   box(2086, 360, 400, 380, 420, {                      // x 1440–1840
-    color: '#f1ebdd', roof: '#4a6b4f', roofH: 160, shutter: 0x4a6b4f,
+    color: '#f1ebdd', roof: '#628065', roofH: 160, roofStyle: 'Hipped', shutter: 0x4a6b4f,
     sign: { text: '训练场', color: '#4a6b4f' },
   }),
 
   // —— 西侧：正面朝东（朝内）——
   box(384, 1080, 400, 380, 470, {                       // 旋转后占 x 110–490, z 680–1120
-    color: '#efe9db', awning: '#b8892f', shutter: 0xb8892f, rot: Math.PI / 2,
+    color: '#efe9db', roof: '#ac7950', roofStyle: 'Hipped', awning: '#b8892f', shutter: 0xb8892f, rot: Math.PI / 2,
     sign: { text: '狗粮铺', color: '#b5791f' },
   }),
   // —— 东侧：正面朝西（朝内）——
   box(2289, 1080, 420, 300, 210, {                      // 旋转后占 x 1650–1950, z 690–1110
-    color: '#f0e8d8', roofH: 60, awning: '#2447d8', shutter: 0x2447d8,
+    color: '#f0e8d8', roof: '#677eaa', roofH: 60, roofStyle: 'Gable', awning: '#2447d8', shutter: 0x2447d8,
     rot: -Math.PI / 2,
     sign: { text: '玩具屋', color: '#2447d8' },
   }),
   // —— 南侧：正面朝北（朝内）。在相机背后，转身往传送圈走时才看到 ——
   //    它同样是外圈的一部分，只是这个机位拍不到。
   box(2289, 1620, 460, 300, 240, {                     // 占 x 1570–2030, z 1200–1500
-    color: '#f6efe0', roof: '#a8332a', roofH: 90, rot: Math.PI,
+    color: '#f6efe0', roof: '#a85747', roofH: 90, roofStyle: 'Gambrel', rot: Math.PI,
     sign: { text: '骨头餐车', color: '#a8332a' },
   }),
 ];
@@ -169,10 +185,10 @@ PLAZA.props = [
   prop(917, 1056, { kind: 'fountain', r: 110 }),              // 喷泉偏左南
 
   prop(1146, 1500, { kind: 'bench', rot: Math.PI }),
-  prop(1527, 1500, { kind: 'bench', rot: 0 }),
+  prop(965, 1650, { kind: 'bench', rot: Math.PI / 2 }),    // 给月塔端口和南侧通道留出空间
 
-  prop(1756, 648, { kind: 'lamp' }), prop(2226, 672, { kind: 'lamp' }),
-  prop(638, 1380, { kind: 'lamp' }), prop(2187, 1380, { kind: 'lamp' }),
+  prop(1756, 648, streetLamp), prop(2226, 672, streetLamp),
+  prop(638, 1380, streetLamp), prop(2187, 1380, streetLamp),
 
   // 花坛放北排两栋之间偏东 —— 西边要让开喷泉(x≤870)和老板娘(x≤650)
   // 花坛塞进北排三栋之间的两条缝（缝只有 140 宽，所以花坛做小一点）
@@ -190,10 +206,41 @@ PLAZA.props = [
   prop(820, 1944, { kind: 'portalsign', label: '去公园' }),      // →park
   prop(312, 1944, { kind: 'portalsign', label: '回狗窝' }),      // →kennel
   prop(1582, 1944, { kind: 'portalsign', label: '去竞技场' }),   // →arena
+
+  // 东侧的夜市小街。摊档沿外缘摆开，中央灯串下留一条贯通的路。
+  trailSign(2460, 1314, '长街夜市'), trailSign(2845, 1850, '望月亭'),
+  stall(2905, 728, 'MarketAmber'), stall(3345, 710, 'MarketJade'),
+  stall(3785, 728, 'MarketAmber'), stall(3835, 1265, 'MarketJade', -Math.PI / 2),
+  kitProp(3345, 1020, 'LanternSpan', 1330, 72, 386,
+    { solid: [[-0.465, 0, 0.044, 0.82], [0.465, 0, 0.044, 0.82]] }),
+  prop(2600, 1250, laneLamp), prop(2630, 565, laneLamp), prop(3995, 1190, laneLamp),
+  prop(3010, 1390, { kind: 'bench', h: 103, rot: Math.PI }),
+  prop(2780, 1555, { kind: 'planter', w: 200, d: 93 }),
+  prop(3595, 1480, { kind: 'planter', w: 216, d: 102 }),
+  prop(3190, 529, { kind: 'tree', h: 392 }), prop(3605, 520, { kind: 'tree', h: 378 }),
+  prop(3920, 950, { kind: 'flowers', w: 134, d: 100, h: 36 }),
+
+  // 南侧花庭到望月亭。亭子前后开放，栏杆只围两侧。
+  kitProp(3530, 2110, 'MoonPavilion', 538, 465, 445, { solid: columnsAndRails }),
+  prop(2940, 1970, laneLamp), prop(3850, 1860, laneLamp), prop(3330, 2500, laneLamp),
+  prop(2470, 2290, laneLamp),
+  prop(2627, 2390, { kind: 'fountain', r: 91 }),
+  prop(2340, 2510, { kind: 'bench', h: 100, rot: 0.12 }),
+  prop(2835, 2530, { kind: 'bench', h: 100, rot: -0.23 }),
+  prop(3910, 2290, { kind: 'bench', h: 107, rot: -Math.PI / 2 }),
+  prop(2160, 2420, { kind: 'tree', h: 350 }), prop(2770, 2190, { kind: 'tree', h: 337 }),
+  prop(3060, 2510, { kind: 'tree', h: 408 }), prop(3860, 2510, { kind: 'tree', h: 435 }),
+  prop(3900, 1650, { kind: 'tree', h: 430 }),
+  prop(2300, 2250, { kind: 'flowers', w: 220, d: 105, h: 40 }),
+  prop(2470, 2596, { kind: 'flowers', w: 150, d: 95, h: 42 }),
+  prop(2820, 2650, { kind: 'flowers', w: 207, d: 102, h: 48 }),
+  prop(3210, 2260, { kind: 'flowers', w: 187, d: 88, h: 40 }),
+  prop(3750, 2515, { kind: 'flowers', w: 169, d: 102, h: 46 }),
+  prop(4140, 2260, { kind: 'bush', h: 118 }), prop(3190, 1715, { kind: 'bush', h: 94 }),
 ];
 
 PLAZA.locals = [
-  prop(1883, 1296, { id: 'board', kind: 'board', label: '公告板',
+  prop(825, 1330, { id: 'board', kind: 'board', label: '公告板', modelScale: 0.93,
     hint: '看看今天有什么任务' }),
 
   /* 月塔端口：守在广场上的一台终端 —— 按 E 直接进「月塔端口」那一页
@@ -206,7 +253,7 @@ PLAZA.locals = [
      为什么另起一台而不是让端口页里拐一下：用户要的是"在游戏里也能直接进去"，
      拐一次就成了两层菜单；两台并排站着，一眼看得出月塔有两件事可做。
      位置挨着端口（前一后一），都在塔的南侧空地上。 */
-  prop(1780, 1560, { id: 'quiz-port', kind: 'towerport', label: '月塔问询',
+  prop(1820, 1560, { id: 'quiz-port', kind: 'towerport', label: '月塔问询',
     hint: '它要问一句', w: 150, h: 300 }),
 
   /* 店主站在**自家店门口正前方**：
@@ -219,6 +266,10 @@ PLAZA.locals = [
     hint: '想练练就去训练场', look: 'german_shepherd' }),
   prop(308, 720, { id: 'shop-toy', kind: 'npc', label: '狗粮铺·老板',
     hint: '新到的狗粮在这边', look: 'corgi' }),
+  prop(3330, 1168, { id: 'plaza-market', kind: 'viewpoint', label: '长街夜市',
+    hint: '站到灯串下看看', note: '灯串下的摊子摆着磨牙饼干、牵引绳和手缝的小布球。' }),
+  prop(3530, 2125, { id: 'plaza-pavilion', kind: 'viewpoint', label: '望月亭',
+    hint: '进亭子看月亮', note: '从亭檐下面看出去，月塔的尖顶刚好露在花庭上方。' }),
 ];
 
 /* 传送圈：三个一排，在活动区南侧（z=1230）。
@@ -243,6 +294,8 @@ PLAZA.npcRoutes = [
     path: path([560, 1150], [1640, 1150], [1640, 1240], [560, 1240]) },
   { look: 'corgi', name: '短腿', level: 15, speed: 62,
     path: path([850, 1440], [1350, 1440], [1350, 1560], [850, 1560]) },
+  { look: 'golden', name: '栗子', level: 16, speed: 75,
+    path: path([2940, 1175], [3330, 1290], [3645, 1145], [3490, 938], [3060, 920]) },
 ];
 
 export default PLAZA;

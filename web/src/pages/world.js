@@ -39,6 +39,7 @@ function signTextOfAllScenes() {
     const s = sceneOf(meta.code);
     if (!s) continue;
     for (const b of s.blocks || []) if (b.sign?.text) out.push(b.sign.text);
+    for (const p of s.props || []) if (p.kind === 'portalsign') out.push(p.label || '');
     for (const l of s.locals || []) out.push(l.label || '');
     for (const p of s.portals || []) out.push(p.label || '');
     for (const n of s.npcRoutes || []) out.push(n.name || '');
@@ -54,12 +55,14 @@ const GREETINGS = [
 
 export async function worldPage() {
   const st = get();
-  // 模型很小（全部不到 300 KB），进场前一次载完，后面就能同步取用。
-  // 外部搭好的整个场景（scene.imported.url）也在这里一起预载 ——
-  // buildScene 是同步的，等不到那时再去 load。
-  const sceneImports = SCENE_LIST
-    .map((s) => sceneOf(s.code)?.imported?.url)
-    .filter(Boolean);
+  // 场景模型和建筑组件一起预载，供同步构建和后续切换场景。
+  const sceneImports = [...new Set(SCENE_LIST
+    .flatMap(({ code }) => {
+      const scene = sceneOf(code);
+      return [scene?.imported?.url, scene?.roofKit, scene?.sceneryKit, scene?.parkPropsKit,
+        scene?.extensionKit, scene?.flowerKit];
+    })
+    .filter(Boolean))];
   try {
     await preloadModels(sceneImports);
   } catch (e) {
@@ -168,6 +171,7 @@ export async function worldPage() {
     },
     onInteract: (n) => {
       if (n.kind === 'portal') { goto(n.to); return; }
+      if (n.kind === 'viewpoint') { say(n.note || n.label, 'good'); return; }
       // 和别的玩家打招呼：本地说一句 + 广播出去，对方那边也会冒泡
       if (n.kind === 'dog') {
         const line = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];

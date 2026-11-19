@@ -6,7 +6,11 @@
 
    跑法：node tests/world_net_test.mjs
 */
+import { readFileSync } from 'node:fs';
 import { WorldSession, DEFAULT_DELAY, HEARTBEAT_SEC } from '../src/world/worldNet.js';
+import { KENNEL } from '../src/world/scenes/kennel.js';
+import { PARK } from '../src/world/scenes/park.js';
+import { PLAZA } from '../src/world/scenes/plaza.js';
 
 let pass = 0;
 const fails = [];
@@ -319,7 +323,28 @@ function testReconnectAfterSceneSwitch() {
 
 /* ---------------- 跑 ---------------- */
 
+function testSceneBounds() {
+  const path = new URL('../../shared/world_scenes.json', import.meta.url);
+  const { scenes } = JSON.parse(readFileSync(path, 'utf8'));
+  for (const scene of [PLAZA, PARK, KENNEL]) {
+    const { w, d, spawn } = scenes[scene.code];
+    eq(`${scene.name}前后端边界一致`, scene.size, { w, d });
+    eq(`${scene.name}前后端出生点一致`, [scene.spawn.x, scene.spawn.z], spawn);
+    const allLocations = [
+      ...scene.blocks.concat(scene.props, scene.locals, scene.portals).map(({ x, z }) => [x, z]),
+      ...scene.npcRoutes.flatMap(({ path: points }) => points),
+    ];
+    if (scene.parkLayout) {
+      allLocations.push(...scene.parkLayout.trails.flatMap(({ points }) => points),
+        ...Object.values(scene.parkLayout.decor).flat());
+    }
+    ok(`${scene.name}道具、路线与传送点留在联机边界内`,
+      allLocations.every(([x, z]) => x >= 0 && x <= w && z >= 0 && z <= d));
+  }
+}
+
 console.log('开放世界联机会话测试');
+testSceneBounds();
 testReportThrottle();
 testReportRoundsToInt();
 testIdleHeartbeat();
